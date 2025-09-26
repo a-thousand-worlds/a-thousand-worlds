@@ -5,7 +5,8 @@
 1. `git clone https://github.com/a-thousand-worlds/a-thousand-worlds-2/`
 1. `npm install`
 1. `cd functions && npm install && cd ..`
-1. `npm install -g firebase-tools`
+1. Add `./node_modules/.bin` to your `PATH` so that running `firebase` will reference your locally installed `firebase-tools`
+   - Add to .bash_profile: `export PATH="./node_modules/.bin:$PATH"`
 1. Create new project at [firebase.google.com](http://firebase.google.com)
 1. Create web app in Firebase project
 1. Save Firebase config into `.env.local`
@@ -24,7 +25,6 @@
    - Realtime Database → Rules
 1. `firebase login`
 1. Set active Firebase app: `firebase use --add`
-1. Install Firebase function dependencies: `cd functions && npm i`
 1. Generate service account key
    - Firebase Project -> Settings -> Service Accounts -> Generate new private key
    - Save to `/functions/serviceAccountKey.json`
