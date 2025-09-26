@@ -54,6 +54,24 @@ export default {
 <template>
   <div class="is-flex is-justify-content-center">
     <form class="is-flex-grow-1" style="max-width: 480px" @submit.prevent="resetPassword">
+      <!-- Cannot use are-small and is-rounded until #3208 is merged. See https://github.com/jgthms/bulma/pull/3208. -->
+      <div class="buttons is-centered has-addons">
+        <button
+          :class="['button', 'is-small', 'is-rounded']"
+          style="width: 50%; max-width: 240px"
+          @click.prevent="$router.push({ name: 'Signup' })"
+        >
+          Sign Up
+        </button>
+        <button
+          :class="['button', 'is-small', 'is-rounded']"
+          style="width: 50%; max-width: 240px"
+          @click.prevent="$router.push({ name: 'Login' })"
+        >
+          Log In
+        </button>
+      </div>
+
       <h1 class="title page-title divider-bottom">Password Reset</h1>
 
       <div class="field">
