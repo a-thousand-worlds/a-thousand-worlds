@@ -76,7 +76,9 @@ export default {
             <BookmarkIcon
               class="fill-secondary"
               v-tippy="{
-                content: `You have ${bookmarksCount} saved book${bookmarksCount !== 1 ? 's' : ''}`,
+                content: !$iam('authorized')
+                  ? 'Sign up or log in to save books for later!'
+                  : `You have ${bookmarksCount} saved book${bookmarksCount !== 1 ? 's' : ''}`,
               }"
             />
             <span v-if="$iam('authorized')" class="badge">{{ bookmarksCount }}</span>
