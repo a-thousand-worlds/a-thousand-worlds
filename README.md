@@ -1,4 +1,4 @@
-# A Thousand Worlds 2.0
+# A Thousand Worlds
 
 ## Setup
 
