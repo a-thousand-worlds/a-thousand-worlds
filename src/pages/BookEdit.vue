@@ -225,7 +225,9 @@ export default {
           <table class="my-20">
             <!-- Created By -->
             <tr>
-              <th class="has-text-right"><b class="mr-3">submitted by</b></th>
+              <th class="has-text-right" style="white-space: nowrap">
+                <b class="mr-3">submitted by</b>
+              </th>
               <td>
                 <span style="opacity: 0.5">{{ createdByName }}</span>
               </td>
@@ -233,7 +235,9 @@ export default {
 
             <!-- Created At -->
             <tr>
-              <th class="has-text-right"><b class="mr-3">submitted on</b></th>
+              <th class="has-text-right" style="white-space: nowrap">
+                <b class="mr-3">submitted on</b>
+              </th>
               <td>
                 <span style="opacity: 0.5">{{ dayjs(book.createdAt).format('M/D/YYYY') }}</span>
               </td>
@@ -241,7 +245,9 @@ export default {
 
             <!-- Updated At -->
             <tr v-if="book.updatedAt !== book.createdAt">
-              <th class="has-text-right"><b class="mr-3">updated on</b></th>
+              <th class="has-text-right" style="white-space: nowrap">
+                <b class="mr-3">updated on</b>
+              </th>
               <td>
                 <span style="opacity: 0.5">{{ dayjs(book.updatedAt).format('M/D/YYYY') }}</span>
               </td>
