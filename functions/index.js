@@ -1,4 +1,4 @@
-const functions = require('firebase-functions')
+const functions = require('firebase-functions/v1')
 const coverImageByISBN = require('./coverImageByISBNServer')
 const email = require('./email')
 const metadataByISBN = require('./metadataByISBN')

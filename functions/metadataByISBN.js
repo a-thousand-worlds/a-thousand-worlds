@@ -2,7 +2,7 @@
  * e.g. https://us-central1-a-thousand-worlds.cloudfunctions.net/metadataByISBN?isbn=9781984881489
  */
 
-const functions = require('firebase-functions')
+const functions = require('firebase-functions/v1')
 const axios = require('axios').default
 const express = require('express')
 const isbn = require('node-isbn')
