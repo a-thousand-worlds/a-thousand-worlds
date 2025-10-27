@@ -1,5 +1,5 @@
 const admin = require('firebase-admin')
-const functions = require('firebase-functions')
+const functions = require('firebase-functions/v1')
 const express = require('express')
 const cors = require('cors')({ origin: true })
 const serviceAccount = require('./serviceAccountKey.json')

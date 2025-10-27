@@ -1,4 +1,4 @@
-const functions = require('firebase-functions')
+const functions = require('firebase-functions/v1')
 const admin = require('firebase-admin')
 const loadImage = require('../util/loadImage')
 const image64ToBuffer = require('../util/image64ToBuffer')

@@ -1,5 +1,19 @@
 module.exports = {
   configureWebpack: {
+    resolve: {
+      fallback: {
+        assert: require.resolve('assert/'),
+        fs: false,
+        http: require.resolve('stream-http'),
+        https: require.resolve('https-browserify'),
+        path: require.resolve('path-browserify'),
+        querystring: require.resolve('querystring-es3'),
+        stream: require.resolve('stream-browserify'),
+        url: require.resolve('url/'),
+        util: require.resolve('util/'),
+        zlib: require.resolve('browserify-zlib'),
+      },
+    },
     optimization: {
       splitChunks: {
         chunks: 'all',
@@ -13,9 +27,10 @@ module.exports = {
     // svg
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
+    svgRule.delete('type')
     svgRule
       .use('vue-loader')
-      .loader('vue-loader-v16')
+      .loader('vue-loader')
       .end()
       .use('vue-svg-loader')
       .loader('vue-svg-loader')
