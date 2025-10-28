@@ -5,7 +5,7 @@ const admin = require('firebase-admin')
 
 const seedsJsonPath = path.join(__dirname, 'index.json')
 const envPath = path.resolve(process.cwd(), '.env.local')
-const serviceAccountPath = path.resolve(__dirname, '../../functions/serviceAccountKey.json')
+const serviceAccountPath = path.resolve(process.cwd(), 'functions/serviceAccountKey.json')
 
 if (!fs.existsSync(seedsJsonPath)) {
   console.error(`JSON file not found at ${seedsJsonPath}`)
