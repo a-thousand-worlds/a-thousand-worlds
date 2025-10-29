@@ -38,3 +38,22 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+
+      - name: Build app
+        run: npm run build
+
+      - name: Serve the build and run server test
+        run: |
+          npx --yes serve -s dist -l 8080 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID' EXIT
+          for i in {1..5}; do
+            echo "Ping the server..."
+            if curl -sf http://localhost:8080 > /dev/null; then
+              echo "Pong!"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Server failed to respond" >&2
+          exit 1
