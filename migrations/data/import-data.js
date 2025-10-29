@@ -3,12 +3,23 @@ const path = require('path')
 const dotenv = require('dotenv')
 const admin = require('firebase-admin')
 
-const seedsJsonPath = path.join(__dirname, 'index.json')
+const fileArg = process.argv[process.argv.length - 1]
+if (!fileArg || process.argv.length <= 2) {
+  console.error('File path is required.')
+  process.exit(1)
+}
+
+const filePath = path.resolve(process.cwd(), fileArg)
 const envPath = path.resolve(process.cwd(), '.env.local')
 const serviceAccountPath = path.resolve(process.cwd(), 'functions/serviceAccountKey.json')
 
-if (!fs.existsSync(seedsJsonPath)) {
-  console.error(`JSON file not found at ${seedsJsonPath}`)
+if (path.extname(filePath).toLowerCase() !== '.json') {
+  console.error('File must have a .json extension')
+  process.exit(1)
+}
+
+if (!fs.existsSync(filePath)) {
+  console.error(`JSON file not found at ${filePath}`)
   process.exit(1)
 }
 
@@ -19,7 +30,14 @@ if (!fs.existsSync(serviceAccountPath)) {
 
 dotenv.config({ path: envPath })
 
-const payload = JSON.parse(fs.readFileSync(seedsJsonPath, 'utf8'))
+let payload
+try {
+  const fileContents = fs.readFileSync(filePath, 'utf8')
+  payload = JSON.parse(fileContents)
+} catch (error) {
+  console.error(`File is invalid. Failed to parse JSON from ${filePath}: ${error.message}`)
+  process.exit(1)
+}
 
 // skip users from import, so it leaves existing users untouched
 const { users, ...payloadWithoutUsers } = payload
@@ -49,7 +67,7 @@ const run = async () => {
     })
 
     await rootRef.update(updates)
-    console.log('Seeds import complete!')
+    console.log('Data import complete!')
   } finally {
     await admin.app().delete()
   }

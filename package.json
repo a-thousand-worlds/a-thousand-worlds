@@ -23,7 +23,7 @@
     "update:dbcache": "node ./migrations/update-dbcache.js",
     "import:books": "node ./migrations/import-books.js",
     "import:db": "node ./migrations/import-db.js",
-    "import:seeds": "node ./migrations/seeds/import-seeds.js"
+    "import:data": "node ./migrations/data/import-data.js"
   },
   "engines": {
     "node": ">=16"
