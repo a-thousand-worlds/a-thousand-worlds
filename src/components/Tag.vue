@@ -22,19 +22,19 @@ export default {
       return this.type === 'books'
         ? 'Home'
         : this.type === 'people'
-        ? 'People'
-        : this.type === 'bundles'
-        ? 'Bundles'
-        : null
+          ? 'People'
+          : this.type === 'bundles'
+            ? 'Bundles'
+            : null
     },
     singleType() {
       return this.type === 'books'
         ? 'book'
         : this.type === 'people'
-        ? 'person'
-        : this.type === 'bundles'
-        ? 'bundle'
-        : null
+          ? 'person'
+          : this.type === 'bundles'
+            ? 'bundle'
+            : null
     },
   },
   created() {
@@ -128,10 +128,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
-@import 'bulma/sass/elements/table.sass';
+@use '@/assets/style/mixins.scss' as *;
 
 .close {
   background-color: rgba(0, 0, 0, 0.25);

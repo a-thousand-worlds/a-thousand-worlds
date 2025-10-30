@@ -27,8 +27,8 @@ export default {
       return this.$route.name === 'People' || this.$route.name === 'PersonDetail'
         ? 'people'
         : this.$route.name === 'Bundles' || this.$route.name === 'BundleDetail'
-        ? 'bundles'
-        : 'books'
+          ? 'bundles'
+          : 'books'
     },
   },
   methods: {
@@ -66,7 +66,7 @@ export default {
 <template>
   <!-- place bookmarksOpen class on container to allow router-link-active to be disabled for all links. -->
   <section
-    class="mobile-bottom-nav has-text-centered is-uppercase"
+    class="menu mobile-bottom-nav has-text-centered is-uppercase"
     :class="{ bookmarksOpen: $store.state.ui.bookmarksOpen }"
   >
     <ul class="menu-list my-10">
@@ -131,8 +131,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/mixins.scss';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/mixins.scss' as *;
+@use '@/assets/style/vars.scss' as *;
 
 .mobile-filters {
   @include primary(border-top-color);

@@ -644,11 +644,6 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/table.sass';
-</style>
-
 <style lang="scss">
 .pointer span {
   cursor: pointer !important;

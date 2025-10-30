@@ -249,7 +249,7 @@ export default {
           />
         </div>
         <!-- tags -->
-        <div class="tags">
+        <div>
           <Tag
             v-for="tag of tags"
             :key="tag.id"
@@ -282,7 +282,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/vars.scss';
 .container {
   padding-top: 2rem;
   margin-top: 2rem;

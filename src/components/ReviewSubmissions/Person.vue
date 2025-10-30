@@ -136,7 +136,7 @@ export default {
           />
         </div>
         <!-- identities -->
-        <div class="tags">
+        <div>
           <Tag
             v-for="id of identities"
             :key="id"
@@ -166,7 +166,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/vars.scss';
 .container {
   padding-top: 2rem;
   margin-top: 2rem;

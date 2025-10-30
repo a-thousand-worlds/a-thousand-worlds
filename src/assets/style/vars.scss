@@ -1,4 +1,4 @@
-@use "sass:color";
+@use 'sass:color';
 
 $family-sans-serif: Sen, sans-serif;
 
@@ -11,6 +11,8 @@ $secondary1: color.change($primary1, $lightness: 94%);
 $secondary2: color.change($primary2, $lightness: 94%);
 $secondary3: color.change($primary3, $lightness: 94%);
 $secondary4: color.change($primary4, $lightness: 94%);
+
+$primary-invert: white; // findColorInvert($primary);
 
 $background: white;
 $notification-background-color: hsl(0, 0%, 96%);
@@ -27,3 +29,11 @@ $zAlert: 1000;
 $zPopup: 100;
 $zMobileHeader: 10;
 $zField: 10;
+
+$danger: #f14668;
+
+// Bulma breakpoint aliases used throughout legacy styles
+$tablet: 769px;
+$desktop: 960px + 2 * 32px;
+$widescreen: 1152px + 2 * 32px;
+$fullhd: 1344px + 2 * 32px;

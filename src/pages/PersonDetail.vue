@@ -29,8 +29,8 @@ const getPersonPhoto = person => {
   return typeof person.photo === 'string'
     ? person.photo
     : person.photo.url?.startsWith('http')
-    ? person.photo.url
-    : ''
+      ? person.photo.url
+      : ''
 }
 
 export default {
@@ -232,7 +232,7 @@ export default {
             <div v-if="pronouns" class="prounouns mt-2">{{ pronouns }}</div>
 
             <!-- tags -->
-            <div v-if="tags" class="tags mt-20">
+            <div v-if="tags" class="mt-20">
               <Tag
                 v-for="tag of tags"
                 :key="tag.id"
@@ -267,9 +267,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .wide-page {
   margin: 0 20px;

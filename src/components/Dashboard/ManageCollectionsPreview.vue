@@ -53,8 +53,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
+@use 'bulma/sass/utilities';
+@use '@/assets/style/mixins.scss' as *;
 
 h3 {
   font-size: 20px;
@@ -72,9 +72,6 @@ h3:hover {
 
 <!-- unscoped css to modify square's hover style -->
 <style lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
-
 .manage-collections-preview .square:hover,
 .manage-collections-preview .square h3:hover {
   color: black !important;

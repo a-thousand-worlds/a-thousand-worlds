@@ -19,12 +19,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/box.sass';
-@import 'bulma/sass/elements/notification.sass';
-@import 'bulma/sass/elements/other.sass'; // needed for notification delete button
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
+@use 'bulma/sass/elements/box.scss' as *;
+@use '@/assets/style/mixins.scss' as *;
 
 .notification {
   color: #fff;

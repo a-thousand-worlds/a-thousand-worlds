@@ -54,8 +54,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/tabs.scss';
 .is-active {
   pointer-events: none;
 }

@@ -11,10 +11,10 @@ export default {
       return this.type === 'books'
         ? 'Book'
         : this.type === 'bundles'
-        ? 'Bundle'
-        : this.type === 'people'
-        ? 'People'
-        : null
+          ? 'Bundle'
+          : this.type === 'people'
+            ? 'People'
+            : null
     },
     type() {
       return this.$route.params.type

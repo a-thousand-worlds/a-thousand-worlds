@@ -359,8 +359,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
 
 .section {
   @include primary(border-bottom-color);

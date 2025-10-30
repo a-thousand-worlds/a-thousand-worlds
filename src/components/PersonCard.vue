@@ -12,8 +12,8 @@ export default {
       return typeof this.person.photo === 'string'
         ? this.person.photo
         : this.person.photo.url?.startsWith('http')
-        ? this.person.photo.url
-        : ''
+          ? this.person.photo.url
+          : ''
     },
   },
 }
@@ -27,9 +27,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
-
 a {
   color: #000;
   font-size: 110%;

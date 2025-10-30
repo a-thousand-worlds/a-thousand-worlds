@@ -257,10 +257,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/components/dropdown.sass';
-@import '@/assets/style/vars.scss';
-
 .required {
   position: absolute;
 }

@@ -47,10 +47,10 @@ export default {
                   this.sortConfig.dir,
                 )
               : this.sortConfig.field === 'submitted'
-              ? dayjs(bundle.createdAt)
-              : this.sortConfig.field === 'updated'
-              ? dayjs(bundle.updatedAt)
-              : (bundle[this.sortConfig.field] || '').toLowerCase(),
+                ? dayjs(bundle.createdAt)
+                : this.sortConfig.field === 'updated'
+                  ? dayjs(bundle.updatedAt)
+                  : (bundle[this.sortConfig.field] || '').toLowerCase(),
           'nameLower',
         ])
         return this.sortConfig.dir === 'desc' ? reverse(sorted) : sorted
@@ -215,8 +215,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/table.sass';
-</style>

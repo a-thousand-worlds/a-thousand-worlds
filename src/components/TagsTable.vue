@@ -124,11 +124,11 @@ export default {
           tagNew.parent
           ? this.getParent(tagNew)
           : moveDown
-          ? tagNew
-          : // handle dragging a subtag to the last position within a tag
-          tagPrev.parent
-          ? this.getParent(tagPrev)
-          : tagPrev
+            ? tagNew
+            : // handle dragging a subtag to the last position within a tag
+              tagPrev.parent
+              ? this.getParent(tagPrev)
+              : tagPrev
         : null
 
       // do not allow subtags to be moved to the top level
@@ -159,11 +159,11 @@ export default {
                 : // shift other items up
                   startSortOrder + (i - 1) * increment
               : // shift down
-              i === tagsToResort.length - 1
-              ? // move last item to the beginning
-                startSortOrder
-              : // shift other items down
-                startSortOrder + (i + 1) * increment,
+                i === tagsToResort.length - 1
+                ? // move last item to the beginning
+                  startSortOrder
+                : // shift other items down
+                  startSortOrder + (i + 1) * increment,
           }),
           {},
         )
@@ -581,11 +581,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/table.sass';
-@import 'bulma/sass/form/shared.sass';
-@import 'bulma/sass/form/checkbox-radio.sass';
-
 table th:last-child {
   text-align: right;
 }

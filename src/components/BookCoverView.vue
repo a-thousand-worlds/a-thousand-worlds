@@ -90,8 +90,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/vars.scss';
-
 .book-cover-wrapper {
   margin-bottom: 10px;
   background-size: contain;

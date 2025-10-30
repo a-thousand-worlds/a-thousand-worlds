@@ -66,9 +66,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/components/dropdown.sass';
-@import 'bulma/sass/elements/other.sass'; // delete button
-</style>

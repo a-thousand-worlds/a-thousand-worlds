@@ -461,8 +461,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
 
 .required {
   position: absolute;

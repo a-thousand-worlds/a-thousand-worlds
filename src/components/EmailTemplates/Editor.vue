@@ -207,10 +207,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/form/shared.sass';
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/vars.scss' as *;
+@use '@/assets/style/mixins.scss' as *;
 
 .content-email-body {
   outline: solid 1px #ddd;
@@ -229,7 +227,7 @@ export default {
     &.is-focused,
     &:active,
     &.is-active {
-      box-shadow: $input-focus-box-shadow-size bulmaRgba($danger, 0.25);
+      box-shadow: 0 0 0 0.1875em bulmaRgba($danger, 0.25);
     }
   }
 }

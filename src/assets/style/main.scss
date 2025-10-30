@@ -1,42 +1,20 @@
 @charset "utf-8";
-@use "sass:map";
+@use './vars.scss' as *;
+@use './mixins.scss' as *;
 
-@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
-
-@font-face {
-  font-family: 'GT Walsheim';
-  src: url('~@/assets/fonts/GT-Walsheim-Medium.ttf');
-}
-
-// set font-family before importing Bulma
-$family-sans-serif: Sen, sans-serif;
-$family-primary: $family-sans-serif;
-
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/base/_all.sass';
-@import 'bulma/sass/helpers/_all.sass';
-@import 'bulma/sass/components/menu.sass';
-@import 'bulma/sass/elements/button.sass';
-@import 'bulma/sass/form/shared.sass';
-@import 'bulma/sass/form/input-textarea.sass';
-@import 'bulma/sass/form/tools.sass';
-@import 'bulma/sass/form/select.sass';
-@import 'bulma/sass/grid/columns.sass';
-@import 'bulma/sass/layout/section.sass';
-
-@import './mixins.scss';
-@import './vars.scss';
-
-// extend bulma spacing
-// https://github.com/jgthms/bulma/blob/master/sass/helpers/spacing.sass
-$spacing-values: map.merge(
-  $spacing-values,
-  (
-    // rem
+@use 'bulma/sass' with (
+  $family-primary: $family-sans-serif,
+  $spacing-values: (
+    '0': 0,
+    '1': 0.25rem,
+    '2': 0.5rem,
+    '3': 0.75rem,
+    '4': 1rem,
+    '5': 1.5rem,
+    '6': 3rem,
     '7': 7rem,
     '8': 8rem,
     '9': 9rem,
-    // px
     '10': 10px,
     '20': 20px,
     '30': 30px,
@@ -46,22 +24,27 @@ $spacing-values: map.merge(
     '70': 70px,
     '80': 80px,
     '90': 90px,
-    '100': 100px
+    '100': 100px,
+    'auto': auto,
   )
 );
-@import 'bulma/sass/helpers/spacing.sass';
+
+@use 'bulma/sass/utilities/initial-variables' as iv;
+@use 'bulma/sass/utilities/mixins' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
+
 
 // Bulma has is-hidden-* classes that hide elements after a breakpoint, but does not seem to have classes that hide elements up to a breakpoint
 // https://bulma.io/documentation/helpers/visibility-helpers/
 $devices: (
-  tablet: $tablet,
+  tablet: iv.$tablet,
   // 768px
-  desktop: $desktop,
+  desktop: iv.$desktop,
   // 1024px
-  widescreen: $widescreen,
+  widescreen: iv.$widescreen,
   // 1216px
-  fullhd: $fullhd,
-  // 1408px
+  fullhd: iv.$fullhd, // 1408px
 );
 
 @each $key, $value in $devices {
@@ -85,6 +68,7 @@ hr {
 // override bulma title
 .title,
 .title:not(:last-child) {
+  --bulma-title-line-height: 1.5;
   font-size: 30px;
   margin-bottom: 10px;
   @include from($tablet) {
@@ -143,6 +127,11 @@ button.is-selected {
 .page-title {
   text-align: center;
   margin-bottom: 1.5rem !important;
+
+  &:not(h1, h2, h3) {
+    font-weight: 500;
+    line-height: 1.125;
+  }
 }
 
 .is-underlined {
@@ -152,6 +141,21 @@ button.is-selected {
 .button {
   border: solid 1px black;
   text-transform: uppercase;
+  padding-bottom: calc(0.5em - 1px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(0.5em - 1px);
+  height: 2.5em;
+  box-shadow: none;
+
+  &:hover {
+    border-color: #b5b5b5;
+    background-color: white;
+  }
+
+  &.is-primary {
+    border-color: transparent;
+  }
 
   &.is-secondary {
     @include secondary(background-color);
@@ -299,4 +303,26 @@ a.button.is-secondary.is-outlined:hover,
   font-weight: normal;
   user-select: none;
   cursor: pointer;
+}
+
+.menu-list {
+  a,
+  button,
+  .menu-item {
+    width: unset;
+    text-align: unset;
+  }
+
+  .submenu {
+    a,
+    button,
+    .menu-item {
+      padding: initial;
+    }
+  }
+}
+
+svg {
+  width: revert;
+  height: revert;
 }
