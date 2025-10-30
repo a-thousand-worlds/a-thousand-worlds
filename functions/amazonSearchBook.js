@@ -86,7 +86,7 @@ module.exports = () => {
           result = {
             title: title.trim(),
             url: `https://amazon.com${bookUrl.split('?')[0]}`,
-            isbn: isbn,
+            isbn,
             thumbnail: maxCover,
           }
         }

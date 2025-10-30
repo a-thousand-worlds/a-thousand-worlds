@@ -79,7 +79,7 @@ const tagModule = {
                 createdAt: new Date().toISOString(),
                 type: 'tags',
                 action: 'delete',
-                message: message,
+                message,
               },
             },
             { root: true },

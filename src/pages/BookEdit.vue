@@ -260,7 +260,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="book"
-                    @update:modelValue="saveIsbn"
+                    @update:model-value="saveIsbn"
                     v-model="book.isbn"
                     placeholder="Enter ISBN"
                   />
@@ -273,7 +273,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="book"
-                    @update:modelValue="updateBook({ year: $event })"
+                    @update:model-value="updateBook({ year: $event })"
                     v-model="book.year"
                     placeholder="Enter Year"
                   />
@@ -286,7 +286,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="book"
-                    @update:modelValue="updateBook({ goodreads: $event })"
+                    @update:model-value="updateBook({ goodreads: $event })"
                     v-model="book.goodreads"
                     placeholder="No value"
                   />
@@ -314,7 +314,7 @@ export default {
                 }"
               >
                 <SimpleInput
-                  @update:modelValue="updateBook({ title: $event })"
+                  @update:model-value="updateBook({ title: $event })"
                   v-model="book.title"
                   placeholder="Enter Title"
                   unstyled
@@ -339,7 +339,7 @@ export default {
                 class="mb-20 mr-30"
                 style="min-width: 33%"
                 @remove="removeCreator(id)"
-                @updateTitle="titleId => updateTitle(id, titleId)"
+                @update-title="titleId => updateTitle(id, titleId)"
                 edit
               />
               <AddCreator class="mb-10 ml-1 mr-30" @update="addCreator" style="width: 100%" />
@@ -348,7 +348,7 @@ export default {
 
           <!-- summary -->
           <ckeditor
-            @update:modelValue="updateBook({ summary: $event })"
+            @update:model-value="updateBook({ summary: $event })"
             v-model="book.summary"
             :editor="editor"
             :config="ckConfig"
@@ -358,7 +358,7 @@ export default {
 
           <RecommendedBy
             v-model="book.createdBy"
-            @update:modelValue="updateRecommendedBy"
+            @update:model-value="updateRecommendedBy"
             edit
             class="mt-10"
             style="font-size: 16px"

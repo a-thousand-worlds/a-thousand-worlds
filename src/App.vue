@@ -180,7 +180,6 @@ body {
 </style>
 
 <style lang="scss" scoped>
-@use 'bulma/sass/utilities';
 @use '@/assets/style/vars.scss' as *;
 @use '@/assets/style/mixins.scss' as *;
 @use 'bulma/sass/utilities/mixins' as *;

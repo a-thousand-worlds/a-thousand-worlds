@@ -95,7 +95,7 @@ export default {
           :label="titleIntro"
           labelStyle="font-weight: bold;"
           :options="creatorTitles"
-          @update:modelValue="updateTitle($event)"
+          @update:model-value="updateTitle($event)"
           style="display: block"
         >
           <template #beforeOptions>

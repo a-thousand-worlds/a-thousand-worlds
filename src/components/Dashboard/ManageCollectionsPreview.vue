@@ -53,7 +53,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@use 'bulma/sass/utilities';
 @use '@/assets/style/mixins.scss' as *;
 
 h3 {

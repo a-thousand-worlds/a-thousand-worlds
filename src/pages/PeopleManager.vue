@@ -328,7 +328,7 @@ export default {
               <td>
                 <SimpleInput
                   v-if="editMode"
-                  @update:modelValue="updatePerson(person, '', { name: $event })"
+                  @update:model-value="updatePerson(person, '', { name: $event })"
                   v-model="person.name"
                   placeholder="Enter Name"
                   unstyled
@@ -368,7 +368,7 @@ export default {
                   :defaultValue="person.title"
                   :options="creatorTitles"
                   placeholder="Choose pronouns"
-                  @update:modelValue="updatePerson(person, '', { title: $event })"
+                  @update:model-value="updatePerson(person, '', { title: $event })"
                   :labelStyle="{
                     fontStyle: !person.title ? 'italic' : null,
                   }"
