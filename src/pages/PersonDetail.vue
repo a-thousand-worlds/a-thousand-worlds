@@ -29,8 +29,8 @@ const getPersonPhoto = person => {
   return typeof person.photo === 'string'
     ? person.photo
     : person.photo.url?.startsWith('http')
-      ? person.photo.url
-      : ''
+    ? person.photo.url
+    : ''
 }
 
 export default {

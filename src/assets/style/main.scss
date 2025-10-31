@@ -34,7 +34,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 
-
 // Bulma has is-hidden-* classes that hide elements after a breakpoint, but does not seem to have classes that hide elements up to a breakpoint
 // https://bulma.io/documentation/helpers/visibility-helpers/
 $devices: (
@@ -44,7 +43,8 @@ $devices: (
   // 1024px
   widescreen: iv.$widescreen,
   // 1216px
-  fullhd: iv.$fullhd, // 1408px
+  fullhd: iv.$fullhd,
+  // 1408px
 );
 
 @each $key, $value in $devices {
@@ -127,10 +127,10 @@ button.is-selected {
 .page-title {
   text-align: center;
   margin-bottom: 1.5rem !important;
+  color: var(--bulma-subtitle-color);
 
   &:not(h1, h2, h3) {
     font-weight: 500;
-    line-height: 1.125;
   }
 }
 
@@ -325,4 +325,8 @@ a.button.is-secondary.is-outlined:hover,
 svg {
   width: revert;
   height: revert;
+}
+
+.delete {
+  --bulma-delete-background-alpha: 0.2;
 }

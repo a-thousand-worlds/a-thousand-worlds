@@ -77,7 +77,7 @@ const collectionModule = name => {
         })
         return entry ? entry[1] : null
       },
-      list: state => () => (state.loaded ? Object.values(state.data) : []),
+      list: state => () => state.loaded ? Object.values(state.data) : [],
     },
     actions: {
       /** Loads the collection from the cache and updates state. */

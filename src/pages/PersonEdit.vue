@@ -60,8 +60,8 @@ export default {
       return typeof this.person.photo === 'string'
         ? this.person.photo
         : this.person.photo.url?.startsWith('http')
-          ? this.person.photo.url
-          : ''
+        ? this.person.photo.url
+        : ''
     },
     // link the first instance of the person's name in their bio to their website
     // when the bio editable is focused, the raw bio should be returned for edits

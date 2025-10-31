@@ -47,8 +47,8 @@ export default {
       const booksAdjective = filters.find(filter => filter.tag === 'Picture book')
         ? 'Picture '
         : filters.find(filter => filter.tag === 'Board book')
-          ? 'Board '
-          : ''
+        ? 'Board '
+        : ''
 
       return `${writtenList(filterNames)} ${booksAdjective}books`
     }

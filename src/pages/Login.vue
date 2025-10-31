@@ -78,10 +78,10 @@ export default {
           ? `You have been invited to join as a ${this.invite.role}!`
           : 'Sign up for an account'
         : this.isLogin
-          ? 'Log In'
-          : this.isAccount
-            ? 'Your Account'
-            : null
+        ? 'Log In'
+        : this.isAccount
+        ? 'Your Account'
+        : null
     },
   },
 
@@ -155,8 +155,8 @@ export default {
               err.code === 'auth/wrong-password'
                 ? 'Wrong email or password'
                 : err.code === 'auth/user-not-found'
-                  ? 'Email not registered'
-                  : err.message,
+                ? 'Email not registered'
+                : err.message,
           })
           this.loading = false
           this.disableSend = false
@@ -167,10 +167,10 @@ export default {
       return window.location.pathname === '/login'
         ? 'login'
         : window.location.pathname === '/signup'
-          ? 'signup'
-          : window.location.pathname === '/account'
-            ? 'account'
-            : null
+        ? 'signup'
+        : window.location.pathname === '/account'
+        ? 'account'
+        : null
     },
 
     async onEnter() {
@@ -425,12 +425,12 @@ export default {
                 isLogin
                   ? 'Log In'
                   : isAccount
-                    ? 'Save'
-                    : isSignup
-                      ? bipoc === false
-                        ? 'Join as ally'
-                        : 'Create Account'
-                      : null
+                  ? 'Save'
+                  : isSignup
+                  ? bipoc === false
+                    ? 'Join as ally'
+                    : 'Create Account'
+                  : null
               "
             />
           </div>

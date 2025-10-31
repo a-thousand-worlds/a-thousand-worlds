@@ -29,10 +29,10 @@ export default {
       return this.type === 'books'
         ? 'Home'
         : this.type === 'people'
-          ? 'People'
-          : this.type === 'bundles'
-            ? 'Bundles'
-            : null
+        ? 'People'
+        : this.type === 'bundles'
+        ? 'Bundles'
+        : null
     },
     specialFilters() {
       return specialFilters[this.type]

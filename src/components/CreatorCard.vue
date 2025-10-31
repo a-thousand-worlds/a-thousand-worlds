@@ -41,10 +41,10 @@ export default {
         this.role === 'author'
           ? 'words '
           : this.role === 'illustrator'
-            ? 'pictures '
-            : this.longlabel
-              ? 'words and pictures '
-              : ''
+          ? 'pictures '
+          : this.longlabel
+          ? 'words and pictures '
+          : ''
       return `${intro}by`
     },
   },

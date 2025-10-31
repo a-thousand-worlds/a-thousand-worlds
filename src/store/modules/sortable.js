@@ -10,8 +10,8 @@ const module = () => ({
               parseFloat(a.sortOrder) > parseFloat(b.sortOrder)
                 ? 1
                 : parseFloat(a.sortOrder) < parseFloat(b.sortOrder)
-                  ? -1
-                  : 0,
+                ? -1
+                : 0,
             )
         : [],
   },
