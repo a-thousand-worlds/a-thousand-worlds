@@ -208,7 +208,7 @@ export default {
           </div>
 
           <!-- tags -->
-          <div>
+          <div class="tags">
             <Tag
               v-for="tag of tags"
               :key="tag.id"

@@ -29,8 +29,8 @@
   )
 );
 
-@use 'bulma/sass/utilities/initial-variables' as iv;
 @use 'bulma/sass/utilities/mixins' as *;
+@use 'bulma/sass/utilities/initial-variables' as iv;
 
 @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 
@@ -127,10 +127,10 @@ button.is-selected {
 .page-title {
   text-align: center;
   margin-bottom: 1.5rem !important;
-  color: var(--bulma-subtitle-color);
+  // color: var(--bulma-subtitle-color);
 
   &:not(h1, h2, h3) {
-    font-weight: 500;
+    --bulma-title-weight: 500;
   }
 }
 
@@ -329,4 +329,8 @@ svg {
 
 .delete {
   --bulma-delete-background-alpha: 0.2;
+}
+
+.tags {
+  gap: unset;
 }

@@ -302,7 +302,7 @@ export default {
             </div>
 
             <!-- tags -->
-            <div class="mt-20">
+            <div class="tags mt-20">
               <!-- tags -->
               <Tag
                 v-for="tag of tags"

@@ -232,7 +232,7 @@ export default {
             <div v-if="pronouns" class="prounouns mt-2">{{ pronouns }}</div>
 
             <!-- tags -->
-            <div v-if="tags" class="mt-20">
+            <div v-if="tags" class="tags mt-20">
               <Tag
                 v-for="tag of tags"
                 :key="tag.id"

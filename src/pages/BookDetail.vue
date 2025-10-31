@@ -200,7 +200,7 @@ export default {
               ><LazyImage class="cover" :src="book.cover"
             /></a>
           </div>
-          <div>
+          <div class="tags">
             <Tag
               v-for="tag of tags"
               :key="tag.id"

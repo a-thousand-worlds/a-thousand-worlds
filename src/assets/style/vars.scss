@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use 'bulma/sass/utilities/initial-variables' as iv;
 
 $family-sans-serif: Sen, sans-serif;
 
@@ -32,8 +33,7 @@ $zField: 10;
 
 $danger: #f14668;
 
-// Bulma breakpoint aliases used throughout legacy styles
-$tablet: 769px;
-$desktop: 960px + 2 * 32px;
-$widescreen: 1152px + 2 * 32px;
-$fullhd: 1344px + 2 * 32px;
+$tablet: iv.$tablet;
+$desktop: iv.$desktop;
+$widescreen: iv.$widescreen;
+$fullhd: iv.$fullhd;

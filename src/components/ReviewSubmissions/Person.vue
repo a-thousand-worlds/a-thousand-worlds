@@ -136,7 +136,7 @@ export default {
           />
         </div>
         <!-- identities -->
-        <div>
+        <div class="tags">
           <Tag
             v-for="id of identities"
             :key="id"
