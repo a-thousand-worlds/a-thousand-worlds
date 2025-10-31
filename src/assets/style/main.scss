@@ -127,7 +127,7 @@ button.is-selected {
 .page-title {
   text-align: center;
   margin-bottom: 1.5rem !important;
-  // color: var(--bulma-subtitle-color);
+  color: var(--bulma-subtitle-color);
 
   &:not(h1, h2, h3) {
     --bulma-title-weight: 500;
