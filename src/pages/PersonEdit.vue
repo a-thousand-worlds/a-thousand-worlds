@@ -239,7 +239,7 @@ export default {
           <div class="cover-wrapper mb-20">
             <PhotoUpload
               v-model="person.photo"
-              @update:model-value="updatePhoto"
+              @update:modelValue="updatePhoto"
               noremove
               noMinimumSize
               :style="{ opacity: uploadingPhoto ? 0.5 : null }"
@@ -252,7 +252,7 @@ export default {
               :defaultValue="person.title"
               :options="creatorTitles"
               placeholder="Choose title"
-              @update:model-value="updatePerson({ title: $event })"
+              @update:modelValue="updatePerson({ title: $event })"
               style="display: inline"
               :labelStyle="{
                 fontStyle: !person.pronouns ? 'italic' : null,
@@ -271,7 +271,7 @@ export default {
               >
                 <SimpleInput
                   v-if="person"
-                  @update:model-value="saveName"
+                  @update:modelValue="saveName"
                   v-model="person.name"
                   placeholder="Enter Name"
                   unstyled
@@ -285,7 +285,7 @@ export default {
                 :defaultValue="person.pronouns"
                 :options="pronounOptions"
                 placeholder="Choose pronouns"
-                @update:model-value="updatePerson({ pronouns: $event })"
+                @update:modelValue="updatePerson({ pronouns: $event })"
                 :labelStyle="{
                   fontStyle: !person.pronouns ? 'italic' : null,
                 }"
@@ -326,7 +326,7 @@ export default {
 
           <!-- bio -->
           <Ckeditor
-            @update:model-value="updateBio($event)"
+            @update:modelValue="updateBio($event)"
             :model-value="bio"
             :editor="editor"
             :config="ckConfig"
@@ -383,7 +383,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="person"
-                    @update:model-value="updatePerson({ website: $event })"
+                    @update:modelValue="updatePerson({ website: $event })"
                     v-model="person.website"
                     placeholder="Enter a website"
                     style="display: inline-block; margin-right: 0.5em"

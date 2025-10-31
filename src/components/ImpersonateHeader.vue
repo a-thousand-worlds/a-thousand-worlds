@@ -44,7 +44,7 @@ export default {
       <Dropdown
         :options="roleOptions"
         :v-model="role"
-        @update:model-value="impersonate"
+        @update:modelValue="impersonate"
         :label="role"
         labelStyle="text-transform: uppercase; font-weight: bold; color: #fff;"
         placeholder="Choose Role"

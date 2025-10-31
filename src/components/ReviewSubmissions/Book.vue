@@ -145,7 +145,7 @@ export default {
         <div style="font-weight: bold">
           <SimpleInput
             v-model="sub.title"
-            @update:model-value="save"
+            @update:modelValue="save"
             :disabled="busy"
             placeholder="Title"
             controlStyle="font-size: 20px;"
@@ -156,7 +156,7 @@ export default {
         <div>
           <MultiPersonField
             v-model="sub.authors"
-            @update:model-value="save"
+            @update:modelValue="save"
             :disabled="busy"
             :search-db="false"
             placeholder="author(s)"
@@ -180,7 +180,7 @@ export default {
         <div>
           <MultiPersonField
             v-model="sub.illustrators"
-            @update:model-value="save"
+            @update:modelValue="save"
             :disabled="busy"
             :placeholder="'illustrator(s)'"
             :search-db="false"
@@ -205,7 +205,7 @@ export default {
           <b class="mr-1">isbn</b>
           <SimpleInput
             :disabled="busy"
-            @update:model-value="save"
+            @update:modelValue="save"
             v-model="sub.isbn"
             placeholder="Enter ISBN"
           />
@@ -216,7 +216,7 @@ export default {
           <b class="mr-1">year</b>
           <SimpleInput
             v-model="sub.year"
-            @update:model-value="save"
+            @update:modelValue="save"
             :disabled="busy"
             placeholder="Enter Year"
             style="display: inline-block"
@@ -239,7 +239,7 @@ export default {
         <!-- summary -->
         <div class="mb-10" style="max-height: 25rem; overflow: scroll">
           <ckeditor
-            @update:model-value="save"
+            @update:modelValue="save"
             v-model="sub.summary"
             :disabled="busy"
             class="oneline"

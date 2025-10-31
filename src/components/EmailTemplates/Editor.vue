@@ -215,8 +215,15 @@ export default {
   min-height: 10rem;
 }
 
-.menu-list a.is-active {
-  @include primary(background-color);
+.menu-list a {
+  &.is-active {
+    @include primary(background-color);
+    color: white;
+  }
+
+  &:hover {
+    color: #363636;
+  }
 }
 
 // cannot add is-danger directly to Content element since dynamic classes interfere with CKEditor classes
@@ -227,7 +234,7 @@ export default {
     &.is-focused,
     &:active,
     &.is-active {
-      box-shadow: 0 0 0 0.1875em bulmaRgba($danger, 0.25);
+      box-shadow: var(--bulma-input-focus-shadow-size) bulmaRgba($danger, 0.25);
     }
   }
 }

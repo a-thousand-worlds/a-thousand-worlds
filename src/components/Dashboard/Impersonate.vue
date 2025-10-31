@@ -36,7 +36,7 @@ export default {
       <Dropdown
         :options="roleOptions"
         :v-model="role"
-        @update:model-value="role = $event"
+        @update:modelValue="role = $event"
         format="button"
         :label="role"
         placeholder="Choose Role"

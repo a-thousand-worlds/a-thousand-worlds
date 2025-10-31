@@ -342,7 +342,7 @@ export default {
               ><b>Bio</b><sup class="required">*</sup></label
             >
             <ckeditor
-              @update:model-value="saveDraftAndRevalidate"
+              @update:modelValue="saveDraftAndRevalidate"
               v-model="submission.bio"
               :editor="editor"
               :config="ckConfig"

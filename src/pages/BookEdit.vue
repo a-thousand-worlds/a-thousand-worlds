@@ -260,7 +260,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="book"
-                    @update:model-value="saveIsbn"
+                    @update:modelValue="saveIsbn"
                     v-model="book.isbn"
                     placeholder="Enter ISBN"
                   />
@@ -273,7 +273,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="book"
-                    @update:model-value="updateBook({ year: $event })"
+                    @update:modelValue="updateBook({ year: $event })"
                     v-model="book.year"
                     placeholder="Enter Year"
                   />
@@ -286,7 +286,7 @@ export default {
                 <td>
                   <SimpleInput
                     v-if="book"
-                    @update:model-value="updateBook({ goodreads: $event })"
+                    @update:modelValue="updateBook({ goodreads: $event })"
                     v-model="book.goodreads"
                     placeholder="No value"
                   />
@@ -314,7 +314,7 @@ export default {
                 }"
               >
                 <SimpleInput
-                  @update:model-value="updateBook({ title: $event })"
+                  @update:modelValue="updateBook({ title: $event })"
                   v-model="book.title"
                   placeholder="Enter Title"
                   unstyled
@@ -348,7 +348,7 @@ export default {
 
           <!-- summary -->
           <ckeditor
-            @update:model-value="updateBook({ summary: $event })"
+            @update:modelValue="updateBook({ summary: $event })"
             v-model="book.summary"
             :editor="editor"
             :config="ckConfig"
@@ -358,7 +358,7 @@ export default {
 
           <RecommendedBy
             v-model="book.createdBy"
-            @update:model-value="updateRecommendedBy"
+            @update:modelValue="updateRecommendedBy"
             edit
             class="mt-10"
             style="font-size: 16px"
