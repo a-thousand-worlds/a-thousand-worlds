@@ -39,16 +39,76 @@ try {
   process.exit(1)
 }
 
-// skip users from import, so it leaves existing users untouched
-const { users, ...payloadWithoutUsers } = payload
-if (users) {
-  console.log('Skipping import of "users". Existing users will remain untouched.')
-}
-
 admin.initializeApp({
   credential: admin.credential.cert(require(serviceAccountPath)),
   databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
 })
+
+const syncUsersToAuthentication = async users => {
+  const auth = admin.auth()
+
+  if (!users || !Object.keys(users).length) {
+    return
+  }
+
+  console.log('Authentication sync started.')
+
+  for (const [uid, user] of Object.entries(users)) {
+    const email = user?.profile?.email || user?.email
+
+    let userById = null
+    let userByEmail = null
+
+    try {
+      userById = await auth.getUser(uid)
+      userByEmail = await auth.getUserByEmail(email)
+    } catch (error) {
+      if (error.code !== 'auth/user-not-found') {
+        continue
+      }
+    }
+
+    if (userById || userByEmail) {
+      if (userById) {
+        console.warn(`Skipped user ${uid}: user UID already exists.`)
+      }
+
+      if (userByEmail) {
+        console.warn(`Skipped user ${email}: email already exists.`)
+      }
+      continue
+    }
+
+    try {
+      const displayName = user?.profile?.name || user?.name || user?.displayName
+
+      let password = user?.profile?.password || user?.password
+      if (!password) {
+        password = email
+      }
+
+      const createPayload = {
+        uid,
+        email,
+        password,
+        displayName,
+        disabled: false,
+      }
+
+      if (!createPayload.email || !createPayload.password || !createPayload.displayName) {
+        console.warn(`Skipping user ${email}: invalid data.`)
+        continue
+      }
+
+      await auth.createUser(createPayload)
+      console.log(`Created user ${email}.`)
+    } catch (error) {
+      console.error(`Failed to sync auth user ${email}: ${error.message}`)
+    }
+  }
+
+  console.log('Authentication sync complete.')
+}
 
 const run = async () => {
   try {
@@ -56,18 +116,22 @@ const run = async () => {
     const existing = (await rootRef.once('value')).val() || {}
 
     const updates = {}
-    Object.entries(payloadWithoutUsers).forEach(([key, value]) => {
+    Object.entries(payload).forEach(([key, value]) => {
       updates[key] = value
     })
 
     Object.keys(existing).forEach(key => {
-      if (key !== 'users' && !(key in payloadWithoutUsers)) {
+      if (!(key in payload)) {
         updates[key] = null
       }
     })
 
+    if (updates.users && Object.keys(updates.users).length) {
+      await syncUsersToAuthentication(updates.users)
+    }
+
     await rootRef.update(updates)
-    console.log('Data import complete!')
+    console.log('Data import complete.')
   } finally {
     await admin.app().delete()
   }
