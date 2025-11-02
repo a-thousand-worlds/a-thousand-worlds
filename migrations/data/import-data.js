@@ -95,7 +95,7 @@ const syncUsersToAuthentication = async users => {
         disabled: false,
       }
 
-      if (!createPayload.email || !createPayload.password || !createPayload.displayName) {
+      if (!createPayload.email || !createPayload.password) {
         console.warn(`Skipping user ${email}: invalid data.`)
         continue
       }
