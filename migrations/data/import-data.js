@@ -81,11 +81,7 @@ const syncUsersToAuthentication = async users => {
 
     try {
       const displayName = user?.profile?.name || user?.name || user?.displayName
-
-      let password = user?.profile?.password || user?.password
-      if (!password) {
-        password = email
-      }
+      const password = user?.profile?.password || user?.password || email
 
       const createPayload = {
         uid,

@@ -53,7 +53,7 @@
 
    or
 
-   - run `npm run import:data PATH_TO_JSON_FILE` (your JSON file may include `"users"` with defined email/password for login)
+   - run `npm run import:data PATH_TO_JSON_FILE` (your JSON file may include `"users"` with defined email/password for login; if password is not defined, it will be set to the email)
 
 ## Development
 
