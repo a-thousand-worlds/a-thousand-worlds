@@ -1,6 +1,7 @@
 @charset "utf-8";
 @use './vars.scss' as *;
 @use './mixins.scss' as *;
+@use './tabs.scss';
 
 @use 'bulma/sass' with (
   $family-primary: $family-sans-serif,
@@ -57,6 +58,7 @@ $devices: (
 
 body {
   font-size: 15px;
+  --bulma-body-color: #4a4a4a;
 }
 
 hr {
@@ -69,9 +71,15 @@ hr {
 .title,
 .title:not(:last-child) {
   --bulma-title-line-height: 1.5;
+  --bulma-title-color: var(--bulma-body-color);
+  --bulma-subtitle-color: var(--bulma-body-color);
   font-size: 30px;
   margin-bottom: 10px;
-  line-height: 1.2;
+
+  &.inline {
+    --bulma-title-color: black;
+    --bulma-subtitle-color: black;
+  }
 
   @include from($tablet) {
     font-size: 40px;
@@ -339,5 +347,11 @@ svg {
 }
 
 .tags {
+  display: block;
   gap: unset;
+}
+
+a.dropdown-item {
+  color: #4a4a4a;
+  position: relative;
 }

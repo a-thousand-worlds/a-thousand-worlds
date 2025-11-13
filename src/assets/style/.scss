@@ -1,7 +1,0 @@
-@use 'bulma/sass/components/tabs.scss';
-@use '@/assets/style/mixins.scss' as *;
-
-.tabs li.is-active a {
-  @include primary(color);
-  @include primary(border-bottom-color);
-}
