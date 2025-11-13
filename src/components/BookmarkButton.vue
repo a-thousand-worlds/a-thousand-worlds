@@ -30,6 +30,9 @@ export default {
 
 <template>
   <div style="cursor: pointer" @click.prevent="toggleBookmark">
-    <BookmarkIcon :class="{ 'fill-primary': isMarked }" :style="iconStyle" />
+    <BookmarkIcon
+      :class="{ 'fill-primary': isMarked, 'fill-secondary-hover': !isMarked }"
+      :style="iconStyle"
+    />
   </div>
 </template>

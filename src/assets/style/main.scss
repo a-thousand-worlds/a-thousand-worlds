@@ -194,6 +194,11 @@ button.is-selected {
 .fill-secondary {
   @include secondary(fill);
 }
+.fill-secondary-hover {
+  &:hover {
+    @include secondary(fill);
+  }
+}
 .stroke-primary {
   @include primary(stroke);
 }
