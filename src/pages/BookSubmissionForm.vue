@@ -212,6 +212,7 @@ export default {
       this.revalidate()
     },
 
+    // when title, author, or illustrator changes, search for book cover
     metadataInputsChangedDebounced: debounce(async function (si) {
       const sub = this.submissions[si]
       const { authors, illustrators, title } = sub
