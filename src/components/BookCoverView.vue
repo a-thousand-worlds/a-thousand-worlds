@@ -90,7 +90,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import 'bulma/sass/utilities/_all.sass';
 @import '@/assets/style/vars.scss';
+@import '@/assets/style/mixins.scss';
 
 .book-cover-wrapper {
   margin-bottom: 10px;
@@ -121,8 +123,13 @@ export default {
     overflow: scroll;
 
     .title {
-      font-size: 24px;
+      font-size: 1.2rem;
       font-weight: 500;
+
+      // since the book covers scale with viewport width, use vw units for font size
+      @include from($tablet) {
+        font-size: 2vw;
+      }
     }
   }
 
