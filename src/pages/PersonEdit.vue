@@ -2,6 +2,7 @@
 import dayjs from 'dayjs'
 import slugify from '@sindresorhus/slugify'
 
+import BackLink from '@/components/BackLink'
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon'
 import creatorTitles from '@/store/constants/creatorTitles'
 import pronounOptions from '@/store/constants/pronouns'
@@ -20,6 +21,7 @@ import SimpleInput from '@/components/fields/SimpleInput'
 export default {
   components: {
     AddTag,
+    BackLink,
     BookListView,
     Dropdown,
     Filter,
@@ -226,7 +228,7 @@ export default {
       <!-- back and view buttons -->
       <div class="is-flex is-justify-content-space-between mb-3">
         <div class="mb-5 is-narrow">
-          <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+          <BackLink />
         </div>
 
         <PersonDetailLink v-if="person" :person="person" class="button is-rounded is-primary"

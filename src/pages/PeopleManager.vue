@@ -7,6 +7,7 @@ import { remove as diacritics } from 'diacritics'
 import creatorTitles from '@/store/constants/creatorTitles'
 
 import AddTag from '@/components/AddTag'
+import BackLink from '@/components/BackLink'
 import CoverImage from '@/components/CoverImage'
 import DeletePersonButton from '@/components/DeletePersonButton'
 import Dropdown from '@/components/Dropdown'
@@ -24,6 +25,7 @@ export default {
   name: 'PeopleManager',
   components: {
     AddTag,
+    BackLink,
     CoverImage,
     DeletePersonButton,
     Dropdown,
@@ -235,7 +237,7 @@ export default {
   <div class="is-flex is-justify-content-center m-20 mb-40">
     <div class="is-flex-grow-1 mx-20" style="max-width: 900px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <div class="is-flex is-justify-content-space-between is-align-items-flex-end divider-bottom">

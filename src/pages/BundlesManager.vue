@@ -7,6 +7,7 @@ import Loader from '@/components/Loader'
 import PersonDetailLink from '@/components/PersonDetailLink'
 import SortableTableHeading from '@/components/SortableTableHeading'
 import CoverImage from '@/components/CoverImage'
+import BackLink from '@/components/BackLink'
 import { remove as diacritics } from 'diacritics'
 
 /** Generates a sort token that will sort empty strings to the end regardless of sort direction. */
@@ -19,6 +20,7 @@ export default {
     PersonDetailLink,
     SortableTableHeading,
     CoverImage,
+    BackLink,
   },
   data() {
     const sortField = this.$route.query?.sort || 'submitted'
@@ -123,7 +125,7 @@ export default {
   <div class="is-flex is-justify-content-center m-20 mb-40">
     <div class="is-flex-grow-1 mx-20" style="max-width: 900px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <h1 class="title divider-bottom mb-30">Bundles Manager</h1>

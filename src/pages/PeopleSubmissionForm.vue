@@ -6,11 +6,13 @@ import validator from '@/mixins/validator'
 import creatorTitles from '@/store/constants/creatorTitles'
 import pronouns from '@/store/constants/pronouns'
 import personSubmission from '@/store/constants/personSubmission'
+import BackLink from '@/components/BackLink'
 import Content from '@/components/Content'
 import PhotoUpload from '@/components/PhotoUpload'
 
 export default {
   components: {
+    BackLink,
     Content,
     PhotoUpload,
   },
@@ -155,7 +157,7 @@ export default {
     <div class="is-flex is-justify-content-center">
       <form class="is-flex-grow-1" style="max-width: 540px" @submit.prevent="submitForReview">
         <div class="mb-5">
-          <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+          <BackLink />
         </div>
 
         <h1 class="title page-title divider-bottom">

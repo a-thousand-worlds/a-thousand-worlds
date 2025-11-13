@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon'
 import AddCreator from '@/components/AddCreator'
 import AddTag from '@/components/AddTag'
+import BackLink from '@/components/BackLink'
 import BookDetailLink from '@/components/BookDetailLink'
 import Filter from '@/components/Filter'
 import Clipboard from 'clipboard'
@@ -24,6 +25,7 @@ export default {
   components: {
     AddCreator,
     AddTag,
+    BackLink,
     BookDetailLink,
     CreatorCard,
     Filter,
@@ -187,7 +189,7 @@ export default {
   <div class="book-detail" :data-book-id="book?.id">
     <div class="is-flex is-justify-content-space-between mb-3">
       <div class="mb-5 is-narrow">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <BookDetailLink v-if="book" :book="book" class="button is-rounded is-primary"

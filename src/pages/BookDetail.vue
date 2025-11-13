@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy'
 import Clipboard from 'clipboard'
 import router from '@/router'
 import store from '@/store'
+import BackLink from '@/components/BackLink'
 import BookDetailFooter from '@/components/BookDetailFooter'
 import BookmarkButton from '@/components/BookmarkButton'
 import Filter from '@/components/Filter'
@@ -29,6 +30,7 @@ const getBook = state =>
 export default {
   name: 'BookDetail',
   components: {
+    BackLink,
     BookDetailFooter,
     BookmarkButton,
     Filter,
@@ -184,7 +186,7 @@ export default {
   <div class="book-detail" :data-book-id="book?.id">
     <div class="columns mb-5">
       <div class="column is-narrow">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <PrevNext v-if="book" type="books" :item="book" class="column" />

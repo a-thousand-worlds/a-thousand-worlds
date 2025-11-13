@@ -2,6 +2,7 @@
 import EmailTemplatesEditor from '@/components/EmailTemplates/Editor'
 import EmailTemplatesHelp from '@/components/EmailTemplates/Help'
 import Toggle from '@/components/Toggle'
+import BackLink from '@/components/BackLink'
 
 export default {
   name: 'EmailTemplates',
@@ -9,6 +10,7 @@ export default {
     EmailTemplatesEditor,
     EmailTemplatesHelp,
     Toggle,
+    BackLink,
   },
 }
 </script>
@@ -20,7 +22,7 @@ export default {
   >
     <div class="is-flex-grow-1 mx-20" style="max-width: 760px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <h1 class="divider-bottom">Email Templates</h1>
