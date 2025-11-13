@@ -85,7 +85,7 @@ export default {
           <a
             v-for="option in options"
             :key="option.id"
-            @click.stop.prevent="!isParent(option) ? select(option) : null"
+            @click.prevent.stop="!isParent(option) ? select(option) : null"
             :class="{
               'ml-20': option.parent,
             }"

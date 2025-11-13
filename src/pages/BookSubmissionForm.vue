@@ -9,6 +9,7 @@ import parseNames from '@/util/parseNames'
 import uid from '@/util/chronouid'
 import validator from '@/mixins/validator'
 
+import BackLink from '@/components/BackLink'
 import BookTitleField from '@/components/fields/BookTitle'
 import Content from '@/components/Content'
 import LogarithmicProgressBar from '@/components/LogarithmicProgressBar'
@@ -17,6 +18,7 @@ import RecommendedBy from '@/components/RecommendedBy'
 
 export default {
   components: {
+    BackLink,
     BookTitleField,
     Content,
     LogarithmicProgressBar,
@@ -210,6 +212,7 @@ export default {
       this.revalidate()
     },
 
+    // when title, author, or illustrator changes, search for book cover
     metadataInputsChangedDebounced: debounce(async function (si) {
       const sub = this.submissions[si]
       const { authors, illustrators, title } = sub
@@ -401,7 +404,7 @@ export default {
     <div class="is-flex is-justify-content-center">
       <form class="is-flex-grow-1" style="max-width: 540px" @submit.prevent="submitForReview">
         <div class="mb-5">
-          <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+          <BackLink />
         </div>
 
         <h1 class="title page-title divider-bottom" style="position: relative">

@@ -1,11 +1,13 @@
 <script>
 import validator from '@/mixins/validator'
 import Loader from '@/components/Loader'
+import BackLink from '@/components/BackLink'
 
 export default {
   name: 'LoginPage',
   components: {
     Loader,
+    BackLink,
   },
 
   mixins: [
@@ -277,7 +279,7 @@ export default {
 <template>
   <div class="mx-6">
     <div v-if="isAccount" class="mb-5">
-      <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+      <BackLink />
     </div>
 
     <div v-if="(code && !invite) || invite?.used" class="is-flex is-justify-content-center mt-20">

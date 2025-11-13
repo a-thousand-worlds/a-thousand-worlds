@@ -96,6 +96,7 @@ export default {
 
 .prev-next {
   text-align: center;
+  user-select: none;
 
   @include from($tablet) {
     text-align: right;

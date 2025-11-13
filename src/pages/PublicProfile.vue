@@ -1,9 +1,11 @@
 <script>
+import BackLink from '@/components/BackLink'
 import Content from '@/components/Content'
 import PublicProfileForm from '@/components/Dashboard/PublicProfileForm'
 
 export default {
   components: {
+    BackLink,
     Content,
     PublicProfileForm,
   },
@@ -15,7 +17,7 @@ export default {
     <div class="is-flex is-justify-content-center">
       <div>
         <div class="mb-5">
-          <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+          <BackLink />
         </div>
 
         <h1 class="page-title divider-bottom">

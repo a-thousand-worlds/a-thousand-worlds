@@ -1,10 +1,12 @@
 <script>
 import TagsTable from '@/components/TagsTable'
+import BackLink from '@/components/BackLink'
 
 export default {
   name: 'TagsManagerPage',
   components: {
     TagsTable,
+    BackLink,
   },
   data() {
     return {
@@ -29,7 +31,7 @@ export default {
   <div class="m-20 is-flex is-justify-content-center">
     <div class="is-flex-grow-1 mx-20" style="max-width: 760px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <h1 class="title divider-bottom mb-30">Tags Manager</h1>

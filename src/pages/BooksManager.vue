@@ -10,6 +10,7 @@ import { parse } from 'json2csv'
 import creatorTitles from '@/store/constants/creatorTitles'
 import AddCreator from '@/components/AddCreator'
 import AddTag from '@/components/AddTag'
+import BackLink from '@/components/BackLink'
 import BookDetailLink from '@/components/BookDetailLink'
 import Dropdown from '@/components/Dropdown'
 import HighlightedText from '@/components/HighlightedText'
@@ -29,6 +30,7 @@ export default {
   components: {
     AddCreator,
     AddTag,
+    BackLink,
     BookDetailLink,
     Dropdown,
     HighlightedText,
@@ -326,7 +328,7 @@ export default {
   <div class="is-flex is-justify-content-center m-20 mb-40">
     <div class="is-flex-grow-1 mx-20" style="max-width: 1200px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <div class="is-flex is-justify-content-space-between is-align-items-flex-end divider-bottom">

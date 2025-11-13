@@ -2,12 +2,14 @@
 import BookTitleField from '@/components/fields/BookTitle'
 import BookIsbnField from '@/components/fields/BookIsbn'
 import PersonField from '@/components/fields/Person'
+import BackLink from '@/components/BackLink'
 
 export default {
   components: {
     'book-title-field': BookTitleField,
     'book-isbn-field': BookIsbnField,
     'person-field': PersonField,
+    BackLink,
   },
   data() {
     return {
@@ -102,7 +104,7 @@ export default {
     <div class="is-flex is-justify-content-center">
       <form class="is-flex-grow-1" style="max-width: 540px" @submit.prevent="submitForReview">
         <div class="mb-5">
-          <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+          <BackLink />
         </div>
 
         <h1 class="title page-title divider-bottom">Curate a Book Bundle</h1>

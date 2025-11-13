@@ -9,6 +9,7 @@ import router from '@/router'
 import creatorTitles from '@/store/constants/creatorTitles'
 import pronounOptions from '@/store/constants/pronouns'
 import linkCreatorInBio from '@/util/linkCreatorInBio'
+import BackLink from '@/components/BackLink'
 import BookListView from '@/components/BookListView'
 import Filter from '@/components/Filter'
 import Loader from '@/components/Loader'
@@ -35,6 +36,7 @@ const getPersonPhoto = person => {
 
 export default {
   components: {
+    BackLink,
     BookListView,
     Filter,
     Loader,
@@ -191,7 +193,7 @@ export default {
     <div class="wide-page">
       <div class="columns mb-5">
         <div class="column is-narrow">
-          <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+          <BackLink />
         </div>
 
         <PrevNext v-if="person" type="people" :item="person" class="column" />

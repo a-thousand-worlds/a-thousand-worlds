@@ -71,6 +71,8 @@ hr {
   --bulma-title-line-height: 1.5;
   font-size: 30px;
   margin-bottom: 10px;
+  line-height: 1.2;
+
   @include from($tablet) {
     font-size: 40px;
   }
@@ -195,6 +197,11 @@ button.is-selected {
 }
 .fill-secondary {
   @include secondary(fill);
+}
+.fill-secondary-hover {
+  &:hover {
+    @include secondary(fill);
+  }
 }
 .stroke-primary {
   @include primary(stroke);

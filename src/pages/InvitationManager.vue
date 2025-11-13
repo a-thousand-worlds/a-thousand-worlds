@@ -1,11 +1,13 @@
 <script>
 import InvitationTable from '@/components/InvitationTable'
+import BackLink from '@/components/BackLink'
 import { dateComparator } from '@/util/dateComparator'
 
 export default {
   name: 'InvitationManager',
   components: {
     InvitationTable,
+    BackLink,
   },
   computed: {
     cancelledInvites() {
@@ -51,7 +53,7 @@ export default {
   <div class="is-flex is-justify-content-center">
     <div class="is-flex-grow-1 mx-20" style="max-width: 760px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <h1 class="divider-bottom">Invitations</h1>

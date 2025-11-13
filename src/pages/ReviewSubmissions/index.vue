@@ -1,9 +1,11 @@
 <script>
+import BackLink from '@/components/BackLink'
 import Groups from '@/components/ReviewSubmissions/Groups'
 
 export default {
   name: 'ReviewSubmissions',
   components: {
+    BackLink,
     Groups,
   },
   computed: {
@@ -27,7 +29,7 @@ export default {
   <div class="is-flex is-justify-content-center">
     <div class="is-flex-grow-1 mx-20" style="max-width: 760px">
       <div class="mb-5">
-        <a @click.prevent="$router.back" class="is-uppercase is-primary">&lt; Back</a>
+        <BackLink />
       </div>
 
       <h1
