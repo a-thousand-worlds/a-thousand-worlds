@@ -22,7 +22,8 @@
     "update:images": "mkdir -p /tmp/atw/ && firebase database:get /books > /tmp/atw/books.json && node ./migrations/update-images.js",
     "update:dbcache": "node ./migrations/update-dbcache.js",
     "import:books": "node ./migrations/import-books.js",
-    "import:db": "node ./migrations/import-db.js"
+    "import:db": "node ./migrations/import-db.js",
+    "import:data": "node ./migrations/data/import-data.js"
   },
   "engines": {
     "node": ">=16"
@@ -56,13 +57,13 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "url": "^0.11.3",
+    "util": "^0.12.5",
     "uuid": "^8.3.2",
     "vue": "^3.3.4",
     "vue-router": "^4.0.10",
     "vue-tippy": "^6.0.0-alpha.30",
     "vuedraggable": "^4.0.3",
     "vuex": "^4.0.2",
-    "util": "^0.12.5",
     "webpack": "^5.91.0"
   },
   "devDependencies": {
@@ -89,6 +90,7 @@
     "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-testing-library": "^4.10.1",
     "eslint-plugin-vue": "^7.14.0",
+    "firebase-admin": "^13.6.0",
     "firebase-tools": "^14.0.0",
     "husky": "^7.0.1",
     "jest-transform-stub": "^2.0.0",

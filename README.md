@@ -44,6 +44,16 @@
 1. Navigate to `FUNCTIONS_URL/buildCache` to build `public/dbcache.js`.
    - Get full endpoint URL at Firebase Functions dashboard (same baseUrl as `VUE_APP_SEARCH_SERVICE_URL`)
    - File `dbcache.js` and book covers generated automatically at Firebase hosting—no redeployment required.
+1. After creating a user via the UI, you can promote them to owner by signing up as a regular user and then manually setting `roles: { owner: true }` in the `/users` entry.
+1. To fill your Firebase Realtime Database, choose one of the following:
+
+   - Go to your Firebase Console → Realtime Database.
+   - Open the Data tab.
+   - Click Import JSON and select your file.
+
+   or
+
+   - run `npm run import:data PATH_TO_JSON_FILE` (your JSON file may include `"users"` with defined email/password for login; if password is not defined, it will be set to the email)
 
 ## Development
 
