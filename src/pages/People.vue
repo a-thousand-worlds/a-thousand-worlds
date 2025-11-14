@@ -109,7 +109,7 @@ export default {
       <p><a @click.prevent="resetFilter" class="button is-rounded is-primary">Reset Filter</a></p>
     </div>
 
-    <div class="container is-flex is-flex-direction-row is-flex-wrap-wrap mx-20 mb-60">
+    <div class="is-flex is-flex-direction-row is-flex-wrap-wrap mx-20 mb-60">
       <div
         v-for="person of people"
         :key="person.id"
@@ -123,7 +123,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
+@use 'bulma/sass/utilities/mixins' as *;
+@use '@/assets/style/vars.scss' as *;
 
 .person-block {
   width: 50%;

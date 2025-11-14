@@ -53,7 +53,7 @@ export default {
       </p>
     </div>
 
-    <div class="container is-flex is-flex-direction-row is-flex-wrap-wrap p-3">
+    <div class="is-flex is-flex-direction-row is-flex-wrap-wrap p-3">
       <div
         v-for="bundle of bundles"
         :key="bundle.id"
@@ -65,5 +65,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style></style>

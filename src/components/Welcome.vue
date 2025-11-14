@@ -48,9 +48,8 @@ export default {
 
 <!-- do not scope so that we can style CKEditor -->
 <style lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .welcome-banner {
   background-color: white;

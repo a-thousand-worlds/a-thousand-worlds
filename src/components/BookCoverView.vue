@@ -90,9 +90,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
+@use 'bulma/sass/utilities/mixins' as *;
+@use '@/assets/style/vars.scss' as *;
 
 .book-cover-wrapper {
   margin-bottom: 10px;

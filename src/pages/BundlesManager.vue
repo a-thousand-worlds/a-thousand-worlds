@@ -217,8 +217,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/table.sass';
-</style>

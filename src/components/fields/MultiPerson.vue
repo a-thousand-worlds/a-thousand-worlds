@@ -134,7 +134,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
 
 .input {
   margin-top: -0.25rem;

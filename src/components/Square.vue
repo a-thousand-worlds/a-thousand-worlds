@@ -22,8 +22,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .square {
   color: black;

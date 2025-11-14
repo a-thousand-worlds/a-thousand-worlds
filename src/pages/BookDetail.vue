@@ -278,8 +278,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .book-detail {
   margin: 0 20px;

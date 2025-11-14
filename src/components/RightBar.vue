@@ -65,7 +65,7 @@ export default {
 
 <template>
   <aside
-    class="is-flex is-flex-direction-column is-justify-content-space-between has-text-centered"
+    class="menu is-flex is-flex-direction-column is-justify-content-space-between has-text-centered"
     style="height: 100%"
   >
     <!-- div must remain when hiding for justify-content: space-between -->
@@ -113,8 +113,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
 
 .bookmark-toggler {
   position: relative;

@@ -207,18 +207,23 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/form/shared.sass';
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/vars.scss' as *;
+@use '@/assets/style/mixins.scss' as *;
 
 .content-email-body {
   outline: solid 1px #ddd;
   min-height: 10rem;
 }
 
-.menu-list a.is-active {
-  @include primary(background-color);
+.menu-list a {
+  &.is-active {
+    @include primary(background-color);
+    color: white;
+  }
+
+  &:hover {
+    color: #363636;
+  }
 }
 
 // cannot add is-danger directly to Content element since dynamic classes interfere with CKEditor classes
@@ -229,7 +234,7 @@ export default {
     &.is-focused,
     &:active,
     &.is-active {
-      box-shadow: $input-focus-box-shadow-size bulmaRgba($danger, 0.25);
+      box-shadow: var(--bulma-input-focus-shadow-size) bulmaRgba($danger, 0.25);
     }
   }
 }

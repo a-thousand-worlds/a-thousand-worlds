@@ -27,7 +27,3 @@ export default {}
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import '@/assets/style/vars.scss';
-</style>

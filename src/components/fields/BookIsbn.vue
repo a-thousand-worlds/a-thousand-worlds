@@ -103,7 +103,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
 
 .w-100 {
   width: 100%;

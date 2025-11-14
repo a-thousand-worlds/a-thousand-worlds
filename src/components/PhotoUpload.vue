@@ -114,9 +114,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
 
 .photo-container {
   label {

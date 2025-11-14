@@ -195,9 +195,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/components/dropdown.sass';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
 
 .creators-widget {
   color: black !important;

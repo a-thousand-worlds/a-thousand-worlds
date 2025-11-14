@@ -1,4 +1,5 @@
-@use "sass:color";
+@use 'sass:color';
+@use 'bulma/sass/utilities/initial-variables' as iv;
 
 $family-sans-serif: Sen, sans-serif;
 
@@ -11,6 +12,8 @@ $secondary1: color.change($primary1, $lightness: 94%);
 $secondary2: color.change($primary2, $lightness: 94%);
 $secondary3: color.change($primary3, $lightness: 94%);
 $secondary4: color.change($primary4, $lightness: 94%);
+
+$primary-invert: white; // findColorInvert($primary);
 
 $background: white;
 $notification-background-color: hsl(0, 0%, 96%);
@@ -27,3 +30,10 @@ $zAlert: 1000;
 $zPopup: 100;
 $zMobileHeader: 10;
 $zField: 10;
+
+$danger: #f14668;
+
+$tablet: iv.$tablet;
+$desktop: iv.$desktop;
+$widescreen: iv.$widescreen;
+$fullhd: iv.$fullhd;

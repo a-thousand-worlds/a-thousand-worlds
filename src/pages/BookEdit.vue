@@ -225,74 +225,76 @@ export default {
           </div>
 
           <table class="my-20">
-            <!-- Created By -->
-            <tr>
-              <th class="has-text-right" style="white-space: nowrap">
-                <b class="mr-3">submitted by</b>
-              </th>
-              <td>
-                <span style="opacity: 0.5">{{ createdByName }}</span>
-              </td>
-            </tr>
+            <tbody>
+              <!-- Created By -->
+              <tr>
+                <th class="has-text-right" style="white-space: nowrap">
+                  <b class="mr-3">submitted by</b>
+                </th>
+                <td>
+                  <span style="opacity: 0.5">{{ createdByName }}</span>
+                </td>
+              </tr>
 
-            <!-- Created At -->
-            <tr>
-              <th class="has-text-right" style="white-space: nowrap">
-                <b class="mr-3">submitted on</b>
-              </th>
-              <td>
-                <span style="opacity: 0.5">{{ dayjs(book.createdAt).format('M/D/YYYY') }}</span>
-              </td>
-            </tr>
+              <!-- Created At -->
+              <tr>
+                <th class="has-text-right" style="white-space: nowrap">
+                  <b class="mr-3">submitted on</b>
+                </th>
+                <td>
+                  <span style="opacity: 0.5">{{ dayjs(book.createdAt).format('M/D/YYYY') }}</span>
+                </td>
+              </tr>
 
-            <!-- Updated At -->
-            <tr v-if="book.updatedAt !== book.createdAt">
-              <th class="has-text-right" style="white-space: nowrap">
-                <b class="mr-3">updated on</b>
-              </th>
-              <td>
-                <span style="opacity: 0.5">{{ dayjs(book.updatedAt).format('M/D/YYYY') }}</span>
-              </td>
-            </tr>
+              <!-- Updated At -->
+              <tr v-if="book.updatedAt !== book.createdAt">
+                <th class="has-text-right" style="white-space: nowrap">
+                  <b class="mr-3">updated on</b>
+                </th>
+                <td>
+                  <span style="opacity: 0.5">{{ dayjs(book.updatedAt).format('M/D/YYYY') }}</span>
+                </td>
+              </tr>
 
-            <!-- isbn -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">isbn</b></th>
-              <td>
-                <SimpleInput
-                  v-if="book"
-                  @update:modelValue="saveIsbn"
-                  v-model="book.isbn"
-                  placeholder="Enter ISBN"
-                />
-              </td>
-            </tr>
+              <!-- isbn -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">isbn</b></th>
+                <td>
+                  <SimpleInput
+                    v-if="book"
+                    @update:modelValue="saveIsbn"
+                    v-model="book.isbn"
+                    placeholder="Enter ISBN"
+                  />
+                </td>
+              </tr>
 
-            <!-- year -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">year</b></th>
-              <td>
-                <SimpleInput
-                  v-if="book"
-                  @update:modelValue="updateBook({ year: $event })"
-                  v-model="book.year"
-                  placeholder="Enter Year"
-                />
-              </td>
-            </tr>
+              <!-- year -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">year</b></th>
+                <td>
+                  <SimpleInput
+                    v-if="book"
+                    @update:modelValue="updateBook({ year: $event })"
+                    v-model="book.year"
+                    placeholder="Enter Year"
+                  />
+                </td>
+              </tr>
 
-            <!-- goodreads -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">goodreads</b></th>
-              <td>
-                <SimpleInput
-                  v-if="book"
-                  @update:modelValue="updateBook({ goodreads: $event })"
-                  v-model="book.goodreads"
-                  placeholder="No value"
-                />
-              </td>
-            </tr>
+              <!-- goodreads -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">goodreads</b></th>
+                <td>
+                  <SimpleInput
+                    v-if="book"
+                    @update:modelValue="updateBook({ goodreads: $event })"
+                    v-model="book.goodreads"
+                    placeholder="No value"
+                  />
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -339,7 +341,7 @@ export default {
                 class="mb-20 mr-30"
                 style="min-width: 33%"
                 @remove="removeCreator(id)"
-                @updateTitle="titleId => updateTitle(id, titleId)"
+                @update-title="titleId => updateTitle(id, titleId)"
                 edit
               />
               <AddCreator class="mb-10 ml-1 mr-30" @update="addCreator" style="width: 100%" />
@@ -373,8 +375,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .book-detail {
   margin: 0 20px;

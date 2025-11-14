@@ -159,10 +159,9 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/box.sass';
-@import '@/assets/style/mixins.scss';
-@import '@/assets/style/vars.scss';
+@use 'bulma/sass/elements/box.scss' as *;
+@use '@/assets/style/mixins.scss' as *;
+@use '@/assets/style/vars.scss' as *;
 
 a {
   text-transform: uppercase;
@@ -187,6 +186,8 @@ a {
     font-size: 10px;
     text-align: left;
     text-transform: uppercase;
+    color: black;
+    padding-top: 1px;
 
     &:focus,
     &:active {
@@ -211,7 +212,8 @@ a {
   display: inline-block;
   border-radius: 99px;
   width: 15px;
-  line-height: 15px; // use line-height instead of height to vertically center the dash
+  height: 15px;
+  line-height: 14px;
   margin-left: 5px;
   text-align: center;
   position: absolute;

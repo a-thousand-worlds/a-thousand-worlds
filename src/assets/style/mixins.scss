@@ -1,4 +1,4 @@
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
 
 // set the primary color based on a rotating theme (ancestor selector)
 @mixin primary($property, $rest: '') {

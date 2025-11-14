@@ -116,10 +116,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/components/dropdown.sass';
-@import '@/assets/style/vars.scss';
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
 
 hr.dropdown-divider {
   background-color: #ccc;

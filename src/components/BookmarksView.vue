@@ -148,7 +148,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
+@use 'bulma/sass/utilities/mixins' as *;
+@use '@/assets/style/vars.scss' as *;
 
 a.option-link {
   color: #333;

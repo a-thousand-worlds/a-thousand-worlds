@@ -166,7 +166,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/style/vars.scss';
 .container {
   padding-top: 2rem;
   margin-top: 2rem;

@@ -110,7 +110,13 @@ export default {
     <div class="column p-0 is-half-desktop is-offset-one-quarter-desktop">
       <div class="columns is-mobile">
         <div class="column is-6-mobile has-text-right">
-          <HeartIcon class="fill-primary pr-5" width="140px" height="140px" />
+          <HeartIcon
+            class="fill-primary pr-5"
+            :style="{
+              width: '140px',
+              height: '140px',
+            }"
+          />
         </div>
         <div class="column is-flex is-align-items-center">
           <div>
@@ -287,9 +293,7 @@ $placeholderColor: #a0a0a0;
 .is-text-color {
   color: black !important;
 }
-</style>
 
-<style lang="scss">
 .ck.ck-editor__editable_inline > :first-child,
 .ck.ck-editor__editable_inline > :last-child {
   margin-top: 0px !important;

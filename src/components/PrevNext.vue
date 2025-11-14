@@ -91,7 +91,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
+@use 'bulma/sass/utilities/mixins' as *;
+@use '@/assets/style/vars.scss' as *;
 
 .prev-next {
   text-align: center;

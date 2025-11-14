@@ -19,9 +19,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/elements/box.sass';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .popups-area {
   position: fixed;

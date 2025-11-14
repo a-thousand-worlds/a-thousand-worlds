@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <aside class="menu">
     <ul class="menu-list is-flex-grow-1">
       <li>
         <router-link
@@ -63,11 +63,11 @@ export default {
         /></a>
       </li>
     </ul>
-  </div>
+  </aside>
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/style/mixins.scss';
+@use '@/assets/style/mixins.scss' as *;
 
 .menu-list a {
   color: black;

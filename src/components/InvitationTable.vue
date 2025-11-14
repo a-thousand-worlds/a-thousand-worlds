@@ -63,11 +63,13 @@ export default {
 <template>
   <table class="table w-100">
     <thead>
-      <th>Date</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th />
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th />
+      </tr>
     </thead>
     <tbody>
       <tr v-for="invite of invites" :key="invite.code">
@@ -81,7 +83,7 @@ export default {
         <td>
           <button
             v-if="fields.includes('resend')"
-            class="copy-link is-flat"
+            class="copy-link is-flat mx-2"
             :data-clipboard-text="signupLink(invite)"
             v-tippy="{ content: 'Copy invitation link to clipboard' }"
             @click="copied(invite)"
@@ -90,7 +92,7 @@ export default {
           </button>
           <button
             v-if="fields.includes('resend')"
-            class="is-flat"
+            class="is-flat mx-2"
             v-tippy="{ content: 'Resend invitation' }"
             :disabled="resendDisabled[invite.code]"
             @click="resend(invite)"
@@ -99,7 +101,7 @@ export default {
           </button>
           <button
             v-if="fields.includes('cancel')"
-            class="is-flat"
+            class="is-flat mx-2"
             v-tippy="{ content: 'Cancel invitation' }"
             @click="cancel(invite)"
           >

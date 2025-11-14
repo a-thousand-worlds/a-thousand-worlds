@@ -327,7 +327,7 @@ export default {
           </div>
 
           <!-- bio -->
-          <ckeditor
+          <Ckeditor
             @update:modelValue="updateBio($event)"
             :model-value="bio"
             :editor="editor"
@@ -342,52 +342,58 @@ export default {
           <!-- information table -->
           <!-- text-align: left needed to override centered content in tablet view. -->
           <table style="text-align: left">
-            <!-- Submitted by -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">submitted by</b></th>
-              <td>
-                <span style="opacity: 0.5">{{ createdByName }}</span>
-              </td>
-            </tr>
+            <tbody>
+              <!-- Submitted by -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">submitted by</b></th>
+                <td>
+                  <span style="opacity: 0.5">{{ createdByName }}</span>
+                </td>
+              </tr>
 
-            <!-- Submitted on -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">submitted on</b></th>
-              <td>
-                <span style="opacity: 0.5">{{ dayjs(person?.createdAt).format('M/D/YYYY') }}</span>
-              </td>
-            </tr>
+              <!-- Submitted on -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">submitted on</b></th>
+                <td>
+                  <span style="opacity: 0.5">{{
+                    dayjs(person?.createdAt).format('M/D/YYYY')
+                  }}</span>
+                </td>
+              </tr>
 
-            <!-- Updated by -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">updated by</b></th>
-              <td>
-                <span style="opacity: 0.5">{{ updatedByName }}</span>
-              </td>
-            </tr>
+              <!-- Updated by -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">updated by</b></th>
+                <td>
+                  <span style="opacity: 0.5">{{ updatedByName }}</span>
+                </td>
+              </tr>
 
-            <!-- Updated on -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">updated on</b></th>
-              <td>
-                <span style="opacity: 0.5">{{ dayjs(person?.updatedAt).format('M/D/YYYY') }}</span>
-              </td>
-            </tr>
+              <!-- Updated on -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">updated on</b></th>
+                <td>
+                  <span style="opacity: 0.5">{{
+                    dayjs(person?.updatedAt).format('M/D/YYYY')
+                  }}</span>
+                </td>
+              </tr>
 
-            <!-- Website -->
-            <tr>
-              <th class="has-text-right"><b class="mr-3">website</b></th>
-              <td>
-                <SimpleInput
-                  v-if="person"
-                  @update:modelValue="updatePerson({ website: $event })"
-                  v-model="person.website"
-                  placeholder="Enter a website"
-                  style="display: inline-block; margin-right: 0.5em"
-                />
-                <a v-if="person?.website" :href="person.website" target="_blank">↗</a>
-              </td>
-            </tr>
+              <!-- Website -->
+              <tr>
+                <th class="has-text-right"><b class="mr-3">website</b></th>
+                <td>
+                  <SimpleInput
+                    v-if="person"
+                    @update:modelValue="updatePerson({ website: $event })"
+                    v-model="person.website"
+                    placeholder="Enter a website"
+                    style="display: inline-block; margin-right: 0.5em"
+                  />
+                  <a v-if="person?.website" :href="person.website" target="_blank">↗</a>
+                </td>
+              </tr>
+            </tbody>
           </table>
 
           <div class="divider-30 is-hidden-widescreen" />
@@ -410,9 +416,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'bulma/sass/utilities/_all.sass';
-@import '@/assets/style/mixins.scss';
-@import '@/assets/style/vars.scss';
+@use '@/assets/style/vars.scss' as *;
+@use 'bulma/sass/utilities/mixins' as *;
 
 .wide-page {
   margin: 0 20px;
