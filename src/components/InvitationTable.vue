@@ -80,7 +80,7 @@ export default {
         </td>
         <td v-if="fields.includes('email')">{{ invite.email }}</td>
         <td class="is-capitalized">{{ invite.role }}</td>
-        <td>
+        <td style="white-space: nowrap">
           <button
             v-if="fields.includes('resend')"
             class="copy-link is-flat mx-2"
