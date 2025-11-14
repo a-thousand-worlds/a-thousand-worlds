@@ -228,7 +228,7 @@ export default {
             <tbody>
               <!-- Created By -->
               <tr>
-                <th class="has-text-right" style="white-space: nowrap">
+                <th class="has-text-right nowrap">
                   <b class="mr-3">submitted by</b>
                 </th>
                 <td>
@@ -238,7 +238,7 @@ export default {
 
               <!-- Created At -->
               <tr>
-                <th class="has-text-right" style="white-space: nowrap">
+                <th class="has-text-right nowrap">
                   <b class="mr-3">submitted on</b>
                 </th>
                 <td>
@@ -248,7 +248,7 @@ export default {
 
               <!-- Updated At -->
               <tr v-if="book.updatedAt !== book.createdAt">
-                <th class="has-text-right" style="white-space: nowrap">
+                <th class="has-text-right nowrap">
                   <b class="mr-3">updated on</b>
                 </th>
                 <td>

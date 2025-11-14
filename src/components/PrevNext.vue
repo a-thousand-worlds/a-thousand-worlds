@@ -34,7 +34,7 @@ export default {
 
 <template>
   <div class="prev-next pb-0 mb-10">
-    <span v-if="prev" style="white-space: nowrap">
+    <span v-if="prev" class="nowrap">
       <span v-if="type === 'books'">
         <BookDetailLink
           :book="prev"
@@ -60,7 +60,7 @@ export default {
     <!-- separating character needed otherwise the two links do not wrap -->
     <span v-if="next" style="visibility: hidden"> | </span>
 
-    <span v-if="next" style="white-space: nowrap">
+    <span v-if="next" class="nowrap">
       <span v-if="type === 'books'">
         <BookDetailLink
           v-if="next"

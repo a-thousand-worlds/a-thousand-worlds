@@ -318,11 +318,10 @@ export default {
 
         <!-- # Books/People/Bundles -->
         <th
-          class="has-text-centered"
+          class="has-text-centered nowrap"
           v-tippy="{
             content: `The number of books with this tag.`,
           }"
-          style="white-space: nowrap"
         >
           {{ type === 'books' ? 'Books' : type === 'people' ? 'People' : 'Bundles' }}
           <i class="far fa-question-circle" />
@@ -330,11 +329,10 @@ export default {
 
         <!-- Weight -->
         <th
-          class="has-text-centered"
+          class="has-text-centered nowrap"
           v-tippy="{
             content: `Adjust the likelihood of ${type} with this tag being sorted to the top. For example, if Historical has a weight of 10 and all other tags have a weight of 1, then a Historical book will be 10 times more likely to be sorted to the top than a non-Historical book.`,
           }"
-          style="white-space: nowrap"
         >
           Weight <i class="far fa-question-circle" />
         </th>
@@ -342,11 +340,10 @@ export default {
         <!-- Creator -->
         <th
           v-if="type === 'people'"
-          class="has-text-centered"
+          class="has-text-centered nowrap"
           v-tippy="{
             content: `Show this tag as one of the identity options on the People Submission Form.`,
           }"
-          style="white-space: nowrap"
         >
           Creator <i class="far fa-question-circle" />
         </th>
@@ -354,31 +351,28 @@ export default {
         <!-- Contributor -->
         <th
           v-if="type === 'people'"
-          class="has-text-centered"
+          class="has-text-centered nowrap"
           v-tippy="{
             content: `Show this tag as one of the identity options on the Contributor Profile Form.`,
           }"
-          style="white-space: nowrap"
         >
           Contributor <i class="far fa-question-circle" />
         </th>
 
         <!-- Show -->
         <th
-          class="has-text-centered"
+          class="has-text-centered nowrap"
           v-tippy="{ content: `Show this tag in the ${type} filter menu` }"
-          style="white-space: nowrap"
         >
           Show <i class="far fa-question-circle" />
         </th>
 
         <!-- Edit/Delete -->
         <th
-          class="has-text-centered"
+          class="has-text-centered nowrap"
           v-tippy="{
             content: `Edit or delete this tag from all ${type}`,
           }"
-          style="white-space: nowrap"
         >
           Edit/Delete <i class="far fa-question-circle" />
         </th>

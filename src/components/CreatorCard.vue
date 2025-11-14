@@ -105,7 +105,7 @@ export default {
         </Dropdown>
 
         <!-- By / Words by / Illutsratored by -->
-        <div v-else style="font-weight: bold; white-space: nowrap">{{ titleIntro }}</div>
+        <div v-else class="nowrap" style="font-weight: bold">{{ titleIntro }}</div>
       </div>
 
       <PersonDetailLink v-if="creator" :person="creator" :edit="edit" class="primary-hover">{{

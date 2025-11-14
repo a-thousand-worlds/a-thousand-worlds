@@ -244,7 +244,7 @@ export default {
         <h1 class="title mb-0" style="display: inline">People Manager</h1>
 
         <!-- EDIT/DONE link -->
-        <span style="white-space: nowrap; line-height: 55px">
+        <span class="nowrap" style="line-height: 55px">
           <Loader
             v-if="loadingEditMode"
             class="mr-1"
@@ -267,18 +267,17 @@ export default {
         </div>
         <div class="is-flex is-align-items-center">
           <!-- # creators -->
-          <span v-if="loaded" class="mr-40" style="white-space: nowrap"
+          <span v-if="loaded" class="mr-40 nowrap"
             >{{ people.length }} creator{{ people.length === 1 ? '' : 's' }}
             <span v-if="search">(filtered)</span></span
           >
 
           <!-- search -->
           <span
-            class="has-text-right"
+            class="has-text-right nowrap"
             v-tippy="{
               content: `Search all creators. Use 'field:value' to filter by a specific field, e.g. 'tag:Asian'`,
             }"
-            style="white-space: nowrap"
             ><i class="far fa-question-circle"
           /></span>
           <i class="fas fa-search" style="transform: translateX(23px); z-index: 10; opacity: 0.3" />

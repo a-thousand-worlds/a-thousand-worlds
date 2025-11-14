@@ -119,7 +119,7 @@ export default {
         </div>
       </div>
 
-      <b class="mr-2" style="user-select: none; white-space: nowrap">
+      <b class="mr-2 nowrap" style="user-select: none">
         <a
           v-if="edit"
           v-click-outside="closeTitleDropdown"
@@ -166,7 +166,7 @@ export default {
         </div>
       </div>
 
-      <b class="mr-2" style="user-select: none; white-space: nowrap">
+      <b class="mr-2 nowrap" style="user-select: none">
         <a
           v-if="edit"
           v-click-outside="closeTitleDropdown"

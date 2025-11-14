@@ -413,15 +413,8 @@ export default {
             v-if="helpCompleted"
             @click.prevent="$refs.help.toggle"
             v-tippy="{ content: 'Help' }"
-            class="has-text-right"
-            style="
-              position: absolute;
-              right: 0;
-              bottom: 20px;
-              font-size: 16px;
-              white-space: nowrap;
-              cursor: pointer;
-            "
+            class="has-text-right nowrap"
+            style="position: absolute; right: 0; bottom: 20px; font-size: 16px"
             ><i class="far fa-question-circle"
           /></span>
         </h1>

@@ -86,7 +86,7 @@ export default {
   <div class="control">
     <div class="field is-grouped">
       <div class="control is-flex is-flex-wrap-wrap w-100">
-        <div class="mr-1" style="white-space: nowrap; font-weight: bold">{{ preText }}</div>
+        <div class="mr-1 nowrap" style="font-weight: bold">{{ preText }}</div>
         <div
           v-if="mode === 'view' && !names?.length && placeholder?.length"
           :class="{ disabled: disabled }"

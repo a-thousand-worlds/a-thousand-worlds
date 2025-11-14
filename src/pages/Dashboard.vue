@@ -182,14 +182,8 @@ export default {
               v-if="submissionFormMessageCompleted"
               @click.prevent="$refs.submissionFormMessage.toggle"
               v-tippy="{ content: 'Help' }"
-              class="has-text-right"
-              style="
-                margin-left: 10px;
-                font-size: 14px;
-                white-space: nowrap;
-                cursor: pointer;
-                vertical-align: middle;
-              "
+              class="has-text-right nowrap"
+              style="margin-left: 10px; font-size: 14px; cursor: pointer; vertical-align: middle"
               ><i class="far fa-question-circle"
             /></span>
           </h2>
@@ -263,14 +257,8 @@ export default {
             v-if="shareListCompleted"
             @click.prevent="$refs.shareListMessage.toggle"
             v-tippy="{ content: 'Help' }"
-            class="has-text-right"
-            style="
-              margin-left: 10px;
-              font-size: 14px;
-              white-space: nowrap;
-              cursor: pointer;
-              vertical-align: middle;
-            "
+            class="has-text-right nowrap"
+            style="margin-left: 10px; font-size: 14px; cursor: pointer; vertical-align: middle"
             ><i class="far fa-question-circle"
           /></span>
         </h2>
@@ -320,14 +308,8 @@ export default {
             v-if="inviteMessageCompleted"
             @click.prevent="$refs.inviteMessage.toggle"
             v-tippy="{ content: 'Help' }"
-            class="has-text-right"
-            style="
-              margin-left: 10px;
-              font-size: 14px;
-              white-space: nowrap;
-              cursor: pointer;
-              vertical-align: middle;
-            "
+            class="has-text-right nowrap"
+            style="margin-left: 10px; font-size: 14px; cursor: pointer; vertical-align: middle"
             ><i class="far fa-question-circle"
           /></span>
         </h2>
