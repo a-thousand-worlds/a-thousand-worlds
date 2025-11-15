@@ -22,19 +22,19 @@ export default {
       return this.type === 'books'
         ? 'Home'
         : this.type === 'people'
-        ? 'People'
-        : this.type === 'bundles'
-        ? 'Bundles'
-        : null
+          ? 'People'
+          : this.type === 'bundles'
+            ? 'Bundles'
+            : null
     },
     singleType() {
       return this.type === 'books'
         ? 'book'
         : this.type === 'people'
-        ? 'person'
-        : this.type === 'bundles'
-        ? 'bundle'
-        : null
+          ? 'person'
+          : this.type === 'bundles'
+            ? 'bundle'
+            : null
     },
   },
   created() {

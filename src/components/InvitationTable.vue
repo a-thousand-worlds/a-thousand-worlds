@@ -45,8 +45,8 @@ export default {
       const dateField = this.fields.includes('cancelled')
         ? 'cancelled'
         : this.fields.includes('used')
-        ? 'used'
-        : 'createdAt'
+          ? 'used'
+          : 'createdAt'
       // date field was incorrectly set to true instead of a date in earlier versions of the code, so make sure it gets ignored
       return invite[dateField] && invite[dateField] !== true ? this.format(invite[dateField]) : '--'
     },

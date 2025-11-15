@@ -41,10 +41,10 @@ export default {
         this.role === 'author'
           ? 'words '
           : this.role === 'illustrator'
-          ? 'pictures '
-          : this.longlabel
-          ? 'words and pictures '
-          : ''
+            ? 'pictures '
+            : this.longlabel
+              ? 'words and pictures '
+              : ''
       return `${intro}by`
     },
   },
@@ -95,7 +95,7 @@ export default {
           :label="titleIntro"
           labelStyle="font-weight: bold;"
           :options="creatorTitles"
-          @update:modelValue="updateTitle($event)"
+          @update:model-value="updateTitle($event)"
           style="display: block"
         >
           <template #beforeOptions>

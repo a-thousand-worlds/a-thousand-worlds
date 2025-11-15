@@ -24,7 +24,7 @@ const module = (name, field) =>
           await ref.put(buff, { contentType: 'image/png', cacheControl: 'public,max-age=31536000' })
           const url = await ref.getDownloadURL()
           value[field] = {
-            url: url,
+            url,
             width: img.bitmap.width,
             height: img.bitmap.height,
           }

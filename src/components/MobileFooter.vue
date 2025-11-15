@@ -27,8 +27,8 @@ export default {
       return this.$route.name === 'People' || this.$route.name === 'PersonDetail'
         ? 'people'
         : this.$route.name === 'Bundles' || this.$route.name === 'BundleDetail'
-        ? 'bundles'
-        : 'books'
+          ? 'bundles'
+          : 'books'
     },
   },
   methods: {

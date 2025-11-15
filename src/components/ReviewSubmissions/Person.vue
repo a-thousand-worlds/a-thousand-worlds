@@ -87,7 +87,7 @@ export default {
           v-model="submission.photo"
           photoHeight="88px"
           noremove
-          @update:modelValue="save"
+          @update:model-value="save"
         />
         <!-- eslint-enable vue/no-mutating-props -->
       </div>
@@ -96,7 +96,7 @@ export default {
       <div class="column is-3">
         <SimpleInput
           v-model="sub.name"
-          @update:modelValue="save"
+          @update:model-value="save"
           :disabled="busy"
           style="font-weight: bold"
           placeholder="Name"
@@ -105,7 +105,7 @@ export default {
         <Dropdown
           v-model="sub.title"
           :options="creatorTitles"
-          @update:modelValue="save"
+          @update:model-value="save"
           style="display: block"
         />
 
@@ -126,7 +126,7 @@ export default {
         <!-- bio -->
         <div>
           <ckeditor
-            @update:modelValue="save"
+            @update:model-value="save"
             v-model="sub.bio"
             :disabled="busy"
             class="oneline"
