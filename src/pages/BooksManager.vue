@@ -449,7 +449,7 @@ export default {
               <td>
                 <SimpleInput
                   v-if="editMode"
-                  @update:modelValue="updateBook(book, '', { isbn: $event })"
+                  @update:model-value="updateBook(book, '', { isbn: $event })"
                   v-model="book.isbn"
                   placeholder="Enter ISBN"
                 />
@@ -464,7 +464,7 @@ export default {
               <td>
                 <SimpleInput
                   v-if="editMode"
-                  @update:modelValue="updateBook(book, '', { title: $event })"
+                  @update:model-value="updateBook(book, '', { title: $event })"
                   v-model="book.title"
                   placeholder="Enter Title"
                   unstyled
@@ -506,7 +506,7 @@ export default {
                     :label="author.name"
                     labelStyle="font-weight: bold;"
                     :options="creatorTitles"
-                    @update:modelValue="updateBook(book, 'creators', { [author.id]: $event })"
+                    @update:model-value="updateBook(book, 'creators', { [author.id]: $event })"
                     style="display: inline"
                   >
                     <template #beforeOptions>
@@ -547,7 +547,7 @@ export default {
                     :label="illustrator.name"
                     labelStyle="font-weight: bold;"
                     :options="creatorTitles"
-                    @update:modelValue="updateBook(book, 'creators', { [illustrator.id]: $event })"
+                    @update:model-value="updateBook(book, 'creators', { [illustrator.id]: $event })"
                     style="display: inline"
                   >
                     <template #beforeOptions>
@@ -585,7 +585,7 @@ export default {
                   v-model="book.createdBy"
                   labelStyle="font-weight: bold;"
                   :options="contributorOptions"
-                  @update:modelValue="updateBook(book, '', { createdBy: $event })"
+                  @update:model-value="updateBook(book, '', { createdBy: $event })"
                   style="display: inline"
                 >
                   <template #beforeOptions>
@@ -606,7 +606,7 @@ export default {
               <td class="has-text-right">
                 <SimpleInput
                   v-if="editMode"
-                  @update:modelValue="updateBook(book, '', { year: $event })"
+                  @update:model-value="updateBook(book, '', { year: $event })"
                   v-model="book.year"
                   placeholder="Enter Year"
                   unstyled

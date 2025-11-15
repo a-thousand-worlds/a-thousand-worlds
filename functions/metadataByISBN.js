@@ -16,7 +16,7 @@ async function getGoodreadsBookIDByISBN(isbn) {
       method: 'get',
       params: {
         key: functions.config().goodreads.api_key,
-        isbn: isbn,
+        isbn,
       },
       responseType: 'text',
     })
