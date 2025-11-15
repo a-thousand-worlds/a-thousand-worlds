@@ -49,10 +49,10 @@ export default {
                   this.sortConfig.dir,
                 )
               : this.sortConfig.field === 'submitted'
-              ? dayjs(bundle.createdAt)
-              : this.sortConfig.field === 'updated'
-              ? dayjs(bundle.updatedAt)
-              : (bundle[this.sortConfig.field] || '').toLowerCase(),
+                ? dayjs(bundle.createdAt)
+                : this.sortConfig.field === 'updated'
+                  ? dayjs(bundle.updatedAt)
+                  : (bundle[this.sortConfig.field] || '').toLowerCase(),
           'nameLower',
         ])
         return this.sortConfig.dir === 'desc' ? reverse(sorted) : sorted

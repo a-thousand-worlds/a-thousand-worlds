@@ -59,10 +59,10 @@ const module = () => ({
               const itemFilters = Array.isArray(value)
                 ? value
                 : typeof value === 'string'
-                ? [value]
-                : typeof value === 'object'
-                ? Object.keys(value)
-                : []
+                  ? [value]
+                  : typeof value === 'object'
+                    ? Object.keys(value)
+                    : []
               return itemFilters.includes(filter.id)
             }) &&
             // id filters

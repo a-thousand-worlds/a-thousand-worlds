@@ -4,8 +4,8 @@ const normalizeLink = link => {
   return link.startsWith('http')
     ? link
     : link.startsWith('@')
-    ? `https://twitter.com/${link.slice(1)}`
-    : `https://${link}`
+      ? `https://twitter.com/${link.slice(1)}`
+      : `https://${link}`
 }
 
 export default normalizeLink
