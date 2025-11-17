@@ -12,8 +12,8 @@ export default {
       return typeof this.person.photo === 'string'
         ? this.person.photo
         : this.person.photo.url?.startsWith('http')
-        ? this.person.photo.url
-        : ''
+          ? this.person.photo.url
+          : ''
     },
   },
 }
