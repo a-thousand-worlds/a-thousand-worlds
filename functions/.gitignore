@@ -1,2 +1,4 @@
 .runtimeconfig.json
 serviceAccountKey.json
+
+node_modules

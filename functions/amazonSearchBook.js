@@ -1,7 +1,5 @@
 const express = require('express')
-const puppeteer = require('puppeteer-extra')
-const puppeteerStealth = require('puppeteer-extra-plugin-stealth')
-puppeteer.use(puppeteerStealth())
+const chromium = require('@sparticuz/chromium')
 const cheerio = require('cheerio')
 
 // amazon uses '+' char to separate keywords in url, not %20 encoded 'space'
@@ -26,6 +24,15 @@ const parseSrcset = srcset => {
     }, {})
 }
 
+let puppeteer = null
+const getPuppeteer = () => {
+  if (!puppeteer) {
+    puppeteer = require('puppeteer-extra')
+    puppeteer.use(require('puppeteer-extra-plugin-stealth')())
+  }
+  return puppeteer
+}
+
 module.exports = () => {
   const app = express()
 
@@ -39,11 +46,27 @@ module.exports = () => {
     console.log(`searching book isbn for [${req.query.keyword}]`)
     const keywords = req.query.keyword
 
-    const browser = await puppeteer.launch({
-      defaultViewport: { width: 800, height: 600, deviceScaleFactor: 3 },
-      args: ['--no-sandbox'],
+    const browser = await getPuppeteer().launch({
+      args: [...chromium.args, '--no-sandbox'],
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+      defaultViewport: { width: 1280, height: 720, deviceScaleFactor: 3 },
     })
+
+    if (!browser) {
+      console.log('browser is not loaded')
+      return
+    }
+
     const page = await browser.newPage()
+    // mimic a real browser to avoid Amazon bot detection
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', // common User Agent
+    )
+    await page.setViewport({ width: 1280, height: 720 })
+    await page.setExtraHTTPHeaders({
+      'accept-language': 'en-US,en;q=0.9',
+    })
     let result = null
     try {
       console.log('URL: ', amazonSearchUrl(keywords))
