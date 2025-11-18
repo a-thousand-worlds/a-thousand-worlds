@@ -50,7 +50,6 @@ module.exports = () => {
       args: [...chromium.args, '--no-sandbox'],
       executablePath: await chromium.executablePath(),
       headless: chromium.headless,
-      defaultViewport: { width: 1280, height: 720, deviceScaleFactor: 3 },
     })
 
     if (!browser) {
