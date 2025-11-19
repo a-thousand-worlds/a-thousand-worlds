@@ -176,7 +176,6 @@ const rebuildCache = async (host = 'all') => {
       const cacheUrl = `/img/${userPhoto.key}.png`
       console.log(`Preparing user photo for ${userPhoto.name} (<${cacheUrl}>)`)
       const buff = await image64ToBuffer(userPhoto.base64, 400)
-      // eslint-disable-next-line fp/no-delete
       delete db.contributors[userPhoto.i].profile.photo.base64
       db.contributors[userPhoto.i].profile.photo.url = cacheUrl
       db.contributors[userPhoto.i].profile.photo.width = buff.width

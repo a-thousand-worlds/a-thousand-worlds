@@ -1,3 +1,5 @@
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+
 module.exports = {
   configureWebpack: {
     resolve: {
@@ -20,11 +22,18 @@ module.exports = {
       },
     },
   },
-  /*
-   */
-  // https://github.com/visualfanatic/vue-svg-loader
   chainWebpack: config => {
-    // svg
+    config.plugin('eslint').use(ESLintWebpackPlugin, [
+      {
+        context: __dirname,
+        files: ['src/**/*.{js,jsx,ts,vue}'],
+        extensions: ['js', 'jsx', 'ts', 'vue'],
+        failOnWarning: false,
+        failOnError: true,
+      },
+    ])
+
+    // svg: https://github.com/visualfanatic/vue-svg-loader
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
     svgRule.delete('type')

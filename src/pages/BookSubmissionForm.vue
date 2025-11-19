@@ -196,7 +196,6 @@ export default {
     },
     clearSubmission(si) {
       // remove submission and existing book
-      // eslint-disable-next-line fp/no-delete
       delete this.books[si]
       this.submissions[si] = this.newSubmissionObject()
       this.errors = []
