@@ -78,14 +78,6 @@ module.exports = [
       'testing-library/prefer-screen-queries': 0,
     },
   }),
-  // {
-  //   files: ['src/**/*.js', 'src/**/*.vue'],
-  //   rules: {
-  //     // browser bundle uses DOM/Blob APIs that are unavailable in Node,
-  //     // so disable Node builtin compatibility checks there
-  //     'n/no-unsupported-features/node-builtins': 0,
-  //   },
-  // },
   {
     files: ['**/*.test.js', '**/*.spec.js', '**/__tests__/**/*.js'],
     languageOptions: {
