@@ -3,7 +3,10 @@ const js = require('@eslint/js')
 const { FlatCompat } = require('@eslint/eslintrc')
 const fpPlugin = require('eslint-plugin-fp')
 const globals = require('globals')
+const neostandard = require('neostandard')
 
+// mutate the rules 
+// since defined rule causes an error: (Key "fp/no-mutating-methods":Value [{"allowedObjects":["$router","router","_"]}] should NOT have more than 0 items.))
 const noMutatingMethodsRule = fpPlugin?.rules?.['no-mutating-methods']
 if (noMutatingMethodsRule) {
   noMutatingMethodsRule.meta = {
@@ -32,43 +35,23 @@ const compat = new FlatCompat({
 })
 
 module.exports = [
-  {
+  ...neostandard({
+    env: ['browser', 'node'],
     ignores: ['dist/**', 'public/dbcache.js'],
-  },
+  }),
   ...compat.config({
     parser: 'vue-eslint-parser',
     extends: [
-      'eslint:recommended',
       'plugin:jest-dom/recommended',
       'plugin:testing-library/vue',
       'plugin:vue/vue3-recommended',
-      'plugin:import/recommended',
-      'plugin:promise/recommended',
-      'plugin:n/recommended',
       'prettier',
     ],
     parserOptions: {
       parser: '@babel/eslint-parser',
       sourceType: 'module',
     },
-    plugins: ['fp', 'node', 'jest-dom', 'testing-library', 'prettier'],
-    settings: {
-      'import/resolver': {
-        webpack: {
-          config: {
-            resolve: {
-              alias: {
-                '@': path.resolve(__dirname, 'src'),
-              },
-              extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.json'],
-            },
-          },
-        },
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.json'],
-        },
-      },
-    },
+    plugins: ['fp', 'n', 'node', 'jest-dom', 'testing-library', 'prettier'],
     rules: {
       'prettier/prettier': [2],
       'vue/component-name-in-template-casing': [2, 'PascalCase'],
@@ -93,7 +76,6 @@ module.exports = [
       ],
       'testing-library/render-result-naming-convention': 0,
       'testing-library/prefer-screen-queries': 0,
-      'n/no-missing-import': 0, // added because node algorigth does not understand out webpack alias (@)
     },
   }),
   // {

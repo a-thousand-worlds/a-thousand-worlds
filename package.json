@@ -94,6 +94,7 @@
     "firebase-tools": "^14.0.0",
     "husky": "^7.0.1",
     "jest-transform-stub": "^2.0.0",
+    "neostandard": "^0.12.2",
     "prettier": "^3.6.2",
     "promptly": "^3.2.0",
     "sass": "^1.93.2",
