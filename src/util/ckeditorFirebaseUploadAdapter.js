@@ -1,6 +1,7 @@
 // import firebase from '@/firebase'
 const firebaseImport = () => import(/* webpackChunkName: "firebase" */ '@/firebase')
 
+// eslint-disable-next-line fp/no-class
 class ATWUploadAdapter {
   constructor(loader) {
     this.loader = loader

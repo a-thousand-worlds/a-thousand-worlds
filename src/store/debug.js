@@ -5,6 +5,7 @@ const module = {
       if (!window.atw) {
         window.atw = {}
       }
+      // eslint-disable-next-line fp/no-loops
       for (const key in o) {
         window.atw[key] = o[key]
       }

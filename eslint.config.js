@@ -3,9 +3,10 @@ const js = require('@eslint/js')
 const { FlatCompat } = require('@eslint/eslintrc')
 const fpPlugin = require('eslint-plugin-fp')
 const globals = require('globals')
+const jsdocPlugin = require('eslint-plugin-jsdoc')
 const neostandard = require('neostandard')
 
-// mutate the rules 
+// mutate the rules
 // since defined rule causes an error: (Key "fp/no-mutating-methods":Value [{"allowedObjects":["$router","router","_"]}] should NOT have more than 0 items.))
 const noMutatingMethodsRule = fpPlugin?.rules?.['no-mutating-methods']
 if (noMutatingMethodsRule) {
@@ -39,6 +40,34 @@ module.exports = [
     env: ['browser', 'node'],
     ignores: ['dist/**', 'public/dbcache.js'],
   }),
+  // rules to align with v8 eslint packages ("eslint-config-raine", "eslint-config-standard")
+  {
+    plugins: {
+      jsdoc: jsdocPlugin,
+    },
+    rules: {
+      'no-var': 'warn',
+      'dot-notation': ['error', { allowKeywords: true }],
+      'no-new-object': 'error',
+      'no-new-symbol': 'error',
+
+      'n/handle-callback-err': ['error', '^(err|error)$'],
+      'n/no-deprecated-api': 'error',
+
+      'fp/no-class': 'error',
+      'fp/no-delete': 'error',
+      'fp/no-loops': 'error',
+
+      'jsdoc/check-alignment': 'error',
+      'jsdoc/check-indentation': 'error',
+      'jsdoc/check-syntax': 'error',
+      'jsdoc/check-tag-names': 'error',
+      'jsdoc/implements-on-classes': 'error',
+      'jsdoc/check-types': 'error',
+      'jsdoc/no-types': 'error',
+      'jsdoc/no-undefined-types': 'error',
+    },
+  },
   ...compat.config({
     parser: 'vue-eslint-parser',
     extends: [

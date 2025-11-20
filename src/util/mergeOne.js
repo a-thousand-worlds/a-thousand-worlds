@@ -5,6 +5,7 @@ const mergeOne = (...args) => {
   }
 
   const o = { ...args[0] }
+  // eslint-disable-next-line fp/no-loops
   for (const key in args[1]) {
     o[key] = { ...args[0][key], ...args[1][key] }
   }
