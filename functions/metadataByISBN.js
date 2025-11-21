@@ -30,16 +30,13 @@ async function getGoodreadsBookIDByISBN(isbn) {
 
 /** Calls the node-isbn function and returns null if there is an error. */
 function _isbn(code, provider) {
-  return (
-    isbn
-      .provider([provider])
-      .resolve(code)
-      // eslint-disable-next-line node/handle-callback-err
-      .catch(err => {
-        console.log(`Error searching ${provider} for ${code}`, err)
-        return null
-      })
-  )
+  return isbn
+    .provider([provider])
+    .resolve(code)
+    .catch(err => {
+      console.log(`Error searching ${provider} for ${code}`, err)
+      return null
+    })
 }
 
 /** Searches for metadata for an ISBN from Google and, if not found, from OpenLibrary. */
