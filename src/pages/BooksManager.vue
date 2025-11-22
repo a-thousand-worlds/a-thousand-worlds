@@ -5,7 +5,7 @@ import reverse from 'lodash/reverse'
 import debounce from 'lodash/debounce'
 import dayjs from 'dayjs'
 import { remove as diacritics } from 'diacritics'
-import { parse } from 'json2csv'
+import { Parser as Json2CsvParser } from '@json2csv/plainjs'
 
 import creatorTitles from '@/store/constants/creatorTitles'
 import AddCreator from '@/components/AddCreator'
@@ -158,7 +158,7 @@ export default {
           illustrators: this.formatIllustrators(book.creators),
           tags: this.formatTags(book),
         }))
-        const csv = parse(booksOutput, {
+        const parser = new Json2CsvParser({
           fields: [
             'isbn',
             'title',
@@ -182,6 +182,7 @@ export default {
             'status',
           ],
         })
+        const csv = parser.parse(booksOutput)
         download(csv, `ATW books (${this.books.length}) - ${new Date().toISOString()}.csv`)
       } catch (e) {
         this.$store.dispatch('ui/handleError', e)
