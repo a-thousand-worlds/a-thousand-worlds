@@ -8,7 +8,10 @@ export const render = component =>
   vueRender(component, {
     // https://vue-test-utils.vuejs.org/v2/api/#mount
     global: {
-      directives,
+      directives: {
+        ...directives,
+        tippy: () => {},
+      },
       mixins: [mixins],
       plugins: [store],
     },
