@@ -1,7 +1,6 @@
 import BookSubmissionForm from '@/pages/BookSubmissionForm.vue'
 import { render } from '@/test-helpers'
 import { fireEvent } from '@testing-library/vue'
-import '@testing-library/jest-dom'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
