@@ -52,7 +52,7 @@ export default {
         </Square>
       </router-link>
     </div>
-    <div class="column">
+    <div class="column" v-if="$hasFeature($features.BUNDLE)">
       <router-link :to="{ name: 'ReviewSubmissions', params: { type: 'bundle' } }">
         <Square>
           <BundlesLayoutIcon
