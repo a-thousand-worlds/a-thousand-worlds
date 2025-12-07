@@ -247,6 +247,10 @@ export default {
       const nonce = ++this.findBookByKeywordNonce
       const result = await findBookByKeyword(search).catch(e => {
         console.error(e)
+        this.$store.dispatch('ui/popup', {
+          text: `Error searching for book: ${e.message || e}`,
+          type: 'error',
+        })
         return null
       })
 
@@ -321,6 +325,10 @@ export default {
       const nonce = ++this.findBookByKeywordNonce
       const result = await findBookByKeyword(search).catch(e => {
         console.error(e)
+        this.$store.dispatch('ui/popup', {
+          text: `Error searching for book: ${e.message || e}`,
+          type: 'error',
+        })
         return null
       })
 
