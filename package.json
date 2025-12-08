@@ -16,6 +16,7 @@
     "start:local": "npm run build && VUE_APP_DATABASE_EMULATOR vue-cli-service serve",
     "start:services": "cd ./services/findISBN && npm run start",
     "test": "vitest run",
+    "test:search": "./test/amazonSearchBook.sh",
     "test:watch": "vitest",
     "update:books:tags": "mkdir -p /tmp/atw/ && firebase database:get /tags/books > /tmp/atw/books.tags.json && firebase database:get /books > /tmp/atw/books.json && node ./migrations/update-books-tags.js",
     "update:books:creators": "mkdir -p /tmp/atw/ && firebase database:get /people > /tmp/atw/creators.json && firebase database:get /books > /tmp/atw/books.json && node ./migrations/update-books-creators.js",
