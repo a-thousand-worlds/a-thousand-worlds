@@ -26,7 +26,6 @@ const parseSrcset = srcset => {
     }, {})
 }
 
-
 // based on environment load appropriate modules
 const isEmulator = process.env.FUNCTIONS_EMULATOR
 
