@@ -1,6 +1,8 @@
 const express = require('express')
-const chromium = require('@sparticuz/chromium')
+const puppeteerStealth = require('puppeteer-extra-plugin-stealth')
 const cheerio = require('cheerio')
+const puppeteerExtra = require('puppeteer-extra')
+puppeteerExtra.use(puppeteerStealth())
 
 // amazon uses '+' char to separate keywords in url, not %20 encoded 'space'
 const amazonSearchUrl = keywords =>
@@ -24,13 +26,15 @@ const parseSrcset = srcset => {
     }, {})
 }
 
-let puppeteer = null
-const getPuppeteer = () => {
-  if (!puppeteer) {
-    puppeteer = require('puppeteer-extra')
-    puppeteer.use(require('puppeteer-extra-plugin-stealth')())
-  }
-  return puppeteer
+
+// based on environment load appropriate modules
+const isEmulator = process.env.FUNCTIONS_EMULATOR
+
+let chromium = null
+
+if (!isEmulator) {
+  require('puppeteer-core')
+  chromium = require('@sparticuz/chromium')
 }
 
 module.exports = () => {
@@ -46,26 +50,25 @@ module.exports = () => {
     console.log(`searching book isbn for [${req.query.keyword}]`)
     const keywords = req.query.keyword
 
-    const browser = await getPuppeteer().launch({
-      args: [...chromium.args, '--no-sandbox'],
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-    })
-
-    if (!browser) {
-      console.log('browser is not loaded')
-      return
+    let launchOptions = {}
+    if (!isEmulator && chromium) {
+      launchOptions = {
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      }
+    } else {
+      // local: use system chromium
+      launchOptions = {
+        defaultViewport: { width: 800, height: 600, deviceScaleFactor: 3 },
+        args: ['--no-sandbox'],
+      }
     }
 
+    const browser = await puppeteerExtra.launch(launchOptions)
+
     const page = await browser.newPage()
-    // mimic a real browser to avoid Amazon bot detection
-    await page.setUserAgent(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', // common User Agent
-    )
-    await page.setViewport({ width: 1280, height: 720 })
-    await page.setExtraHTTPHeaders({
-      'accept-language': 'en-US,en;q=0.9',
-    })
     let result = null
     try {
       console.log('URL: ', amazonSearchUrl(keywords))
