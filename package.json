@@ -50,7 +50,6 @@
     "firebaseui": "^4.8.1",
     "https-browserify": "^1.0.0",
     "isbn3": "^1.2.19",
-    "jimp": "^1.6.0",
     "lodash": "^4.17.21",
     "node-isbn": "^1.6.1",
     "path-browserify": "^1.0.1",
