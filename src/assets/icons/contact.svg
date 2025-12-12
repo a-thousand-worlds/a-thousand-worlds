@@ -1,0 +1,20 @@
+<svg width="35" height="35" viewBox="0 0 35 35" xmlns="http://www.w3.org/2000/svg" class="fill-secondary">
+  <g transform="translate(0,3)">
+    <path
+      d="M3 8H32C33.104 8 34 8.896 34 10V29C34 30.104 33.104 31 32 31H3C1.896 31 1 30.104 1 29V10C1 8.896 1.896 8 3 8Z"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M3 10L17.5 20L32 10"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+</svg>

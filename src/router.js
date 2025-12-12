@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { FEATURES, hasFeature } from '@/util/feature'
 // import Home from '@/pages/Home.vue'
 import NotFound from '@/pages/NotFound.vue'
 
@@ -34,6 +35,9 @@ const routes = [
     path: '/bundles',
     name: 'Bundles',
     component: () => import(/* webpackChunkName: "guest" */ './pages/Bundles.vue'),
+    meta: {
+      features: [FEATURES.BUNDLE],
+    },
   },
   {
     path: '/people',
@@ -133,6 +137,7 @@ const routes = [
       import(/* webpackChunkName: "contributor" */ './pages/BundleSubmissionForm.vue'),
     meta: {
       access: ['contributor', 'advisor', 'owner'],
+      features: [FEATURES.BUNDLE],
     },
   },
   {
@@ -190,6 +195,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "advisor" */ './pages/BundlesManager.vue'),
     meta: {
       access: 'owner',
+      features: [FEATURES.BUNDLE],
     },
   },
   {
@@ -198,6 +204,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "advisor" */ './pages/BundleManagerForm.vue'),
     meta: {
       access: 'owner',
+      features: [FEATURES.BUNDLE],
     },
   },
   {
@@ -206,6 +213,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "advisor" */ './pages/BundleManagerForm.vue'),
     meta: {
       access: 'owner',
+      features: [FEATURES.BUNDLE],
     },
   },
   {
@@ -214,6 +222,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "advisor" */ './pages/EmailTemplates.vue'),
     meta: {
       access: ['advisor', 'owner'],
+      features: [FEATURES.BUNDLE],
     },
   },
   {
@@ -257,6 +266,19 @@ const router = createRouter({
     // position is not saved with router.replace, so we need to get the scroll position manually
     return savedPosition || { left: 0, top: samePage ? window.scrollY : 0 }
   },
+})
+
+router.beforeEach((to, from, next) => {
+  const features = to.matched.flatMap(item => item.meta?.features || [])
+
+  if (features.some(feature => !hasFeature(feature))) {
+    // replace all matched components with NotFound
+    to.matched.forEach(match => {
+      match.components.default = NotFound
+    })
+  }
+
+  next()
 })
 
 export default router
