@@ -29,7 +29,7 @@ module.exports = {
         files: ['src/**/*.{js,jsx,ts,vue}'],
         extensions: ['js', 'jsx', 'ts', 'vue'],
         failOnWarning: false,
-        failOnError: false,
+        failOnError: true,
       },
     ])
 
