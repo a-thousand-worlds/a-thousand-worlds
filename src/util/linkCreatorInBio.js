@@ -3,11 +3,11 @@ const linkCreatorInBio = person => {
   if (!person) return null
   if (!person.website) return person.bio
   const regexpPersonName = new RegExp(`(<a[^>]*>)?\\s*${person.name}(<\\/a>)?`)
-  const isAlreadyLinked = !!person.bio.match(regexpPersonName)?.[1]
+  const isAlreadyLinked = !!person.bio?.match(regexpPersonName)?.[1]
   return isAlreadyLinked
     ? person.bio
     : // custom attributes and classes are stripped by CKEditor
-      person.bio.replace(
+      person.bio?.replace(
         person.name,
         `<a href="${person.website}" target="_blank">${person.name}</a>`,
       )
