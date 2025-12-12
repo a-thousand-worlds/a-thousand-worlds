@@ -168,22 +168,6 @@ const routes = [
     },
   },
   {
-    path: '/admin/people/add',
-    name: 'PeopleManagerAddForm',
-    component: () => import(/* webpackChunkName: "advisor" */ './pages/PeopleManagerForm.vue'),
-    meta: {
-      access: 'owner',
-    },
-  },
-  {
-    path: '/admin/people/update/:uid',
-    name: 'PeopleManagerUpdateForm',
-    component: () => import(/* webpackChunkName: "advisor" */ './pages/PeopleManagerForm.vue'),
-    meta: {
-      access: 'owner',
-    },
-  },
-  {
     path: '/book/:slug(.+)?-:isbn/edit',
     alias: '/book/:slug?/:isbn(.*)/edit',
     name: 'BookEdit',
@@ -196,22 +180,6 @@ const routes = [
     path: '/admin/books',
     name: 'BooksManager',
     component: () => import(/* webpackChunkName: "advisor" */ './pages/BooksManager.vue'),
-    meta: {
-      access: 'owner',
-    },
-  },
-  {
-    path: '/admin/books/update/:bid',
-    name: 'BookManagerUpdateForm',
-    component: () => import(/* webpackChunkName: "advisor" */ './pages/BookManagerForm.vue'),
-    meta: {
-      access: 'owner',
-    },
-  },
-  {
-    path: '/admin/books/add',
-    name: 'BookManagerAddForm',
-    component: () => import(/* webpackChunkName: "advisor" */ './pages/BookManagerForm.vue'),
     meta: {
       access: 'owner',
     },

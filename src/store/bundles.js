@@ -1,7 +1,7 @@
 import mergeOne from '@/util/mergeOne'
-import imaged from '@/store/modules/imaged'
+import managed from '@/store/modules/managed'
 import filterable from '@/store/modules/filterable'
 
-const module = mergeOne(imaged('bundles', 'cover'), filterable())
+const module = mergeOne(managed('bundles'), filterable())
 
 export default module
