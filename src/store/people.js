@@ -1,10 +1,10 @@
 import mergeOne from '@/util/mergeOne'
-import imaged from '@/store/modules/imaged'
+import managed from '@/store/modules/managed'
 import filterable from '@/store/modules/filterable'
 import shuffleable from '@/store/modules/shuffleable'
 
 const moduleFilterable = filterable()
-const module = mergeOne(imaged('people', 'cover'), moduleFilterable, shuffleable(), {
+const module = mergeOne(managed('people'), moduleFilterable, shuffleable(), {
   getters: {
     // override filterable getters.filtered to filter shuffled
     filtered: (state, getters, rootState) =>
