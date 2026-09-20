@@ -1,0 +1,163 @@
+---
+name: ship
+description: 'Finish a feature branch: run quality gates (lint, build, test), commit, open a PR, and squash-merge it automatically once the gates pass. Use when done with a change and ready to land it on main.'
+---
+
+# Ship (finish feature → PR → automatic squash merge)
+
+Take the current feature branch (usually in a worktree), verify it, open a PR, and land it on `main`
+as a single squash-merged commit — automatically, without pausing for approval, as soon as the
+quality gates in step 1 pass.
+
+## Procedure
+
+### 0. Prefix the session title with 🚀
+
+Read the session's title (`mcp__ccd_session_mgmt__get_session` with `"self"`) and set it back with a
+`🚀 ` prefix (`mcp__ccd_session_mgmt__set_session_title`), replacing any existing lifecycle prefix
+rather than stacking — a shipping session was usually `📦 ` a moment ago. Do this **now**, before any
+of the work: the sidebar should say what the session is doing while it is doing it. Step 7 puts the
+title back if the ship does not land. Do not report either. See `AGENTS.md` → Session titles.
+
+### 1. Quality gates (must pass before committing)
+
+Run in order, stop on the first failure, fix, then re-run before proceeding:
+
+```bash
+npm run lint && npm run build && npm test
+```
+
+- `npm run lint` — eslint over `src`, `functions` and `vue.config.js`. The same command runs in
+  `.husky/pre-push`, so a lint failure blocks the push in step 4 anyway; catching it here is cheaper
+  than catching it mid-ship.
+- `npm run build` — `vue-cli-service build`. Slow, and the gate that actually catches broken imports
+  and template errors; the test suite covers a handful of utils and one page component, nothing more.
+- `npm test` — `vitest run`. Use `npm test`, **not** `npm run test:watch`, which stays in watch mode
+  and hangs.
+
+**There is no format gate.** The repo is not prettier-clean at the root — `README.md`,
+`public/index.html` and `src/assets/style/main.scss` all fail `prettier --check` — so a blanket
+`prettier --write .` would drag unrelated reformatting into every ship. Prettier is wired into lint
+through `eslint-config-prettier`; leave it at that.
+
+**These gates are what the merge waits on, not CI.** `.github/workflows/test.yml` runs lint, build
+and a serve-the-dist smoke test on every PR, but step 5 merges without waiting for it — deliberately.
+Passing the gates locally is therefore the only signal that gates the merge, which makes running them
+non-negotiable: a skipped or ignored failure lands straight on `main`. The one thing CI checks and
+these gates do not is that the built `dist` actually serves; if that goes red on `main` after a
+merge, fix forward.
+
+### 2. Commit all staged and unstaged changes
+
+Generate a commit message from the diff. Match the repo's history, which is mostly a plain
+imperative subject (`BookSubmissionForm: Popup error.`, `Remove hashbang from .husky/pre-push.`)
+rather than conventional-commit prefixes.
+
+### 3. Rebase on the latest main
+
+```bash
+git fetch origin main && git rebase origin/main
+```
+
+If the rebase hits conflicts: resolve them (prefer the branch changes unless clearly wrong),
+`git add` the resolved files, `git rebase --continue`, and repeat until it completes. Do not flag an
+out-of-date main or conflicts — just silently rebase and resolve.
+
+Run the rebase bare, or under `set -o pipefail`. Piping it (`git rebase origin/main 2>&1 | tail -2 && git push …`)
+hides a conflict's exit status, so the `&&` chain carries on and pushes and opens the PR from the
+middle of a rebase; both fail with unrelated-looking errors (`could not determine the current branch`)
+and the conflict only surfaces afterwards.
+
+### 4. Push the branch and open a PR
+
+```bash
+git push -u origin HEAD --force-with-lease
+```
+
+The `pre-push` hook runs `npm run lint` again here. It passed in step 1; if it fails now, something
+changed after the gates ran — re-run step 1 rather than pushing with `--no-verify`.
+
+Then create the PR with `gh pr create`, using a title that matches the commit subject and a body that
+summarizes the overall diff. This repo has no PR template.
+
+### 5. Squash merge automatically
+
+Print the PR URL, then merge immediately. Do **not** ask for approval — the passing gates in step 1
+are the approval, and every PR this skill opens is merged.
+
+```bash
+gh pr merge <PR#> --squash --subject "<commit subject> (#<PR#>)" --body ""
+```
+
+**Run it bare — no pipes, no `;`, no `&&`, no `$(...)`.** Allow rules match a command _prefix_, so
+`.claude/settings.json`'s `Bash(gh pr merge:*)` only covers a command that _starts_ with
+`gh pr merge`. The moment you wrap it — `gh pr merge --squash | tail -5`, or chain a `gh pr view`
+after a `;` — the whole line matches no rule and falls through to the auto-mode classifier, which
+denies it. This is the same trap step 6 describes for `git -C * pull`; it applies to every
+allowlisted command. Pass `--subject`/`--body` so the merge never stops on an interactive prompt to
+edit the squash commit message, and name the PR number explicitly rather than letting `gh` infer it
+from the current branch.
+
+Merge unconditionally, without `--auto`. GitHub's auto-merge feature is disabled on this repo
+(`allow_auto_merge: false`), so `--auto` errors out — and since the merge does not wait on CI
+(step 1), there is nothing for it to wait on anyway.
+
+**If the classifier denies the merge, the allow rule is almost certainly present and fine — check the
+command shape first.** A denial is silent about its own cause, and the overwhelmingly common cause is
+a compound command, not a missing rule. Re-run it bare before concluding anything else.
+
+**If a bare `gh pr merge` is still denied**, then hand it over: print the PR URL and give the user
+this command, which is self-contained and never prompts for a commit message:
+
+```bash
+gh pr merge <PR#> --repo a-thousand-worlds/a-thousand-worlds --squash --subject "<commit subject> (#<PR#>)" --body ""
+```
+
+The only reason to stop before merging is a gate that never passed. If step 1 still fails after your
+fixes, leave the PR open, say plainly which gate is red, and do not merge.
+
+Do **not** pass `--delete-branch`: it tries to check out `main` locally, which fails here because the
+main checkout holds some other branch. This repo also has "automatically delete head branches"
+_disabled_ (`delete_branch_on_merge: false`), so unlike its sibling repos nothing removes the remote
+branch on its own. Delete it after the merge, bare:
+
+```bash
+git push origin --delete <branch>
+```
+
+**Even without `--delete-branch`, `gh pr merge` may still print a checkout error** (something like
+failing to switch this checkout back to `main`). That's just `gh`'s local post-merge cleanup step
+attempting to move the current worktree back to `main` — it always fails the same way, for the same
+reason, and it's harmless: the merge on GitHub has already completed by that point. Don't treat it as
+a failure or retry the merge because of it. Confirm the actual result with
+`gh pr view <PR#> --json state,mergedAt` (allowlisted as `Bash(gh pr view:*)`, and bare like the
+merge), or with `git fetch origin main && git log --oneline origin/main -1`, before deciding whether
+it worked.
+
+**If the merge fails because `main` advanced in the meantime** (e.g. another worktree's PR landed
+first): go back to step 3, rebase on the new `origin/main`, force-push with `--force-with-lease`, and
+retry the merge. Repeat until it succeeds — nothing is merged or lost in the failed attempts.
+
+### 6. Post-merge
+
+- Read the main worktree path from `git worktree list` (it is the first entry), then substitute that
+  literal path into the next two commands. Do **not** wrap them in one `MAIN=$(...) && ...` compound,
+  and do not pipe or chain them: `.claude/settings.json` allowlists `git -C * pull` and
+  `npm install --prefix *`, but allow rules match a command _prefix_, so anything that is not a bare
+  invocation of the allowlisted command matches no rule and gets denied by the permission classifier.
+  (Piping to `tail` to trim output is the usual way this happens.)
+- The same `git worktree list` entry shows which branch the main checkout has out, and here it is
+  routinely _not_ `main` — it sits on whatever `pr/NN` branch was last reviewed. If it is not `main`,
+  `git -C … pull` would update that branch's upstream instead: skip the pull and the install, run
+  `git fetch origin main` here so every worktree's `origin/main` is current, and say so in the summary.
+- Update the main worktree: `git -C /abs/path/to/main pull`.
+- Sync its dependencies: `npm install --prefix /abs/path/to/main`.
+- Print `🚀 Shipped`.
+
+### 7. Correct the title if the ship did not land
+
+If the merge succeeded, the `🚀 ` from step 0 stays — through the report and after it, until the
+session starts something else and that stage's prefix replaces it. Never clear it to leave a bare
+title. If the merge failed, or the ship was abandoned before it, put the title back to the prefix
+that is true now: `📦 ` for a gated branch, `⏳ ` if the work goes back to implementing, `🚙 ` if it
+waits on the user. Do not report this step.
