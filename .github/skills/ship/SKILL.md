@@ -1,6 +1,6 @@
 ---
 name: ship
-description: 'Finish a feature branch: run quality gates (lint, build, test), commit, open a PR, and squash-merge it automatically once the gates pass. Use when done with a change and ready to land it on main.'
+description: 'Finish a feature branch: run quality gates (lint, build, test), commit, open a PR, squash-merge it automatically once the gates pass, and extract the session's learnings. Use when done with a change and ready to land it on main.'
 ---
 
 # Ship (finish feature → PR → automatic squash merge)
@@ -16,7 +16,7 @@ quality gates in step 1 pass.
 Read the session's title (`mcp__ccd_session_mgmt__get_session` with `"self"`) and set it back with a
 `🚀 ` prefix (`mcp__ccd_session_mgmt__set_session_title`), replacing any existing lifecycle prefix
 rather than stacking — a shipping session was usually `📦 ` a moment ago. Do this **now**, before any
-of the work: the sidebar should say what the session is doing while it is doing it. Step 7 puts the
+of the work: the sidebar should say what the session is doing while it is doing it. Step 9 puts the
 title back if the ship does not land. Do not report either. See `AGENTS.md` → Session titles.
 
 ### 1. Quality gates (must pass before committing)
@@ -152,9 +152,28 @@ retry the merge. Repeat until it succeeds — nothing is merged or lost in the f
   `git fetch origin main` here so every worktree's `origin/main` is current, and say so in the summary.
 - Update the main worktree: `git -C /abs/path/to/main pull`.
 - Sync its dependencies: `npm install --prefix /abs/path/to/main`.
-- Print `🚀 Shipped`.
 
-### 7. Correct the title if the ship did not land
+### 7. Extract the learnings
+
+Invoke the `learn` skill. A shipped change is the moment its lessons are worth writing down: the
+branch is landed, nothing is pending, and whatever the session learned about the app, the tree or
+the workflow is still in context — an hour later it is in nobody's. This is not optional and the
+user does not have to ask for it; it is the last stage of shipping.
+
+Skip it only when `learn` or `learn-organize` is what invoked this ship — their own procedures end
+in one, and landing those learnings is that ship's whole job. Otherwise the two call each other
+forever.
+
+`learn` puts `📚 ` on the title, replacing the `🚀 ` from step 0. Put `🚀 ` back when it finishes:
+the session shipped, and that is the stage it rests at.
+
+If `learn` finds nothing worth recording, that is a normal outcome — say so in one line and move on.
+
+### 8. Print the completion message
+
+Print `🚀 Shipped` as the last line of the response, after the learn report.
+
+### 9. Correct the title if the ship did not land
 
 If the merge succeeded, the `🚀 ` from step 0 stays — through the report and after it, until the
 session starts something else and that stage's prefix replaces it. Never clear it to leave a bare
