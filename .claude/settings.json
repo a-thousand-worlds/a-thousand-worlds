@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/sync-worktree-local-files.sh\"",
+            "timeout": 60,
+            "statusMessage": "Syncing local files into worktree"
+          }
+        ]
+      }
+    ]
+  }
+}
