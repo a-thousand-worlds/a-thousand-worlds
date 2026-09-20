@@ -32,7 +32,7 @@ pnpm-debug.log*
 
 # Databse cache
 public/dbcache.js
-public/img/*
+public/img
 
 # Compound Engineering scratch
 .context/compound-engineering/
