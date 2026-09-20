@@ -62,9 +62,10 @@ worktree of the session it forked from, and nothing stops a branch being checked
 moves that worktree under the other session's feet; put it back on the branch it was on when the
 work is landed.
 
-A cloud session never reaches `💾 `. The Firebase credentials live in `.env` and `.env.production`,
-which are outside git, so a fresh clone can reach neither the database nor a deploy. It ends at
-`📦 ` or `🚙 `.
+A cloud session never reaches `💾 `, though not for want of a database URL: `.env.production` is
+tracked and fully populated, so a fresh clone can _read_ production from the first commit. What it
+cannot do is change anything. Writing needs `functions/serviceAccountKey.json` and deploying needs a
+`firebase login`, and both of those live outside git. It ends at `📦 ` or `🚙 `.
 
 This vocabulary came from the sibling `email-filter-builder` and `github-triage` repos, where the
 reasoning behind it lives.
@@ -107,3 +108,45 @@ as a script. Restart the server; reloading the page will not pick it up.
 address for the HMR socket (`ws://192.168.x.x:8080/ws`), which the sandboxed pane cannot open, so its
 console shows a failed WebSocket and edits never hot-reload there. Reload the pane by hand, or
 preview in Brave, where it works normally. Not a defect to chase.
+
+## Reading live data
+
+The `atw-firebase` MCP server, registered for the project in `.mcp.json`, is how a session reads the
+production Realtime Database: `list_paths` for the shape, `list_keys` for a collection's ids,
+`get_value` for a record or a field. Reach for it before `curl`, which the auto-mode classifier stops
+as a production read, and before `firebase database:get`, which needs the Firebase CLI's own login.
+The MCP tools stop for nothing, because there is nothing to weigh — the server issues HTTP GET and
+exposes no `set`, `update`, `push` or `remove`, so a mutation is not something it can be asked for.
+
+**A read through it is not `💾 ` work.** `💾 ` warns other sessions that live state is changing;
+these tools change nothing, in the database or on disk. Nothing needs announcing, and no other
+session needs checking first.
+
+The world-readable paths — `books`, `cache`, `content`, `invites`, `links`, `people`, `tags` — need
+no credentials at all. `logs`, `submits`, `users` and the database root need
+`functions/serviceAccountKey.json`, which is gitignored; without it those reads fail with a message
+saying so and every other path keeps working.
+
+Do not pull a whole table. A `get_value` over the size limit is refused rather than truncated, since
+truncated JSON cannot be parsed — take the ids with `list_keys`, or a few records with `orderBy`
+plus `limitToFirst`. `README.md` → Database MCP server has the tools and their options;
+`docs/firebase-read-mcp.md` has the REST behaviour behind them and the designs that were rejected.
+
+## Linting
+
+`npm run lint` covers `src`, `functions`, `mcp` and `vue.config.js`, and `.husky/pre-push` runs it
+again, so a lint failure blocks the push rather than the commit.
+
+**`fp/no-mutating-methods` rejects `.sort()`.** `src/` works around it with
+`// eslint-disable-next-line fp/no-mutating-methods`, which predates the non-mutating array methods.
+In Node-side code — `mcp/`, `migrations/`, `functions/` — write `.toSorted()` instead and skip the
+comment; it satisfies the rule rather than suppressing it. Leave the existing disables in `src/`
+alone rather than churning browser code for it.
+
+## Tests
+
+Vitest defaults to jsdom here, and `src/` is ESM while `mcp/`, `migrations/` and `functions/` are
+CommonJS. A test for Node-side code therefore opens with `// @vitest-environment node` and loads its
+subject through `createRequire(import.meta.url)` rather than `import`, which keeps Vite's ESM
+transform away from a file written for Node's own resolver. `mcp/firebase-read/server.test.js` is
+the worked example.

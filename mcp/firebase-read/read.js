@@ -4,6 +4,8 @@
  * only through PUT, PATCH, POST and DELETE, and no code path here can reach those verbs: the
  * method is a literal in a single function and is never a parameter. That holds even when a
  * gated read attaches a service account token, which carries full admin privileges.
+ *
+ * docs/firebase-read-mcp.md has the REST behaviour this works around and the designs it rejected.
  */
 
 const fs = require('node:fs')
