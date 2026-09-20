@@ -28,6 +28,8 @@
 1. Generate service account key
    - Firebase Project -> Settings -> Service Accounts -> Generate new private key
    - Save to `/functions/serviceAccountKey.json`
+1. No setup is needed for the read-only database MCP server — it is registered in `.mcp.json` and
+   reads the public paths without credentials. See [Database MCP server](#database-mcp-server).
 1. Add Goodreads API key for firebase function
    - `firebase functions:config:set goodreads.api_key="YOUR_API_KEY"`
 1. Deploy Firebase functions: `firebase deploy --only functions`
@@ -75,6 +77,55 @@ firebase functions:config:get > functions/.runtimeconfig.json
 npm run build
 firebase emulators:start
 ```
+
+## Database MCP server
+
+`mcp/firebase-read/` is an MCP server that gives agent sessions read-only access to the Realtime
+Database, so they can query live data directly instead of shelling out to `curl` or
+`firebase database:get`. It is registered for the project in `.mcp.json` and needs no setup: run
+`npm install` and it starts on demand.
+
+It exposes three tools, and only these three:
+
+| Tool         | Does                                                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `list_paths` | Lists the top-level paths and whether each one is public or gated. No network call.                                                  |
+| `list_keys`  | Lists the child keys at a path without downloading their values.                                                                     |
+| `get_value`  | Reads the value at a path, optionally narrowed by `shallow`, `orderBy`, `limitToFirst`/`limitToLast` or `startAt`/`endAt`/`equalTo`. |
+
+**It cannot write.** There is no `set`, `update`, `push` or `remove` tool, and the client
+underneath issues nothing but HTTP GET — the method is a literal at a single call site, never a
+parameter, so the Realtime Database's write verbs (PUT, PATCH, POST, DELETE) are unreachable even
+when an admin token is attached. `mcp/firebase-read/server.test.js` asserts this: mutation attempts
+are rejected as unknown tools, every read is a GET, and neither module names a mutating method.
+
+### Paths
+
+The paths `firebase.rules.json` marks `".read": true` — `books`, `cache`, `content`, `invites`,
+`links`, `people`, `tags` — are read anonymously, with no credentials loaded.
+
+`logs`, `submits`, `users` and the database root are gated. Reading one mints an access token from
+`functions/serviceAccountKey.json` (the same key the Firebase functions use), which is loaded lazily
+— only on a call that actually needs it. Without that key a gated read fails with a message saying
+so; the public paths keep working. Set `ATW_SERVICE_ACCOUNT_KEY` to use a key from another location.
+
+### Sampling
+
+A read over 100,000 characters is refused rather than truncated, since truncated JSON cannot be
+parsed. Sample a large collection instead:
+
+- `list_keys` with path `books` for the ids and the count
+- `get_value` with path `books` and `shallow: true` for the same thing as a raw map
+- `get_value` with path `books`, `orderBy: "$key"` and `limitToFirst: 5` for a handful of records
+- `get_value` with path `books/<id>/title` for one field
+
+`shallow` cannot be combined with `orderBy` or a limit — Firebase returns every key, in
+lexicographical order. Raise the size limit with `ATW_MAX_RESPONSE_CHARS` if a bulk read is really
+wanted.
+
+The database URL comes from `VUE_APP_FIREBASE_DATABASE_URL`, read from the environment or, failing
+that, from `.env.production`, `.env.local` or `.env` — so the server follows whichever database the
+rest of the project is pointed at.
 
 ## Database caching
 

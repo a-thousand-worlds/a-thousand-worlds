@@ -10,7 +10,7 @@
     "deploy:staging": "npm run build && npm run host:staging",
     "emulate": "firebase emulators:start --only functions",
     "host:staging": "firebase hosting:channel:deploy staging --expires 30d",
-    "lint": "eslint src functions vue.config.js",
+    "lint": "eslint src functions mcp vue.config.js",
     "postinstall": "husky",
     "start": "vue-cli-service serve",
     "start:local": "npm run build && VUE_APP_DATABASE_EMULATOR vue-cli-service serve",
@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.5",
+    "@modelcontextprotocol/sdk": "^1.22.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/vue": "^8.1.0",
     "@vitejs/plugin-vue": "^5.2.4",

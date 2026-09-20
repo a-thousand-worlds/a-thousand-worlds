@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "atw-firebase": {
+      "command": "node",
+      "args": ["mcp/firebase-read/server.js"]
+    }
+  }
+}

@@ -112,6 +112,8 @@ module.exports = [
     languageOptions: {
       globals: {
         ...globals.jest,
+        // vitest's test utilities, which globals.jest does not cover
+        vi: 'readonly',
       },
     },
   },
