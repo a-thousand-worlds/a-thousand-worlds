@@ -71,18 +71,29 @@ reasoning behind it lives.
 
 ## Running the app
 
-`npm start` serves the dev build at http://localhost:8080. In a new worktree, `npm install` first —
-that is the one setup step left by hand.
+`npm start` serves the dev build at http://localhost:8080. A new worktree needs no setup step by
+hand.
 
-Everything else a worktree needs is gitignored, and `.claude/hooks/sync-worktree-local-files.sh`
-places it on `SessionStart`: `.env.local` and `public/dbcache.js` are copied from the main checkout,
-and `public/img` is symlinked to it — the photos are the bulk of it (~19M today) and are a generated
+Everything a worktree needs is gitignored, and `.claude/hooks/sync-worktree-local-files.sh` places
+it on `SessionStart`: `.env.local` and `public/dbcache.js` are copied from the main checkout,
+`public/img` is symlinked to it — the photos are the bulk of it (~19M today) and are a generated
 per-machine artifact, so one copy is enough, while the small two stay copies so a worktree can
-diverge. Each is placed only when missing. Do not hand-copy them; if one is absent, the hook is what
-to fix.
+diverge — and `node_modules` is symlinked to it as well, whenever the main checkout's tree is
+provably the one this branch needs. Each is placed only when missing. Do not hand-copy or
+hand-install them; if one is absent, the hook is what to fix.
 
 Without them the app still boots — the store falls back to reading Firebase live — but the console
 says the cache has not been generated, and every cover and portrait 404s.
+
+**`npm install <pkg>` from a worktree writes through the `node_modules` symlink**, changing the
+_main checkout's_ dependencies — the same hazard as `update:dbcache` below, one layer down. To add
+or change a dependency on a branch, give the worktree a tree of its own first,
+`rm node_modules && npm ci`, which the hook then leaves alone. Sharing is worth this because a
+symlink is instant where duplicating the tree costs more than a clean install; the main checkout
+stays on `main` so the two trees keep agreeing, since a checkout parked on a feature branch, or one
+that pulled a dependency change without reinstalling, silently costs every new worktree a full
+install. `docs/worktrees.md` has the mechanism, the measurements, and the approaches that were tried
+and rejected.
 
 **`npm run update:dbcache .env.local` writes through the symlink.** Run from a worktree it rebuilds
 that worktree's own `public/dbcache.js`, but adds new photos to the _main checkout's_ `public/img`,
