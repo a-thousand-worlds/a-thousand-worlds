@@ -27,7 +27,7 @@ Run in order, stop on the first failure, fix, then re-run before proceeding:
 npm run lint && npm run build && npm test
 ```
 
-- `npm run lint` — eslint over `src`, `functions` and `vue.config.js`. The same command runs in
+- `npm run lint` — eslint over `src`, `functions`, `mcp` and `vue.config.js`. The same command runs in
   `.husky/pre-push`, so a lint failure blocks the push in step 4 anyway; catching it here is cheaper
   than catching it mid-ship.
 - `npm run build` — `vue-cli-service build`. Slow, and the gate that actually catches broken imports
@@ -129,10 +129,16 @@ git push origin --delete <branch>
 failing to switch this checkout back to `main`). That's just `gh`'s local post-merge cleanup step
 attempting to move the current worktree back to `main` — it always fails the same way, for the same
 reason, and it's harmless: the merge on GitHub has already completed by that point. Don't treat it as
-a failure or retry the merge because of it. Confirm the actual result with
-`gh pr view <PR#> --json state,mergedAt` (allowlisted as `Bash(gh pr view:*)`, and bare like the
-merge), or with `git fetch origin main && git log --oneline origin/main -1`, before deciding whether
-it worked.
+a failure or retry the merge because of it.
+
+**Confirm the result with two bare git commands, one per call** — `git fetch origin main`, then
+`git log --oneline origin/main -1`. The squash commit appearing on `origin/main` is the proof.
+`gh pr view <PR#> --json state,mergedAt` is _not_ allowlisted (`.claude/settings.json` grants
+`Bash(gh pr merge:*)` and nothing else) and the classifier denies it as a Merge Without Review, so
+reaching for it after a successful merge produces a denial that reads like the merge failed.
+Chaining the two git commands with `&&` is denied as well: the compound-command trap above is not
+limited to allowlisted commands, and a chain of two individually-harmless read-only commands still
+matches no rule.
 
 **If the merge fails because `main` advanced in the meantime** (e.g. another worktree's PR landed
 first): go back to step 3, rebase on the new `origin/main`, force-push with `--force-with-lease`, and
