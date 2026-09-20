@@ -68,3 +68,31 @@ which are outside git, so a fresh clone can reach neither the database nor a dep
 
 This vocabulary came from the sibling `email-filter-builder` and `github-triage` repos, where the
 reasoning behind it lives.
+
+## Running the app
+
+`npm start` serves the dev build at http://localhost:8080. In a new worktree, `npm install` first —
+that is the one setup step left by hand.
+
+Everything else a worktree needs is gitignored, and `.claude/hooks/sync-worktree-local-files.sh`
+places it on `SessionStart`: `.env.local` and `public/dbcache.js` are copied from the main checkout,
+and `public/img` is symlinked to it — the photos are the bulk of it (~19M today) and are a generated
+per-machine artifact, so one copy is enough, while the small two stay copies so a worktree can
+diverge. Each is placed only when missing. Do not hand-copy them; if one is absent, the hook is what
+to fix.
+
+Without them the app still boots — the store falls back to reading Firebase live — but the console
+says the cache has not been generated, and every cover and portrait 404s.
+
+**`npm run update:dbcache .env.local` writes through the symlink.** Run from a worktree it rebuilds
+that worktree's own `public/dbcache.js`, but adds new photos to the _main checkout's_ `public/img`,
+which every other worktree is reading. It reads live Firebase too, so it is `💾 ` work.
+
+**The dev server snapshots `public/` at startup.** A file added there afterwards — a freshly
+generated `dbcache.js` — is served as the SPA fallback instead, which arrives as HTML and is refused
+as a script. Restart the server; reloading the page will not pick it up.
+
+**Hot reload does not reach the in-app Browser pane.** The dev server hands the client its LAN
+address for the HMR socket (`ws://192.168.x.x:8080/ws`), which the sandboxed pane cannot open, so its
+console shows a failed WebSocket and edits never hot-reload there. Reload the pane by hand, or
+preview in Brave, where it works normally. Not a defect to chase.
