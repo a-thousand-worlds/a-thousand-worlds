@@ -35,8 +35,8 @@ Set a prefix **optimistically** — when the stage _starts_, not when it succeed
 the stage falls over. A title that only becomes true at the end is blank for the whole stretch the
 sidebar is there to describe. `🚀 ` is set by the `ship` skill, which sets it before it runs the
 gates and puts it back if the ship does not land, so it stays true on its own. `📚 ` goes on the
-moment a `learn` skill is invoked, before anything is read. The rest are set by hand
-(`mcp__ccd_session_mgmt__set_session_title`), and nothing reconciles a title against reality: an
+moment a `learn` skill is invoked, before anything is read. The rest are set in the response that
+enters the stage (`mcp__ccd_session_mgmt__set_session_title`), and nothing reconciles a title against reality: an
 abandoned session keeps whatever prefix it had.
 
 **Handing back is itself a stage.** A response that closes on something for the user to do — a
