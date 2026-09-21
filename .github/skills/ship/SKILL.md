@@ -11,14 +11,6 @@ quality gates in step 1 pass.
 
 ## Procedure
 
-### 0. Prefix the session title with 🚀
-
-Read the session's title (`mcp__ccd_session_mgmt__get_session` with `"self"`) and set it back with a
-`🚀 ` prefix (`mcp__ccd_session_mgmt__set_session_title`), replacing any existing lifecycle prefix
-rather than stacking — a shipping session was usually `📦 ` a moment ago. Do this **now**, before any
-of the work: the sidebar should say what the session is doing while it is doing it. Step 9 puts the
-title back if the ship does not land. Do not report either. See `AGENTS.md` → Session titles.
-
 ### 1. Quality gates (must pass before committing)
 
 Run in order, stop on the first failure, fix, then re-run before proceeding:
@@ -170,8 +162,7 @@ Skip it only when `learn` or `learn-organize` is what invoked this ship — thei
 in one, and landing those learnings is that ship's whole job. Otherwise the two call each other
 forever.
 
-`learn` puts `📚 ` on the title, replacing the `🚀 ` from step 0. Put `🚀 ` back when it finishes:
-the session shipped, and that is the stage it rests at.
+`learn` puts `📚 ` on the title. Step 9 replaces it once this ship is done.
 
 If `learn` finds nothing worth recording, that is a normal outcome — say so in one line and move on.
 
@@ -179,10 +170,11 @@ If `learn` finds nothing worth recording, that is a normal outcome — say so in
 
 Print `🚀 Shipped` as the last line of the response, after the learn report.
 
-### 9. Correct the title if the ship did not land
+### 9. Prefix the session title with 🚀
 
-If the merge succeeded, the `🚀 ` from step 0 stays — through the report and after it, until the
-session starts something else and that stage's prefix replaces it. Never clear it to leave a bare
-title. If the merge failed, or the ship was abandoned before it, put the title back to the prefix
-that is true now: `📦 ` for a gated branch, `⏳ ` if the work goes back to implementing, `🚙 ` if it
-waits on the user. Do not report this step.
+The merge landed, so set it now and not before: read the session's title
+(`mcp__ccd_session_mgmt__get_session` with `"self"`) and set it back with a `🚀 ` prefix
+(`mcp__ccd_session_mgmt__set_session_title`), replacing whatever prefix is there rather than stacking
+— `📦 ` from the gated branch, or the `📚 ` step 7 left. It stays until another stage replaces it;
+never clear it to leave a bare title. A ship that never landed never set it, so there is nothing to
+put back and nothing to correct. Do not report this step. See `AGENTS.md` → Session titles.
