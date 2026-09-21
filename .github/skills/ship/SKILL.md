@@ -162,15 +162,11 @@ Skip it only when `learn` or `learn-organize` is what invoked this ship — thei
 in one, and landing those learnings is that ship's whole job. Otherwise the two call each other
 forever.
 
-`learn` puts `📚 ` on the title. Step 9 replaces it once this ship is done.
+`learn` puts `📚 ` on the title. Step 8 replaces it once this ship is done.
 
 If `learn` finds nothing worth recording, that is a normal outcome — say so in one line and move on.
 
-### 8. Print the completion message
-
-Print `🚀 Shipped` as the last line of the response, after the learn report.
-
-### 9. Prefix the session title with 🚀
+### 8. Prefix the session title with 🚀
 
 The merge landed, so set it now and not before: read the session's title
 (`mcp__ccd_session_mgmt__get_session` with `"self"`) and set it back with a `🚀 ` prefix
@@ -178,3 +174,7 @@ The merge landed, so set it now and not before: read the session's title
 — `📦 ` from the gated branch, or the `📚 ` step 7 left. It stays until another stage replaces it;
 never clear it to leave a bare title. A ship that never landed never set it, so there is nothing to
 put back and nothing to correct. Do not report this step. See `AGENTS.md` → Session titles.
+
+### 9. Print the completion message
+
+Print `🚀 Shipped` as the last line of the response, after the learn report.
