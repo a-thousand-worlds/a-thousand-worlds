@@ -107,3 +107,12 @@ CommonJS. A test for Node-side code therefore opens with `// @vitest-environment
 subject through `createRequire(import.meta.url)` rather than `import`, which keeps Vite's ESM
 transform away from a file written for Node's own resolver. `mcp/firebase-read/server.test.js` is
 the worked example.
+
+## Documented solutions
+
+`docs/solutions/` holds documented solutions to past problems (bugs, best practices, workflow
+patterns), organized by category with YAML frontmatter (`module`, `tags`, `problem_type`). Relevant
+when implementing or debugging in an area one of them covers. The longer-form engineering write-ups
+stay where they are — [`docs/worktrees.md`](docs/worktrees.md) and
+[`docs/firebase-read-mcp.md`](docs/firebase-read-mcp.md) — and `README.md` has the setup, the
+Database MCP server reference, and how the dbcache is built and deployed.
