@@ -43,12 +43,12 @@ For a while nothing stored the link. It was rederived on demand, two different w
 **Rederivation 1 — the approved-submission id chain.** Walk `user.profile.submissions`, find the
 approved people submission, read its `peopleId`, index `people.data` with that. Three hops of
 id-pointing-at-id, and the pointer was carried in a field name. Renaming that field (`peopleId` to
-`peopleSubmissionId`) broke every hop at once, and for a while a submission carried *two* id fields
+`peopleSubmissionId`) broke every hop at once, and for a while a submission carried _two_ id fields
 — one for the submission the person came from, one for the person — which the call sites confused
 for each other.
 
 **Rederivation 2 — the fuzzy name match.** Give up on the chain and join on the person's name:
-`people/findBy(person => almostEqual(person.name, sub.name))`, where `almostEqual`
+`people/findBy('', person => almostEqual(person.name, sub.name))`, where `almostEqual`
 (`src/util/almostEqual.js`) strips punctuation, diacritics and case. This makes a mutable,
 human-entered field the primary key. `13ccdde2` says what that cost: "Since store/submissions/people
 was matching the creator to the submission based on name, changing the creator name would break the
@@ -61,7 +61,8 @@ Store the link as an explicit `personId` and write it to **all three** places th
 establishes it — the submission, the user profile, and the person record's own `id`. Then every
 reader looks it up instead of reconstructing it.
 
-Approval writes it back (`src/store/submissions/people.js`):
+`updateSubmission` writes it back (`src/store/submissions/people.js`), which `approvePerson`
+dispatches on its way through:
 
 ```js
 // onto the submission
@@ -105,8 +106,8 @@ Before `9719bc8f` this read `personNew.id`, which came from spreading a possibly
 ## Why This Matters
 
 A name is data a user edits. A derived link is a join recomputed at read time against whatever the
-schema happens to look like then, so it breaks on a rename in either direction: rename the *person*
-and the fuzzy match stops matching; rename the *field* and the id chain stops resolving. Both
+schema happens to look like then, so it breaks on a rename in either direction: rename the _person_
+and the fuzzy match stops matching; rename the _field_ and the id chain stops resolving. Both
 failures are silent. Nothing throws — the lookup just returns nothing, approval treats a returning
 creator as new, and the database grows a duplicate person record that no profile points at. That is
 `💾 ` damage in live data, not a test failure someone catches on a branch.
@@ -137,11 +138,12 @@ resolves to the global `window.name`, normally the empty string, so `almostEqual
 matches only a person whose name normalizes to empty. The branch can never find anyone. It does not
 throw (`findBy` in `src/store/modules/collection.js` treats a lone predicate as its optional-first-arg
 form, and `get(obj, '')` in `src/util/get-set.js` returns the object), so it fails by returning
-nothing. The intent was presumably `sub.name` — but that is the matcher this chain removed, so the
-fix is to delete the branch, not to bind it.
+nothing. It was `sub.name` until `13ccdde2` hoisted the matcher out of the helper whose parameter
+supplied it and dropped the prefix in the move — but that matcher is what this chain removed, so the
+fix is to delete the branch, not to rebind it.
 
 The `// TODO: This would be a lot easier if the peopleId was stored in the user profile` above
-`personSubmissionId` in the same file is also stale: the personId *is* stored in the profile now.
+`personSubmissionId` in the same file is also stale: the personId _is_ stored in the profile now.
 `personSubmissionId` still walks the old chain, and still feeds `peopleSubmissionId` on the
 submission, which is a different id from `personId` and should not be mistaken for it.
 

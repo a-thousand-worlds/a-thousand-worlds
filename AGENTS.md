@@ -112,7 +112,11 @@ the worked example.
 
 `docs/solutions/` holds documented solutions to past problems (bugs, best practices, workflow
 patterns), organized by category with YAML frontmatter (`module`, `tags`, `problem_type`). Relevant
-when implementing or debugging in an area one of them covers. The longer-form engineering write-ups
-stay where they are — [`docs/worktrees.md`](docs/worktrees.md) and
-[`docs/firebase-read-mcp.md`](docs/firebase-read-mcp.md) — and `README.md` has the setup, the
-Database MCP server reference, and how the dbcache is built and deployed.
+when implementing or debugging in an area one of them covers.
+[`CONCEPTS.md`](CONCEPTS.md) holds the shared domain vocabulary — the entities, processes and status
+concepts that mean something specific here — and is worth reading when orienting to the codebase.
+
+The longer-form engineering write-ups stay where they are —
+[`docs/worktrees.md`](docs/worktrees.md) and [`docs/firebase-read-mcp.md`](docs/firebase-read-mcp.md)
+— and `README.md` has the setup, the Database MCP server reference, and how the dbcache is built
+and deployed.

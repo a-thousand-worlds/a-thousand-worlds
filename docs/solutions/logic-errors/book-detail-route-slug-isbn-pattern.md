@@ -6,13 +6,13 @@ module: routing
 problem_type: logic_error
 component: frontend
 symptoms:
-  - "After collapsing the two BookDetail patterns into one, a hard refresh of /book/<slug>-<isbn> no longer resolves the book"
-  - "The break survives casual testing: clicking a book link still works, because that navigation never parses the URL"
+  - 'After collapsing the two BookDetail patterns into one, a hard refresh of /book/<slug>-<isbn> no longer resolves the book'
+  - 'The break survives casual testing: clicking a book link still works, because that navigation never parses the URL'
   - "A slugless /book/<isbn> URL does not match the strict '/book/:slug(.+)?-:isbn' pattern"
 root_cause: logic_error
 resolution_type: code_fix
 severity: high
-framework_version: "vue-router 4.0.0-rc.2"
+framework_version: 'vue-router 4.0.0-rc.2 (incident); re-verified on 4.6.3'
 tags: [vue, vue-router, routing, books, url-slug, spa-refresh]
 ---
 
@@ -26,7 +26,7 @@ The attempt (`5815f74`) replaced `path: '/book/:slug(.+)?-:isbn'` with `path: '/
 
 ## Symptoms
 
-- On a full page load of a book URL, `$route.params.isbn` comes out wrong, so `src/pages/BookDetail.vue` — which selects with `book => book.isbn === this.$route.params.isbn`, an exact match — finds no book.
+- On a full page load of a book URL, `$route.params.isbn` comes out wrong, so `src/pages/BookDetail.vue` — which matches isbn by exact string equality in two places, the reactive `book` computed and the non-reactive `getBook` above it — finds no book at all rather than the wrong one.
 - Navigating to the same book by clicking a link still works, so the regression does not show up unless you reload the page or open the link cold.
 
 ## What Didn't Work
@@ -47,13 +47,18 @@ path: '/book/:slug(.+)?-:isbn',
 alias: '/book/:slug?/:isbn(.*)',
 ```
 
-`BookDetailLink` went back to the plain `slug: slugify(this.book.title.replace(/'/g, ''))` and has stayed there. The alias declares `:slug?` only because vue-router warns when an alias does not carry the same params as its path; the slug is expected to be absent on that form.
+The link component — `BookDetailRoute.vue` at the time, since renamed to `src/components/BookDetailLink.vue` — went back to the plain `slug: slugify(this.book.title.replace(/'/g, ''))` and has stayed there. The alias declares `:slug?` only because vue-router warns when an alias does not carry the same params as its path; the slug is expected to be absent on that form.
 
 ## Why This Works
 
 A route pattern runs in two directions, and only one of them is exercised by clicking around the app. `BookDetailLink` navigates by named route — `{ name: 'BookDetail', params: { isbn, slug } }` — so vue-router builds the URL from the params it was handed and the component receives those params directly. Parsing a URL back into params happens on a full page load: a refresh, a pasted link, a shared link. That asymmetry is why a bad pattern passes a click-through test and fails in production on exactly the URLs people share.
 
 The `-` in `'/book/:slug(.+)?-:isbn'` is what makes the parse unambiguous, so it has to stay literal in the pattern rather than move into the slug value. A second entry is the cheap way to add a shape the strict pattern cannot express.
+
+**The same path/alias pair serves `BookEdit`, and carries no comment.** `src/router.js` repeats
+`path: '/book/:slug(.+)?-:isbn/edit'` with `alias: '/book/:slug?/:isbn(.*)/edit'`, so a change made
+to one of them has to be made to both — the uncommented copy is the one a reader is likely to
+"simplify" on its own.
 
 ## Prevention
 

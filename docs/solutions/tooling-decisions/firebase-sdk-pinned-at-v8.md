@@ -1,6 +1,6 @@
 ---
 title: The firebase client SDK is pinned at v8; exclude it from blanket dependency upgrades
-date: 2025-11-24
+date: 2025-12-07
 category: tooling-decisions
 module: firebase
 problem_type: tooling_decision
@@ -12,7 +12,7 @@ related_components:
   - database
 applies_when:
   - Running a blanket dependency upgrade across package.json
-  - Dependabot or a similar bot proposes bumping firebase
+  - Any PR proposes bumping firebase on its own
   - Adding a new Firebase call site in src/
 tags:
   - firebase
@@ -59,13 +59,24 @@ export default firebase
 Both halves of that are v8 shapes. `firebase/app` stopped having a namespaced default
 export in v9, and the bare side-effect subpath imports (`import 'firebase/auth'`) that
 attach `auth`, `database` and `storage` onto it stopped existing at the same time. Every
-consumer then calls through the accessors that idiom produces — about 30 `firebase.auth()`
+consumer then calls through the accessors that idiom produces — 27 `firebase.auth()`
 / `firebase.database()` / `firebase.storage()` call sites, concentrated in
 `src/store/user.js` and `src/store/modules/collection.js` and spread across
 `src/store/books.js`, `src/store/invites.js`, `src/store/links.js`,
 `src/store/modules/managed.js`, `src/util/sendEmail.js`, `src/util/setCacheRequired.js`
-and `src/util/ckeditorFirebaseUploadAdapter.js`. `src/store/users.js` reaches the same
-default export through a lazy `import('@/firebase')`.
+and `src/util/ckeditorFirebaseUploadAdapter.js`.
+
+**No consumer imports `@/firebase` statically.** In every one of those files the static
+import is commented out and the default export is reached through a lazy, chunk-split
+import, so a v9 rewrite has to preserve the deliberate `firebase` webpack chunk as well
+as change the syntax:
+
+```js
+// import firebase from '@/firebase'
+const firebaseImport = () => import(/* webpackChunkName: "firebase" */ '@/firebase')
+const firebasem = await firebaseImport()
+const firebase = firebasem.default
+```
 
 So moving off v8 is a code migration, not a version bump. It has two honest shapes:
 
@@ -90,16 +101,26 @@ It has already cost one round trip: merged in #23, reverted in #24 two weeks lat
 is the recurrence this note is meant to stop, and it is the recurrence a bot PR will
 propose again on its own schedule.
 
-Note what is *not* pinned. The Node-side Firebase packages have no compat constraint and
-moved freely in #23 and stayed there: `firebase-admin` (`^13.6.0`, used by `functions/`)
-and `firebase-tools` (`^14.26.0`). The constraint is the browser client only.
+**The pin is load-bearing outside `src/` too.** Three Node-side scripts initialize the
+same v8 client SDK with the same two v8 shapes — `migrations/update-dbcache.js`,
+`migrations/import-books.js` and `migrations/import-db.js`, each doing
+`require('firebase/app')` plus the bare `firebase/auth` and `firebase/database` subpath
+requires. `update-dbcache.js` is what `npm run update:dbcache` runs, and `npm run deploy`
+runs it in turn, so a v9 bump breaks the dbcache rebuild as silently as it breaks the app.
+
+Note what is _not_ pinned. The separate Node-side Firebase packages carry no compat
+constraint: `firebase-admin` (`^13.6.0`, used by `functions/`, already current and
+untouched by #23) and `firebase-tools`, which #23 moved from `^14.0.0` to `^14.26.0` and
+which stayed there. The constraint belongs to the `firebase` package alone.
 
 ## When to Apply
 
 - Before merging any multi-dependency upgrade — check whether `firebase` is in the diff.
-- When a dependency bot opens a PR bumping `firebase` on its own.
-- When writing a new Firebase call site: follow the existing `firebase.database()` idiom
-  rather than v9 modular syntax, which will not resolve against the installed version.
+- When a PR bumps `firebase` on its own.
+- When writing a new Firebase call site: follow the existing lazy-`firebaseImport()` plus
+  `firebase.database()` idiom above rather than v9 modular syntax, which will not resolve
+  against the installed version.
+- When touching `migrations/`, which loads the same v8 client SDK directly.
 
 ## Examples
 

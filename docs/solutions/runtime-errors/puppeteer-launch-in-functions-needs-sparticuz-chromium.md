@@ -1,6 +1,6 @@
 ---
 title: Puppeteer in functions/ must launch @sparticuz/chromium, and Amazon needs stealth plus a real-browser fingerprint
-date: 2021-03-10
+date: 2025-11-18
 category: runtime-errors
 module: functions
 problem_type: runtime_error
@@ -83,7 +83,9 @@ await page.setExtraHTTPHeaders({ 'accept-language': 'en-US,en;q=0.9' })
 `functions/package.json` lists `puppeteer-core`, not `puppeteer`, so no Chromium
 is installed with the dependency tree. `puppeteer-extra` does not change that: its
 `requireVanillaPuppeteer()` tries `require('puppeteer')` first and falls back to
-`require('puppeteer-core')`, so every `puppeteer-extra` launch in `functions/` is
+`require('puppeteer-core')` — and `functions/package-lock.json` has no `puppeteer`
+entry at all, so the fallback is the only branch that can be taken. Every
+`puppeteer-extra` launch in `functions/` is therefore
 a `puppeteer-core` launch underneath and has nothing to execute unless
 `executablePath` names a binary. `@sparticuz/chromium` supplies that binary along
 with the `args` and `headless` settings its build needs to start inside the
@@ -96,7 +98,7 @@ neither half substitutes for the other.
 ## Prevention
 
 - **Every `launch()` under `functions/` passes `executablePath: await
-  chromium.executablePath()` and spreads `chromium.args`.** A launch without it
+chromium.executablePath()` and spreads `chromium.args`.** A launch without it
   will pass review and pass locally (a developer machine often has a Chrome that
   `puppeteer-core` can be pointed at) and only fail once deployed.
 - **`functions/util/coverImageByISBN.js` still violates this.** Its `scrape()`
@@ -105,9 +107,21 @@ neither half substitutes for the other.
   `functions/amazonSearchBook.js`. That file is reachable from the `coverImageByISBN` HTTP
   function and from the `watchBooks` create/update triggers and
   `watchBookSubmissions`, so cover lookup for a newly added book runs it. Fixing
-  it means the launch options above; the stealth plugin it already has.
+  it means the launch options above plus the `runWith` below; the stealth plugin
+  it already has.
+- **A browser launch also needs `.runWith({ timeoutSeconds: 300, memory: '1GB' })`
+  at its export.** Every other launching entry point has it — `amazonSearchBook`
+  (`functions/index.js`, commented "increase function memory since we are doing image
+  processing"), the `watchBooks` triggers, `watchBookSubmissions`. The exception is
+  `exports.coverImageByISBN`, which is a bare `functions.https.onRequest(...)`, so the
+  HTTP path launches Chromium at the 256MB/60s default while the trigger paths into the
+  same file are provisioned. That is the second half of fixing the call site above.
 - **A dependency swap under `functions/` is a call-site audit.** Grepping
-  `functions` for `puppeteer` finds two files; #18 changed one.
+  `functions` for `puppeteer` finds two call sites; #18 changed one.
+- **`test/amazonSearchBook.sh` is how a launch is proven to work.** It runs the
+  function against `firebase emulators:start --only functions` and asserts on a known
+  result. It is not part of `npm test` (which is `vitest run` over `src/` and `mcp/`), so
+  it has to be run by hand — and there is no equivalent for `coverImageByISBN`.
 
 ## Related Issues
 
