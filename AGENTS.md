@@ -9,15 +9,29 @@ sessions; neither can be set from here — `set_session_title` takes a title str
 So a **single leading emoji on the title** is the only lever, and it is spent on what the app cannot
 know: where the work stands.
 
-| Prefix | Means                                                                                                         |
-| ------ | ------------------------------------------------------------------------------------------------------------- |
-| `⏳ `  | implementing — the weakest of them; every other prefix takes precedence                                        |
+| Prefix | Means                                                                                                            |
+| ------ | ---------------------------------------------------------------------------------------------------------------- |
+| `🎨 `  | brainstorming or designing with the user — exploring, sketching, deciding what to build                          |
+| `⏳ `  | implementing — the weakest of them; every other prefix takes precedence                                          |
+| `🔍 `  | auditing against live state — a dry run, or the plan it printed, with a write to follow                          |
+| `🔓 `  | about to take that slot — queued or blocked on it — or just released it                                          |
+| `🔒 `  | holding a single slot only one session can use at a time                                                         |
 | `💾 `  | writing to the live Firebase project right now — a `migrations/` script, `firebase database:*`, `npm run deploy` |
-| `📦 `  | done on the branch — gated and shippable without re-running anything                                           |
-| `🚀 `  | shipping to `main`, or shipped                                                                                 |
-| `🚙 `  | parked: the work is sound and waiting on the user (a decision, a credential, a confirmation click)             |
-| `🪦 `  | dead end — kept for the findings, not to resume                                                                |
-| `📚 `  | extracting learnings into `AGENTS.md`, `README.md` or the skills                                               |
+| `📦 `  | done on the branch — gated and shippable without re-running anything                                             |
+| `🚀 `  | shipping to `main`, or shipped                                                                                   |
+| `🚙 `  | parked: the work is sound and waiting on the user (a decision, a credential, a confirmation click)               |
+| `⏲️ `   | waiting on a task scheduled for later — nothing to do until it fires                                             |
+| `🪦 `  | dead end — kept for the findings, not to resume                                                                  |
+| `📚 `  | extracting learnings into `AGENTS.md`, `README.md` or the skills                                                 |
+
+`🔍 `, `🔒 ` and `🔓 ` are inert here — nothing in this repo takes a lock, and the live-data
+hazard is `💾 `'s. They are listed so the vocabulary reads the same in every repo, and are ready
+the day a workflow grows into one.
+
+**A design loop is not a park.** `🎨 ` holds through brainstorming and outranks `🚙 ` while it
+does: the back-and-forth _is_ the stage, so a park prefix on every turn of it marks the session as
+blocked without saying on what. It becomes `🚙 ` once the design is settled and waiting on a
+decision, and `⏳ ` when that decision comes.
 
 **Never mention a prefix in the response** — not what it was set to, not that it was already right,
 not that it was left alone. It is sidebar state; say nothing about it unless asked.
