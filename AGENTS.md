@@ -44,7 +44,10 @@ Without them the app still boots — the store falls back to reading Firebase li
 says the cache has not been generated, and every cover and portrait 404s.
 
 **`npm install <pkg>` from a worktree writes through the `node_modules` symlink**, changing the
-_main checkout's_ dependencies — the same hazard as `update:dbcache` below, one layer down. To add
+_main checkout's_ dependencies — the same hazard as `update:dbcache` below, one layer down. So does
+anything else that installs, `npx update-browserslist-db@latest` being the one most easily missed:
+`npm run lint` invites it by printing a caniuse-lite staleness warning on every passing run, exit
+code and all. To add
 or change a dependency on a branch, give the worktree a tree of its own first,
 `rm node_modules && npm ci`, which the hook then leaves alone. Sharing is worth this because a
 symlink is instant where duplicating the tree costs more than a clean install; the main checkout
@@ -110,6 +113,12 @@ lint in that worktree blocks deleting a branch whose contents already landed; `-
 right escape there, since a delete carries no commits to lint — unlike a push of work, where the
 ship skill's rule against it holds.
 
+**No gate covers markdown, and the repo is deliberately uneven.** `AGENTS.md`, `CONCEPTS.md`,
+`docs/firebase-read-mcp.md` and the `docs/solutions/` docs are prettier-clean; `README.md` and
+`docs/worktrees.md` are not, and stay that way so a blanket `prettier --write .` cannot drag their
+reformatting into an unrelated diff. Write a new doc clean — `_emphasis_` rather than `*emphasis*`,
+table columns padded to the widest cell — and format by naming the file, never the tree.
+
 **`fp/no-mutating-methods` rejects `.sort()`.** `src/` works around it with
 `// eslint-disable-next-line fp/no-mutating-methods`, which predates the non-mutating array methods.
 In Node-side code — `mcp/`, `migrations/`, `functions/` — write `.toSorted()` instead and skip the
@@ -148,6 +157,11 @@ patterns), organized by category with YAML frontmatter (`module`, `tags`, `probl
 when implementing or debugging in an area one of them covers.
 [`CONCEPTS.md`](CONCEPTS.md) holds the shared domain vocabulary — the entities, processes and status
 concepts that mean something specific here — and is worth reading when orienting to the codebase.
+
+**The claim validator `ce-compound` runs reads fenced code as prose.** A Vuex snippet such as
+`rootGetters['people/get'](id)` inside a fence parses as a markdown link, and the doc is flagged for
+a relative target that does not resolve. The flag is wrong, not the doc; this store quotes that
+idiom often enough to meet it again.
 
 The longer-form engineering write-ups stay where they are —
 [`docs/worktrees.md`](docs/worktrees.md) and [`docs/firebase-read-mcp.md`](docs/firebase-read-mcp.md)
