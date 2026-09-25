@@ -140,7 +140,7 @@ npm run update:dbcache .env.local
 ```
 
 - Enter email and password for your ATW account **(not Firebase)**.
-- `%ENV_FILE% contains firebase configuration and determines the Firebase database and storage for building local cache production database. Instead, rebuild the production cache (clear or set to false `cache/clear`at database and fire`buildCache` firebase function endpoint) to fix it
+- The env file you pass determines which Firebase database and storage the local cache is built from. To fix a bad production cache, do not deploy a local one — clear `cache/clean` (or set it to false) in the database and hit the `buildCache` function endpoint.
 - Book covers are also cached from Firebase Storage to Firebase Hosting (because Hosting is faster).
 - The script downloads books covers to `/public/img`, and saves the database cache to `/public/dbcache.js`
   - It is best not to deploy the local cache to production with `firebase deploy`. Instead, use the production instructions below.
@@ -150,9 +150,9 @@ npm run update:dbcache .env.local
 - Cache rebuilds daily by Firebase pubsub (cron) at 00:00 New York timezone.
   - To configure automatic schedule and timezone, update `functions/index.js` file (line 75) and redeploy Firebase functions (`firebase deploy --only functions`)
   - The local cache cannot not updated automatically because firebase emulators to not have cron functionality.
-- The website uses `cache/clear` in Firebase to check if cache rebuilding is not required.
+- The website uses `cache/clean` in Firebase to check if cache rebuilding is not required.
   - To manually rebuild the cache, clear the flag in the Firebase console and hit the `buildCache` Firebase function endpoint.
-  - `update:dbcache` ignores `cache/clear`
+  - `update:dbcache` ignores `cache/clean`
 - buildCache http entrypoint and cron pubsub function
   - To use rebuild cache on Firebase Hosting websites manually there is `FUNCTIONS_URL/buildCache` entrypoint with available query param `host`.
   - Default value for `host` param is `'all'` but it applies Firebase Website `SITE_ID` value if there are many websites use same Firebase Database and functions.
