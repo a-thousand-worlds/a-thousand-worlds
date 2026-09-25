@@ -94,6 +94,13 @@ plus `limitToFirst`. `README.md` → Database MCP server has the tools and their
 `npm run lint` covers `src`, `functions`, `mcp` and `vue.config.js`, and `.husky/pre-push` runs it
 again, so a lint failure blocks the push rather than the commit.
 
+**The hook reads no refs, so every push lints — a branch deletion included.**
+`git push origin --delete <branch>` runs the full pass over whatever worktree it is run from, so
+tidying up after a merge prints a lint run that reads like a failure and is not. It also means a red
+lint in that worktree blocks deleting a branch whose contents already landed; `--no-verify` is the
+right escape there, since a delete carries no commits to lint — unlike a push of work, where the
+ship skill's rule against it holds.
+
 **`fp/no-mutating-methods` rejects `.sort()`.** `src/` works around it with
 `// eslint-disable-next-line fp/no-mutating-methods`, which predates the non-mutating array methods.
 In Node-side code — `mcp/`, `migrations/`, `functions/` — write `.toSorted()` instead and skip the
