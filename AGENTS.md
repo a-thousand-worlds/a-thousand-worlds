@@ -116,6 +116,18 @@ In Node-side code — `mcp/`, `migrations/`, `functions/` — write `.toSorted()
 comment; it satisfies the rule rather than suppressing it. Leave the existing disables in `src/`
 alone rather than churning browser code for it.
 
+**A `this.x` naming nothing the component declares evaluates to `undefined`, silently.** Vue warns
+about one only when it is read during render, and only in development, so a read in a method, a
+watcher, or a computed that nothing renders — a local of another function, a field since renamed —
+raises nothing and fails as an empty lookup.
+`vue/no-undef-properties` catches it, but it cannot be switched on in the config: it does not see
+properties that mixins such as `@/mixins/validator` supply, and flags dozens of those. Run it as an
+audit instead, and read past the mixin hits:
+
+```bash
+npx eslint src --rule '{"vue/no-undef-properties":"error"}'
+```
+
 ## Tests
 
 Vitest defaults to jsdom here, and `src/` is ESM while `mcp/`, `migrations/` and `functions/` are
@@ -123,6 +135,11 @@ CommonJS. A test for Node-side code therefore opens with `// @vitest-environment
 subject through `createRequire(import.meta.url)` rather than `import`, which keeps Vite's ESM
 transform away from a file written for Node's own resolver. `mcp/firebase-read/server.test.js` is
 the worked example.
+
+A component that only reads `$store.state` is easier to test against a plain object passed as
+`global.mocks.$store`, with `router-link` and route-bound children stubbed, than through
+`@/test-helpers`, which mounts the real store and leaves you to seed it through its actions.
+`src/components/Dashboard/CreatorProfilePreview.test.js` is the worked example.
 
 ## Documented solutions
 
