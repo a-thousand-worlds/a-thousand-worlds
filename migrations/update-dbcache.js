@@ -178,12 +178,16 @@ const go = async () => {
 }
 
 /** run main function */
-go()
-  .then(() => {
-    console.info('done')
-    process.exit(0)
-  })
-  .catch(err => {
-    console.error('error happens on books creations', err)
-    process.exit(1)
-  })
+if (require.main === module) {
+  go()
+    .then(() => {
+      console.info('done')
+      process.exit(0)
+    })
+    .catch(err => {
+      console.error('error happens on books creations', err)
+      process.exit(1)
+    })
+}
+
+module.exports = { cacheDatabase, go }

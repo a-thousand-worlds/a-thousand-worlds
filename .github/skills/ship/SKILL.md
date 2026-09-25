@@ -22,17 +22,19 @@ npm run lint && npm run build && npm test
 - `npm run lint` — eslint over `src`, `functions`, `mcp` and `vue.config.js`. The same command runs in
   `.husky/pre-push`, so a lint failure blocks the push in step 4 anyway; catching it here is cheaper
   than catching it mid-ship.
-- `npm run build` — `vue-cli-service build`. Slow, and the gate that actually catches broken imports
-  and template errors; the test suite covers a handful of utils and one page component, nothing more.
+- `npm run build` — `vue-cli-service build`. Slow, and the gate that catches broken imports and
+  template errors in the components no test renders.
 - `npm test` — `vitest run`. Use `npm test`, **not** `npm run test:watch`, which stays in watch mode
-  and hangs.
+  and hangs. The suite pins the router, the store, the pages and components that carry the app's
+  URLs and data writes, and each third-party package's contract (`src/contracts/`), so a dependency
+  bump that changes behavior fails here rather than in production.
 
 **There is no format gate.** Four tracked files deliberately fail `prettier --check`, so a blanket
 `prettier --write .` would drag unrelated reformatting into every ship. `AGENTS.md` → Docs names them
 and states the rule. Prettier is wired into lint through `eslint-config-prettier`; leave it at that.
 
-**These gates are what the merge waits on, not CI.** `.github/workflows/test.yml` runs lint, build
-and a serve-the-dist smoke test on every PR, but step 5 merges without waiting for it — deliberately.
+**These gates are what the merge waits on, not CI.** `.github/workflows/test.yml` runs lint, tests,
+build and a serve-the-dist smoke test on every PR, but step 5 merges without waiting for it — deliberately.
 Passing the gates locally is therefore the only signal that gates the merge, which makes running them
 non-negotiable: a skipped or ignored failure lands straight on `main`. The one thing CI checks and
 these gates do not is that the built `dist` actually serves; if that goes red on `main` after a
