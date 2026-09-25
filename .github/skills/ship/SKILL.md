@@ -27,10 +27,9 @@ npm run lint && npm run build && npm test
 - `npm test` — `vitest run`. Use `npm test`, **not** `npm run test:watch`, which stays in watch mode
   and hangs.
 
-**There is no format gate.** The repo is not prettier-clean at the root — `README.md`,
-`public/index.html` and `src/assets/style/main.scss` all fail `prettier --check` — so a blanket
-`prettier --write .` would drag unrelated reformatting into every ship. Prettier is wired into lint
-through `eslint-config-prettier`; leave it at that.
+**There is no format gate.** Four tracked files deliberately fail `prettier --check`, so a blanket
+`prettier --write .` would drag unrelated reformatting into every ship. `AGENTS.md` → Docs names them
+and states the rule. Prettier is wired into lint through `eslint-config-prettier`; leave it at that.
 
 **These gates are what the merge waits on, not CI.** `.github/workflows/test.yml` runs lint, build
 and a serve-the-dist smoke test on every PR, but step 5 merges without waiting for it — deliberately.

@@ -32,10 +32,11 @@ The second gate catches drift the lock files cannot see: a main checkout that pu
 change without reinstalling, or an install interrupted partway. Without it the first gate would
 green-light a tree that is simply wrong.
 
-**The symlink is shared for writes, not just reads.** `npm install <pkg>` run from a worktree
+**The symlink is shared for writes, not just reads.** Anything that installs, run from a worktree,
 follows it into the main checkout's `node_modules`. This is the standing cost of sharing; the gates
 make the tree correct on arrival, not immune to later writes. Both of the hook's messages name which
-tree the worktree got, so it is visible at session start.
+tree the worktree got, so it is visible at session start. `AGENTS.md` → Dependencies has what to do
+about it.
 
 ## Why the tree is never copied
 
