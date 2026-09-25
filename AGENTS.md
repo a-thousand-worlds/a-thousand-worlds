@@ -159,6 +159,25 @@ A component that only reads `$store.state` is easier to test against a plain obj
 `@/test-helpers`, which mounts the real store and leaves you to seed it through its actions.
 `src/components/Dashboard/CreatorProfilePreview.test.js` is the worked example.
 
+**The suite characterizes behavior as it is, so a deliberate change updates its tests in the same
+commit.** It exists to catch dependency upgrades: `src/contracts/<package>.test.js` pins the API
+surface the app uses from each third-party package, so an upgrade that breaks one fails there
+first, and a new package or a new call shape adds its case to that file. A contract that fails
+after an upgrade means the package changed under the app: adapt the call sites and re-pin the
+contract in that upgrade's own commit, or hold the package back in `.ncurc.js`.
+
+**Firebase is the one boundary faked, and the fake goes on `firebase/app`, not `@/firebase`, when
+the code under test can import it twice at once.** Store modules reach Firebase through a lazy
+`import('@/firebase')`, and on vitest 2 a factory mock of that path serves the _real_ module to the
+second of two concurrent dynamic imports — so a flow that dispatches two loads together talks to the
+live SDK. Mock `firebase/app` with a fake of the v8 namespaced API and stub `firebase/auth`,
+`firebase/database` and `firebase/storage` as empty modules; `src/store/submissions/people.test.js`
+is the worked example.
+
+**A Node script is only testable if requiring it does not run it.** `migrations/update-dbcache.js`
+and `import-books.js` start their main function under `require.main === module` and export their
+helpers; a new script takes the same shape.
+
 ## Docs
 
 `docs/solutions/` holds documented solutions to past problems (bugs, best practices, workflow
