@@ -3,6 +3,7 @@ import BookmarkIcon from '@/assets/icons/bookmark.svg'
 import BooksIcon from '@/assets/icons/books.svg'
 import BundlesIcon from '@/assets/icons/bundles.svg'
 import FilterIcon from '@/assets/icons/filter.svg'
+import ContactIcon from '@/assets/icons/contact.svg'
 
 export default {
   components: {
@@ -10,6 +11,7 @@ export default {
     BundlesIcon,
     BooksIcon,
     FilterIcon,
+    ContactIcon,
   },
   computed: {
     bookmarksCount() {
@@ -104,13 +106,22 @@ export default {
         </router-link>
       </li>
 
-      <li>
+      <li v-if="$hasFeature($features.BUNDLE)">
         <router-link
           :to="{ name: 'Bundles' }"
           :class="{ 'router-link-active': $route.name === 'PersonDetail' }"
         >
           <BundlesIcon />
           <label class="mt-2">Bundles</label>
+        </router-link>
+      </li>
+      <li v-else>
+        <router-link
+          :to="{ name: 'Contact' }"
+          :class="{ 'router-link-active': $route.name === 'PersonDetail' }"
+        >
+          <ContactIcon />
+          <label class="mt-2">Contact</label>
         </router-link>
       </li>
 

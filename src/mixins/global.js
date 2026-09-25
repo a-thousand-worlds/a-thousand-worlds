@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import iam from '@/util/iam'
 import can from '@/util/can'
 import allowedInviteeRoles from '@/util/allowedInviteeRoles'
+import { FEATURES, hasFeature } from '@/util/feature'
 import store from '@/store'
 
 const withState =
@@ -18,8 +19,12 @@ const mixins = {
       const d = dayjs(date)
       return d.format('D MMM YY')
     },
+    $hasFeature: hasFeature,
   },
   computed: {
+    $features() {
+      return FEATURES
+    },
     $uiBusy() {
       return this.$store.state.ui.busy
     },
