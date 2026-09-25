@@ -96,7 +96,7 @@ Resolve the id once, then use that one variable everywhere — the save path, th
 the submission update:
 
 ```js
-const personId = sub.personId || person?.id || uid()
+const personId = sub.personId || uid()
 const personNew = { ...person, ...pick(sub, Object.keys(personSubmission())), id: personId }
 ```
 
@@ -125,27 +125,20 @@ answer, rather than re-running the derivation to find out what it would have sai
 
 ## Watch Out
 
-The fuzzy fallback survives at `src/store/submissions/people.js` and is dead code with a live bug:
+A fuzzy fallback lingered in `approvePerson` after `13ccdde2` as dead code:
+`people/findBy(person => almostEqual(person.name, name))`. `name` was unbound, not a parameter, a
+local or an import. In the browser it resolved to the global `window.name`, normally the empty
+string, so the fallback never matched anyone. It also never threw: `findBy` in
+`src/store/modules/collection.js` accepts a lone predicate, and `get(obj, '')` in
+`src/util/get-set.js` returns the object. It had been `sub.name` until `13ccdde2` moved the matcher
+out of the helper whose parameter supplied it. That matcher was the thing this chain was removing,
+so it was deleted rather than rebound. The same change removed `personSubmissionId` and the
+`peopleSubmissionId` field it fed. Nothing ever read that field; approval only copied the previous
+submission's value onto the next. Old submissions in live data still have it. It is not a
+`personId`, so don't mistake one for the other.
 
-```js
-const person =
-  (sub.personId && context.rootGetters['people/get'](sub.personId)) ||
-  context.rootGetters['people/findBy'](person => almostEqual(person.name, name))
-```
-
-`name` is unbound in `approvePerson` — not a parameter, not a local, not an import. In the browser it
-resolves to the global `window.name`, normally the empty string, so `almostEqual(person.name, '')`
-matches only a person whose name normalizes to empty. The branch can never find anyone. It does not
-throw (`findBy` in `src/store/modules/collection.js` treats a lone predicate as its optional-first-arg
-form, and `get(obj, '')` in `src/util/get-set.js` returns the object), so it fails by returning
-nothing. It was `sub.name` until `13ccdde2` hoisted the matcher out of the helper whose parameter
-supplied it and dropped the prefix in the move — but that matcher is what this chain removed, so the
-fix is to delete the branch, not to rebind it.
-
-The `// TODO: This would be a lot easier if the peopleId was stored in the user profile` above
-`personSubmissionId` in the same file is also stale: the personId _is_ stored in the profile now.
-`personSubmissionId` still walks the old chain, and still feeds `peopleSubmissionId` on the
-submission, which is a different id from `personId` and should not be mistaken for it.
+A code path that fails by returning nothing looks the same as one that finds nothing. When a lookup
+has a fallback, check that the fallback can actually match something.
 
 ## Related
 
