@@ -38,8 +38,8 @@ export default {
       <span v-if="type === 'books'">
         <BookDetailLink
           :book="prev"
-          class="is-hidden-tablet button is-rounded is-primary is-uppercase mr-6 mb-10"
-          >&lt; Previous Book</BookDetailLink
+          class="is-hidden-tablet button is-rounded is-primary is-uppercase mb-10"
+          >&lt; Previous</BookDetailLink
         >
         <BookDetailLink :book="prev" class="is-hidden-mobile is-uppercase is-primary mr-6 mb-10"
           >&lt; Previous Book</BookDetailLink
@@ -48,8 +48,8 @@ export default {
       <span v-else-if="type === 'people'">
         <PersonDetailLink
           :person="prev"
-          class="is-hidden-tablet button is-rounded is-primary is-uppercase mr-6 mb-10"
-          >&lt; Previous Person</PersonDetailLink
+          class="is-hidden-tablet button is-rounded is-primary is-uppercase mb-10"
+          >&lt; Previous</PersonDetailLink
         >
         <PersonDetailLink :person="prev" class="is-hidden-mobile is-uppercase is-primary mr-6 mb-10"
           >&lt; Previous Person</PersonDetailLink
@@ -66,7 +66,7 @@ export default {
           v-if="next"
           :book="next"
           class="is-hidden-tablet button is-rounded is-primary is-uppercase"
-          >Next Book &gt;</BookDetailLink
+          >Next &gt;</BookDetailLink
         >
         <BookDetailLink v-if="next" :book="next" class="is-hidden-mobile is-primary is-uppercase"
           >Next Book &gt;</BookDetailLink
@@ -77,7 +77,7 @@ export default {
           v-if="next"
           :person="next"
           class="is-hidden-tablet button is-rounded is-primary is-uppercase"
-          >Next Person &gt;</PersonDetailLink
+          >Next &gt;</PersonDetailLink
         >
         <PersonDetailLink
           v-if="next"
