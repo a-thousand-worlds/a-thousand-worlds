@@ -48,9 +48,6 @@ export default {
       const person = this.$store.state.people.data[getPersonId()]
       return person
     },
-    userPersonSubmission() {
-      return this.userSubmissions[this.peopleSubmissionPersonId]
-    },
     userSubmissions() {
       return this.$store.state.user.user.profile.submissions || {}
     },
