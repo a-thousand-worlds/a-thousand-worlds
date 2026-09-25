@@ -2,7 +2,6 @@ import pick from 'lodash/pick'
 
 import managed from '@/store/modules/managed'
 import personSubmission from '@/store/constants/personSubmission'
-import almostEqual from '@/util/almostEqual'
 import iam from '@/util/iam'
 import mergeOne from '@/util/mergeOne'
 import renderPerson from '@/util/renderPerson'
@@ -94,12 +93,11 @@ const module = mergeOne(managed('submits/people'), {
     },
 
     /** Update submission status */
-    updateSubmission: async (context, { peopleSubmissionId, personId, sub, status }) => {
+    updateSubmission: async (context, { personId, sub, status }) => {
       const submissionUpdates = {
         reviewedBy: context.rootState.user.user.uid,
         reviewedAt: new Date().toISOString(),
         status,
-        ...(peopleSubmissionId ? { peopleSubmissionId } : null),
         ...(personId ? { personId } : null),
       }
 
@@ -201,37 +199,10 @@ const module = mergeOne(managed('submits/people'), {
 
     /** Approves a single person. */
     approvePerson: async (context, sub) => {
-      /** Get the creator id if it exists for the given user. */
-      // TODO: This would be a lot easier if the peopleId was stored in the user profile
-      const personSubmissionId = async userId => {
-        const userSubmissions = context.dispatch('users/loadOne', `${userId}/profile/submissions`, {
-          root: true,
-        })
-
-        const approvedSubmissionIds = Object.entries(await userSubmissions)
-          .filter(([id, status]) => status === 'approved')
-          .map(([id, status]) => id)
-
-        // const peopleSubmissions = context.dispatch('submits/people/loadAll'`)
-        // TODO: Get most recent approved submission
-        const approvedPeopleSubmissionId = approvedSubmissionIds.find(sid =>
-          context.rootGetters['submissions/people/get'](sid),
-        )
-
-        if (!approvedPeopleSubmissionId) return null
-
-        const peopleSubmission = context.rootGetters['submissions/people/get'](
-          approvedPeopleSubmissionId,
-        )
-
-        return peopleSubmission?.peopleSubmissionId
-      }
-
-      // find associated person by sub.personId or fuzzy equal name match
-      const person =
-        (sub.personId && context.rootGetters['people/get'](sub.personId)) ||
-        context.rootGetters['people/findBy'](person => almostEqual(person.name, name))
-      const personId = sub.personId || person?.id || uid()
+      // find associated person by sub.personId, which PeopleSubmissionForm stamps from user.profile.personId
+      // never match by name: a creator who renamed themselves would get a duplicate person record
+      const person = sub.personId && context.rootGetters['people/get'](sub.personId)
+      const personId = sub.personId || uid()
       const personNew = {
         ...person,
         ...pick(sub, Object.keys(personSubmission())),
@@ -249,7 +220,6 @@ const module = mergeOne(managed('submits/people'), {
 
       // update user submission and people submission
       await context.dispatch('updateSubmission', {
-        peopleSubmissionId: (await personSubmissionId(sub.createdBy)) || uid(),
         personId,
         sub,
         status: 'approved',
