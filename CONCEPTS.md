@@ -58,6 +58,7 @@ rather than produce a second.
 
 - "Person" and "creator" have been used interchangeably for the same entity — the data model says
   person, the interface says creator. They are one concept, not two.
-- A Submission carries two different ids that have been confused at call sites: the link to the
-  published record it became, and a pointer to an earlier Submission the same contributor made.
-  Only the first identifies the record.
+- Older Person Submissions carry a second id beside the link to the published record: a pointer to
+  an earlier Submission from the same contributor, which call sites have confused with the link.
+  Approval stopped writing it in #35 and nothing reads it, but it is still in live data. Only the
+  link identifies the record.
