@@ -418,12 +418,16 @@ const go = async () => {
   }
 }
 
-go()
-  .then(() => {
-    console.log('done')
-    process.exit(0)
-  })
-  .catch(err => {
-    console.error('error happens on books creations', err)
-    process.exit(1)
-  })
+if (require.main === module) {
+  go()
+    .then(() => {
+      console.log('done')
+      process.exit(0)
+    })
+    .catch(err => {
+      console.error('error happens on books creations', err)
+      process.exit(1)
+    })
+}
+
+module.exports = { convertCreator, convertTags, loadJsonUrl, normalizeTag }
