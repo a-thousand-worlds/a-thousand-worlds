@@ -53,6 +53,15 @@ that pulled a dependency change without reinstalling, silently costs every new w
 install. `docs/worktrees.md` has the mechanism, the measurements, and the approaches that were tried
 and rejected.
 
+**Removing a dependency needs no tree of its own.** Delete the `package.json` line and run
+`npm install --package-lock-only`, which rewrites the lockfile and leaves the shared tree alone. The
+shared tree still holds the package, though, so a passing build does not prove nothing imports it:
+grep `src`, `functions`, `migrations` and `mcp` for it first.
+
+**A package held back from upgrades goes in `.ncurc.js`'s `reject` list**, with a comment saying
+why, so a blanket `ncu -u` skips it. `firebase` is the costly one:
+`docs/solutions/tooling-decisions/firebase-sdk-pinned-at-v8.md`.
+
 **`npm run update:dbcache .env.local` writes through the symlink.** Run from a worktree it rebuilds
 that worktree's own `public/dbcache.js`, but adds new photos to the _main checkout's_ `public/img`,
 which every other worktree is reading. It reads live Firebase too, so it is `💾 ` work.

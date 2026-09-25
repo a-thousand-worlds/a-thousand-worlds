@@ -38,9 +38,10 @@ The pin is deliberate. It is a consequence of how `src/` talks to Firebase, and 
 
 ## Guidance
 
-Leave `firebase` out of any upgrade that is not itself a v9+ modular migration. When a
-blanket upgrade or a bot PR includes it, split that one line back out rather than taking
-the whole set.
+Leave `firebase` out of any upgrade that is not itself a v9+ modular migration. It is in
+`.ncurc.js`'s `reject` list, so `ncu -u` skips it; an upgrade made any other way — a bot PR,
+a hand-edited `package.json` — does not read that list, so split the line back out rather
+than taking the whole set.
 
 The whole browser client goes through the v8 namespaced (compat) API. `src/firebase.js` is
 the single entry point:
