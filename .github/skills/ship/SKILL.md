@@ -61,6 +61,10 @@ hides a conflict's exit status, so the `&&` chain carries on and pushes and open
 middle of a rebase; both fail with unrelated-looking errors (`could not determine the current branch`)
 and the conflict only surfaces afterwards.
 
+**If the rebase replayed onto new commits, run step 1's gates again before pushing.** A clean rebase
+proves only that the text merged. The suite pins behavior as it is, so a change that landed on `main`
+in the meantime fails tests the branch wrote against the old behavior, with no conflict to warn you.
+
 ### 4. Push the branch and open a PR
 
 ```bash
