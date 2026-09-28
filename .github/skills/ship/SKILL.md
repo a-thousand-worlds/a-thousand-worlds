@@ -1,6 +1,6 @@
 ---
 name: ship
-description: 'Finish a feature branch: run quality gates (lint, build, test), commit, open a PR, squash-merge it automatically once the gates pass, and extract the session's learnings. Use when done with a change and ready to land it on main.'
+description: 'Finish a feature branch: run quality gates (lint, build, test), commit, open a PR, squash-merge it automatically once the gates pass, extract the session's learnings, and archive the session. Use when done with a change and ready to land it on main.'
 ---
 
 # Ship (finish feature → PR → automatic squash merge)
@@ -183,3 +183,19 @@ put back and nothing to correct. Do not report this step. See `AGENTS.md` → Se
 ### 9. Print the completion message
 
 Print `🚀 Shipped` as the last line of the response, after the learn report.
+
+### 10. Archive the session
+
+Last of all, after `learn` has landed its commit and `🚀 ` is back on the title, archive this session: `mcp__ccd_session_mgmt__archive_session` with `"self"`
+and a reason naming the ship. It is the final tool call of the ship, made in the same response as the completion message and after it — nothing after the
+archive reaches the user. Asking to ship is the agreement to archive; do not ask again.
+
+Skip it when `learn` or `learn-organize` invoked this ship: the session goes on after that ship. A
+ship that never merged is still work in progress and keeps its session.
+
+**The archive refuses while anything of this session is still pending** — a background task, an armed
+waiter, a scheduled wakeup left as a fallback. Stop each one first (a pending wakeup is cancelled with
+`ScheduleWakeup` and `stop: true`); if it still refuses, the user archives from the sidebar.
+
+Archiving removes the session's worktree, if it has one. The branch outlives it, and the session is
+reopened from the Archived list if it is ever needed again.
