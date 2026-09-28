@@ -3,7 +3,7 @@ import throttle from 'lodash/throttle'
 import debounce from 'lodash/debounce'
 import ISBN from 'isbn3'
 import metadataByISBN from '@/util/metadataByISBN'
-import findBookByKeyword from '@/util/findBookByKeyword'
+import { findBookCoverByTitleAndAuthor, getBookCoverByIsbn } from '@/util/findBookCover'
 import isValidISBN from '@/util/isValidISBN'
 import parseNames from '@/util/parseNames'
 import uid from '@/util/chronouid'
@@ -217,11 +217,6 @@ export default {
       const sub = this.submissions[si]
       const { authors, illustrators, title } = sub
 
-      // only search by title and author which should be sufficient for uniqueness
-      // increasing the length of the search query decreases the accuracy on Amazon
-      const search = `${title.trim()} by ${parseNames(authors).join(' ')}`
-
-      // clear book cover search if title, author, or illustrators are missing
       this.setConfirmed(si, null)
       sub.attempts = 0
       if (!title || !authors || !illustrators) {
@@ -233,19 +228,22 @@ export default {
         return
       }
 
+      const titleKeyword = title?.trim() || ''
+      const authorKeyword = parseNames(authors || '').join(' ')
+
       // avoid duplicates
       // make sure illustrators is filled out, since it is not part of the search query
-      if (search === sub.lastSearch) {
+      if (titleKeyword + authorKeyword === sub.lastSearch) {
         return
       }
 
       // save the search so that we can avoid duplicate searches
-      sub.lastSearch = search
+      sub.lastSearch = titleKeyword + authorKeyword
 
       this.loadingBook[si] = true
 
       const nonce = ++this.findBookByKeywordNonce
-      const result = await findBookByKeyword(search).catch(e => {
+      const result = await findBookCoverByTitleAndAuthor(titleKeyword, authorKeyword).catch(e => {
         console.error(e)
         this.$store.dispatch('ui/popup', {
           text: `Error searching for book: ${e.message || e}`,
@@ -323,7 +321,7 @@ export default {
       this.loadingBook[si] = true
       const search = `${sub.isbn}`
       const nonce = ++this.findBookByKeywordNonce
-      const result = await findBookByKeyword(search).catch(e => {
+      const result = await getBookCoverByIsbn(search).catch(e => {
         console.error(e)
         this.$store.dispatch('ui/popup', {
           text: `Error searching for book: ${e.message || e}`,
