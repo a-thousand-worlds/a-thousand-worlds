@@ -175,8 +175,11 @@ If `learn` finds nothing worth recording, that is a normal outcome — say so in
 
 The merge landed, so set it now and not before: read the session's title
 (`mcp__ccd_session_mgmt__get_session` with `"self"`) and set it back with a `🚀 ` prefix
-(`mcp__ccd_session_mgmt__set_session_title`), replacing whatever prefix is there rather than stacking
-— `📦 ` from the gated branch, or the `📚 ` step 7 left. It stays until another stage replaces it;
+(`mcp__ccd_session_mgmt__set_session_title`). In a cloud session, where those do not exist,
+`mcp__claude-code-remote__get_session` with no `session_id` describes this session (`ccr.id`,
+`ccr.title`), and `mcp__claude-code-remote__set_session_title` takes that id. Replace whatever prefix
+is there rather than stacking — `📦 ` from the gated branch, or the `📚 ` step 7 left. Skip only when
+neither tool exists. It stays until another stage replaces it;
 never clear it to leave a bare title. A ship that never landed never set it, so there is nothing to
 put back and nothing to correct. Do not report this step. See `AGENTS.md` → Session titles.
 
@@ -187,7 +190,7 @@ Print `🚀 Shipped` as the last line of the response, after the learn report.
 ### 10. Archive the session
 
 Last of all, after `learn` has landed its commit and `🚀 ` is back on the title, archive this session: `mcp__ccd_session_mgmt__archive_session` with `"self"`
-and a reason naming the ship. It is the final tool call of the ship, made in the same response as the completion message and after it — nothing after the
+and a reason naming the ship, or in a cloud session `mcp__claude-code-remote__archive_session` with this session's `ccr.id`. It is the final tool call of the ship, made in the same response as the completion message and after it — nothing after the
 archive reaches the user. Asking to ship is the agreement to archive; do not ask again.
 
 Skip it when `learn` or `learn-organize` invoked this ship: the session goes on after that ship. A
