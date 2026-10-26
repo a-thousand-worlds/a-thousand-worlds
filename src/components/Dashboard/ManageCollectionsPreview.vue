@@ -37,7 +37,7 @@ export default {
         </Square>
       </router-link>
     </div>
-    <div class="column">
+    <div class="column" v-if="$hasFeature($features.BUNDLE)">
       <router-link :to="{ name: 'BundlesManager' }">
         <Square class="square">
           <BundlesLayoutIcon

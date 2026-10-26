@@ -31,7 +31,9 @@ export default {
         >
       </li>
       <li id="people-filter-menu" />
-      <li><router-link :to="{ name: 'Bundles' }">Book Bundles</router-link></li>
+      <li v-if="$hasFeature($features.BUNDLE)">
+        <router-link :to="{ name: 'Bundles' }">Book Bundles</router-link>
+      </li>
       <li id="bundles-filter-menu" />
       <li><router-link :to="{ name: 'Support' }">Support</router-link></li>
       <li><router-link :to="{ name: 'About' }">About</router-link></li>
