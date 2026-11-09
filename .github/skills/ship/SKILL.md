@@ -154,7 +154,9 @@ retry the merge. Repeat until it succeeds — nothing is merged or lost in the f
   `git -C … pull` would update that branch's upstream instead: skip the pull and the install, run
   `git fetch origin main` here so every worktree's `origin/main` is current, and say so in the summary.
 - Update the main worktree: `git -C /abs/path/to/main pull`.
-- Sync its dependencies: `npm install --prefix /abs/path/to/main`.
+- Sync its dependencies: `npm install --prefix /abs/path/to/main`. Start it with
+  `run_in_background` from the outset: when that checkout's tree had drifted from its lockfile it
+  does a full install, which outruns the Bash tool's foreground timeout. Step 7 can run meanwhile.
 
 ### 7. Extract the learnings
 

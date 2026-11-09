@@ -64,7 +64,8 @@ not the production read, which on its own never is.
 _main checkout's_ dependencies.** Establish which you have first, per Running the app above; a
 worktree the hook installed for is already safe to install into.
 
-`npm run lint` is what tempts you into it: every passing run prints two staleness notices on stderr,
+`npm run lint` is what tempts you into it, and `npm run build` and `npm test` do the same: every
+passing run prints two staleness notices on stderr,
 each with a copy-pasteable install command — `npx update-browserslist-db@latest` and
 `npm i baseline-browser-mapping@latest -D` — at exit code 0, so they read like something to fix.
 Running either is a dependency change, with everything above attached.
@@ -113,8 +114,10 @@ designs that were rejected.
 
 ## Linting
 
-`npm run lint` covers `src`, `functions`, `mcp`, `vue.config.js` and `build-stamp.js`, and `.husky/pre-push` runs it
-again, so a lint failure blocks the push rather than the commit.
+`npm run lint` covers `src`, `functions`, `mcp`, `vue.config.js` and `build-stamp.js`, and
+`.husky/pre-push` runs it again, so a lint failure blocks the push rather than the commit. The root
+files are an explicit list in `package.json`'s `lint` script, so a new Node file at the root is
+unlinted until it is added there — and to this line.
 
 **The hook reads no refs, so every push lints — a branch deletion included.**
 `git push origin --delete <branch>` runs the full pass over whatever worktree it is run from, so
@@ -145,6 +148,21 @@ nested paths on declared data. What survives that is worth fixing:
 ```bash
 npx eslint src --rule '{"vue/no-undef-properties":"error"}'
 ```
+
+## Webpack config
+
+**A change to `vue.config.js` adds its cases to `vue.config.test.js`**, which resolves the config
+through `@vue/cli-service`'s own `Service` in development and production and asserts on the result.
+
+**Extend a function-valued vue-cli option by wrapping it, never by replacing it.** vue-cli builds
+`index.html`'s `templateParameters` as a function in `@vue/cli-service/lib/config/app.js`; a
+replacement drops `BASE_URL` and the `htmlWebpackPlugin` it supplies. Tap the `html` plugin in
+`chainWebpack`, call the original and spread its result, as the build stamp's `BUILD_COMMIT` does.
+
+**A webpack plugin here is a plain object with `apply`, because `fp/no-class` forbids a class.**
+webpack-chain's default `init` calls `new`, so register a factory with
+`.use(create, [args]).init((create, args) => create(...args))`, and give the object a `name` so a test
+finds it in `config.plugins`.
 
 ## Tests
 
