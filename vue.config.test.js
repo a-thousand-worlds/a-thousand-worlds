@@ -16,6 +16,7 @@ import vm from 'node:vm'
 const require = createRequire(import.meta.url)
 const Service = require('@vue/cli-service/lib/Service')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const vueSvgLoader = require('vue-svg-loader')
 const webpack = require('webpack')
@@ -249,6 +250,33 @@ describe.each(['development', 'production'])('resolved by @vue/cli-service in %s
       configType: 'flat',
     })
   })
+
+  test('hands index.html the build stamp, alongside the parameters vue-cli provides', () => {
+    const htmlPlugins = config.plugins.filter(plugin => plugin instanceof HtmlWebpackPlugin)
+    const compilation = { options: config }
+    const parameters = htmlPlugins[0].userOptions.templateParameters(compilation, {}, {}, {})
+
+    expect(htmlPlugins).toHaveLength(1)
+    expect(parameters).toMatchObject({
+      BASE_URL: '/',
+      BUILD_COMMIT: expect.stringMatching(/^([0-9a-f]{7,}(-dirty)?|unknown)$/),
+      BUILD_DATE: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T/),
+      htmlWebpackPlugin: { options: {} },
+    })
+  })
+
+  test('emits version.json with a single build stamp plugin', () => {
+    const stampPlugins = config.plugins.filter(plugin => plugin.name === 'BuildStampPlugin')
+
+    expect(stampPlugins).toHaveLength(1)
+  })
+})
+
+test('index.html carries the build stamp in meta tags', () => {
+  const template = fs.readFileSync(path.join(repoRoot, 'public/index.html'), 'utf8')
+
+  expect(template).toContain('<meta name="build-commit" content="<%= BUILD_COMMIT %>" />')
+  expect(template).toContain('<meta name="build-date" content="<%= BUILD_DATE %>" />')
 })
 
 describe('an imported SVG', () => {

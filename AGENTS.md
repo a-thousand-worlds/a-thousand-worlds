@@ -113,7 +113,7 @@ designs that were rejected.
 
 ## Linting
 
-`npm run lint` covers `src`, `functions`, `mcp` and `vue.config.js`, and `.husky/pre-push` runs it
+`npm run lint` covers `src`, `functions`, `mcp`, `vue.config.js` and `build-stamp.js`, and `.husky/pre-push` runs it
 again, so a lint failure blocks the push rather than the commit.
 
 **The hook reads no refs, so every push lints — a branch deletion included.**
