@@ -1,4 +1,8 @@
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+const { createVersionJsonPlugin, getBuildStamp } = require('./build-stamp')
+
+// read once per build, so index.html and version.json carry the same stamp
+const buildStamp = getBuildStamp()
 
 module.exports = {
   configureWebpack: {
@@ -32,6 +36,27 @@ module.exports = {
         failOnError: true,
       },
     ])
+
+    // build stamp: BUILD_COMMIT and BUILD_DATE for the <meta> tags in public/index.html, and
+    // version.json at the root of dist
+    config.plugin('html').tap(([options, ...rest]) => {
+      const templateParameters = options.templateParameters
+      return [
+        {
+          ...options,
+          templateParameters: (...args) => ({
+            ...templateParameters(...args),
+            BUILD_COMMIT: buildStamp.commit,
+            BUILD_DATE: buildStamp.date,
+          }),
+        },
+        ...rest,
+      ]
+    })
+    config
+      .plugin('build-stamp')
+      .use(createVersionJsonPlugin, [buildStamp])
+      .init((create, args) => create(...args))
 
     // svg: https://github.com/visualfanatic/vue-svg-loader
     const svgRule = config.module.rule('svg')

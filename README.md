@@ -166,6 +166,13 @@ Make sure that local cache files are correct or not deployed.
 npm run deploy
 ```
 
+Every build is stamped with the commit it was built from — the short hash, suffixed `-dirty` when tracked files had uncommitted changes, or `unknown` when git was unavailable — and the build time. To see what the live site runs, read either:
+
+- `<meta name="build-commit">` and `<meta name="build-date">` in `index.html`: `curl -s https://a-thousand-worlds.firebaseapp.com/ | grep build-`
+- `/version.json`: `curl -s https://a-thousand-worlds.firebaseapp.com/version.json`
+
+The stamp is read in `build-stamp.js` and wired into the build in `vue.config.js`.
+
 ### Email
 
 The website needs a properly configured and authorized email server to send emails to users on invite, book submission, etc.
