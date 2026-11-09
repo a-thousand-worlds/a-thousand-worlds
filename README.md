@@ -32,8 +32,9 @@
    reads the public paths without credentials. See [Database MCP server](#database-mcp-server).
 1. Add Goodreads API key for firebase function
    - `firebase functions:config:set goodreads.api_key="YOUR_API_KEY"`
+1. Add ISBNdb API key to `/functions/.env`. You can define API key later on Firebase functions details -> Variables, and redeploy `searchBookCover` function later.
 1. Deploy Firebase functions: `firebase deploy --only functions`
-1. Add Request URL from Firebase Functions dashboard to `VUE_APP_SEARCH_SERVICE_URL` in .env.local
+1. Add Request URL from Firebase Functions dashboard to `VUE_APP_SEARCH_BOOK_COVER_URL` in .env.local
    - https://console.firebase.google.com/u/0/project/PROJECT_NAME/functions/list
 1. Set administrator email functions config:
    - `firebase functions:config:set project.admin_email="ADMIN_EMAIL"`
@@ -44,17 +45,15 @@
 1. Copy firebase config for local emulator:
    - `firebase functions:config:get > functions/.runtimeconfig.json`
 1. Navigate to `FUNCTIONS_URL/buildCache` to build `public/dbcache.js`.
-   - Get full endpoint URL at Firebase Functions dashboard (same baseUrl as `VUE_APP_SEARCH_SERVICE_URL`)
+   - Get full endpoint URL at Firebase Functions dashboard (same baseUrl as `VUE_APP_SEARCH_BOOK_COVER_URL`)
    - File `dbcache.js` and book covers generated automatically at Firebase hosting—no redeployment required.
 1. After creating a user via the UI, you can promote them to owner by signing up as a regular user and then manually setting `roles: { owner: true }` in the `/users` entry.
 1. To fill your Firebase Realtime Database, choose one of the following:
-
    - Go to your Firebase Console → Realtime Database.
    - Open the Data tab.
    - Click Import JSON and select your file.
 
    or
-
    - run `npm run import:data PATH_TO_JSON_FILE` (your JSON file may include `"users"` with defined email/password for login; if password is not defined, it will be set to the email)
 
 ## Development

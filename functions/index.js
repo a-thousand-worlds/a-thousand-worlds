@@ -1,8 +1,9 @@
+require('dotenv').config() // for local dev
 const functions = require('firebase-functions/v1')
 const coverImageByISBN = require('./coverImageByISBNServer')
 const email = require('./email')
 const metadataByISBN = require('./metadataByISBN')
-const amazonSearchBook = require('./amazonSearchBook')
+const { buildApp: buildSearchBookCoverApp } = require('./searchBookCover')
 
 const watchBookSubmissions = require('./watchBookSubmissions')
 
@@ -30,12 +31,12 @@ exports.metadataByISBN = functions.https.onRequest(metadataByISBN())
 
 // increase function memory since we are doing image processing
 // https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation
-exports.amazonSearchBook = functions
+exports.searchBookCover = functions
   .runWith({
     timeoutSeconds: 300,
     memory: '1GB',
   })
-  .https.onRequest(amazonSearchBook())
+  .https.onRequest(buildSearchBookCoverApp())
 
 /** Watch functions */
 
